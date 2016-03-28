@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">The Cooper's Lodge</title>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/bootstrap-theme.min.css" rel="stylesheet" th:href="@{/resources/css/bootstrap-theme.min.css}"/>
+    <link href="../../../resources/css/blueimp-gallery.min.css" rel="stylesheet" th:href="@{/resources/css/blueimp-gallery.min.css}"/>
+    <link href="../../../resources/css/main.css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+  </head>
+  <body>
+    <header layout:replace="fragments/header :: header(${page})" />
+    <section layout:fragment="content" />
+    <footer layout:replace="fragments/footer :: footer" />
+
+    <script src="../../../resources/js/jquery-2.2.2.min.js" th:src="@{/resources/js/jquery-2.2.2.min.js}" />
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}" />
+    <script src="../../../resources/js/blueimp-gallery.min.js" th:src="@{/resources/js/blueimp-gallery.min.js}" />
+    <script src="../../../resources/js/bootstrap-image-gallery.min.js" th:src="@{/resources/js/bootstrap-image-gallery.min.js}" />
+  </body>
+</html>

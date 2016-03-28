@@ -1,0 +1,148 @@
+body {
+    background: url('../img/background.jpg') no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.title,
+.address-bar {
+    display:none;
+}
+
+.navbar-brand {
+    color: #0f0f0f !important;
+}
+
+.navbar {
+    background: rgba(255, 255 ,255, 0.6);
+    border: none;
+}
+
+.nav>li>a {
+    padding: 10px 15px;
+    margin: 0 20px 0 20px;
+    color: #000000 !important;
+}
+
+.nav>li>a:hover {
+    color: #2b669a !important;
+}
+
+.nav>li>a.selected {
+    font-weight: bold;
+}
+
+.navbar-nav {
+    display: block;
+    font-weight: 400;
+}
+
+.box {
+    margin-bottom: 20px;
+    padding: 30px 15px;
+    background: #fff;
+    background: rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+}
+
+.contact-details {
+    text-align: center  ;
+}
+
+footer {
+    background: #fff;
+    background: rgba(255, 255 ,255, 0.9);
+}
+
+footer p {
+    margin: 0;
+    padding: 0 0 20px 0;
+}
+
+footer .footer-address {
+    padding-top: 20px;
+}
+
+/* lodge */
+.map-image iframe {
+    display:block;
+    margin: auto;
+    width:  75vw;
+    height: 50vw;
+}
+
+/* media queries */
+
+@media screen and (min-width:768px) {
+    .title {
+        display: inherit;
+        margin: 0;
+        padding: 30px 0 10px;
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        font-size: 5em;
+        font-weight: 700;
+        line-height: normal;
+        color: #fff;
+    }
+
+    .address-bar {
+        display: inherit;
+        margin: 0;
+        padding: 0 0 40px;
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        text-transform: uppercase;
+        font-size: 1.25em;
+        font-weight: 400;
+        letter-spacing: 3px;
+        color: #fff;
+    }
+
+    .navbar-brand {
+        display: none;
+    }
+
+    .navbar-nav {
+        display: table;
+        float: none;
+        margin: 0 auto;
+        table-layout: fixed;
+    }
+
+    .nav>li>a {
+        padding: 35px;
+    }
+
+    footer p {
+        padding-top: 20px;
+    }
+
+    footer .footer-address {
+        display: none;
+    }
+
+    /* lodge */
+    .map-image iframe {
+        width:  90%;
+    }
+}
+
+@media only screen and (min-width:992px) {
+    /* lodge */
+    .map-image iframe {
+        width:  35vw;
+        height: 25vw;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .box:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layouts/layout" th:with="page='lodge'">
+  <head>
+    <title>The Lodge</title>
+  </head>
+  <body>
+    <div class="container" layout:fragment="content">
+      <div class="row">
+        <div class="box">
+          <div class="col-md-12">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras egestas mattis quam nec pulvinar. Donec
+              in turpis eu metus tempor dapibus. Fusce mi arcu, ullamcorper a efficitur a, rutrum sed dolor.
+              Maecenas eleifend ante in lectus imperdiet, quis porta augue lobortis. Maecenas pellentesque velit
+              non est egestas, ac molestie quam hendrerit. Proin scelerisque neque sit amet dictum mollis. Etiam
+              convallis dapibus iaculis. Nullam tincidunt bibendum eros, sagittis placerat libero dapibus eget.
+              Aenean a malesuada velit, et imperdiet lectus. In ligula felis, blandit non egestas non, ultrices
+              sit amet elit. Nam at placerat arcu. Mauris lectus lectus, placerat non mauris vitae, accumsan eleifend
+              enim.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras egestas mattis quam nec pulvinar. Donec
+              in turpis eu metus tempor dapibus. Fusce mi arcu, ullamcorper a efficitur a, rutrum sed dolor.
+              Maecenas eleifend ante in lectus imperdiet, quis porta augue lobortis. Maecenas pellentesque velit
+              non est egestas, ac molestie quam hendrerit. Proin scelerisque neque sit amet dictum mollis. Etiam
+              convallis dapibus iaculis. Nullam tincidunt bibendum eros, sagittis placerat libero dapibus eget.
+              Aenean a malesuada velit, et imperdiet lectus. In ligula felis, blandit non egestas non, ultrices
+              sit amet elit. Nam at placerat arcu. Mauris lectus lectus, placerat non mauris vitae, accumsan eleifend
+              enim.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras egestas mattis quam nec pulvinar. Donec
+              in turpis eu metus tempor dapibus. Fusce mi arcu, ullamcorper a efficitur a, rutrum sed dolor.
+              Maecenas eleifend ante in lectus imperdiet, quis porta augue lobortis. Maecenas pellentesque velit
+              non est egestas, ac molestie quam hendrerit. Proin scelerisque neque sit amet dictum mollis. Etiam
+              convallis dapibus iaculis. Nullam tincidunt bibendum eros, sagittis placerat libero dapibus eget.
+              Aenean a malesuada velit, et imperdiet lectus. In ligula felis, blandit non egestas non, ultrices
+              sit amet elit. Nam at placerat arcu. Mauris lectus lectus, placerat non mauris vitae, accumsan eleifend
+              enim.
+            </p>
+            <br />
+          </div>
+          <div class="col-md-12 map-image">
+            <iframe frameborder="0" allowfullscreen="allowfullscreen"
+                    th:src="@{https://www.google.com/maps/embed/v1/place(q='place_id:ChIJJcaxDsNla0gRWdrKJq-MCAU',
+                    key='AIzaSyDfwK2mRVBUn2UDGa0byArtxWTXOe_b8W8')}">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
