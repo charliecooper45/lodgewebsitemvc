@@ -32,6 +32,7 @@
     <flyway.version>4.0</flyway.version>
     <postgresql.version>9.4.1208</postgresql.version>
     <junit.version>4.12</junit.version>
+    <jasypt-spring-boot.version>1.6</jasypt-spring-boot.version>
   </properties>
 
   <dependencyManagement>
@@ -145,6 +146,11 @@
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-core</artifactId>
         <version>${flyway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.ulisesbocchio</groupId>
+        <artifactId>jasypt-spring-boot</artifactId>
+        <version>${jasypt-spring-boot.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>

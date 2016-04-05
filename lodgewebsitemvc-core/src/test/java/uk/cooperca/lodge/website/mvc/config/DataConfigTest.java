@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DataConfig.class})
-@TestPropertySource(properties = {"spring.profiles.active=dev"})
+@TestPropertySource(properties = {"spring.profiles.active=dev", "jasypt.encryptor.password=password"})
 public class DataConfigTest {
 
     @Autowired

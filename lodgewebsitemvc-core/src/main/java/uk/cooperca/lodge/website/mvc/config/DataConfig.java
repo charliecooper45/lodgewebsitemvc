@@ -1,5 +1,6 @@
 package uk.cooperca.lodge.website.mvc.config;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -17,14 +18,14 @@ import uk.cooperca.lodge.website.mvc.config.profile.impl.ProductionProfileConfig
 import java.util.Properties;
 
 /**
- * Main configuration class for data related beans. This class imports another configuration class based on the defined
- * Spring profile.
+ * The main configuration class for data related beans. Imports another configuration class based on the defined profile.
  *
  * @author Charlie Cooper
  */
 @Configuration
 @EnableJpaRepositories(basePackages = "uk.cooperca.lodge.website.mvc.repository",
         entityManagerFactoryRef = "localContainerEntityManagerFactory")
+@EnableEncryptableProperties
 @PropertySource("classpath:application-${spring.profiles.active}.properties")
 @Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class})
 public class DataConfig {
