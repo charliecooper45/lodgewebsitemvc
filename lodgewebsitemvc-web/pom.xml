@@ -14,6 +14,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>uk.cooperca</groupId>
+      <artifactId>lodgewebsitemvc-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
     </dependency>
