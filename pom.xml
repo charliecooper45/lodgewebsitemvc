@@ -20,27 +20,41 @@
 
   <properties>
     <spring.version>4.2.5.RELEASE</spring.version>
-    <spring-data-jpa.version>1.9.4.RELEASE</spring-data-jpa.version>
-    <spring-data-commons.version>1.11.4.RELEASE</spring-data-commons.version>
-    <hibernate-version>5.1.0.FINAL</hibernate-version>
+    <spring.data.jpa.version>1.9.4.RELEASE</spring.data.jpa.version>
+    <spring.data.commons.version>1.11.4.RELEASE</spring.data.commons.version>
+    <hibernate.version>5.1.0.FINAL</hibernate.version>
+    <hibernate.jpa.version>1.0.0.FINAL</hibernate.jpa.version>
     <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
-    <thymeleaf-layout-dialect.version>1.3.3</thymeleaf-layout-dialect.version>
+    <thymeleaf.layout.dialect.version>1.3.3</thymeleaf.layout.dialect.version>
     <servlet.version>3.1.0</servlet.version>
     <logback.version>1.1.6</logback.version>
-    <jcl-slf4j.version>1.7.19</jcl-slf4j.version>
-    <commons-logging.version>1.2</commons-logging.version>
+    <jcl.slf4j.version>1.7.19</jcl.slf4j.version>
     <flyway.version>4.0</flyway.version>
     <postgresql.version>9.4.1208</postgresql.version>
+    <hikaricp.version>2.4.5</hikaricp.version>
     <junit.version>4.12</junit.version>
-    <jasypt-spring-boot.version>1.6</jasypt-spring-boot.version>
+    <jasypt.spring.boot.version>1.6</jasypt.spring.boot.version>
+    <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+    <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
+    <maven.war.plugin.version>2.6</maven.war.plugin.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>uk.cooperca</groupId>
+        <groupId>${project.groupId}</groupId>
         <artifactId>lodgewebsitemvc-core</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -74,9 +88,14 @@
         <version>${spring.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-jpa</artifactId>
-        <version>${spring-data-jpa.version}</version>
+        <version>${spring.data.jpa.version}</version>
         <exclusions>
           <exclusion>
             <groupId>org.springframework.data</groupId>
@@ -87,7 +106,7 @@
       <dependency>
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-commons</artifactId>
-        <version>${spring-data-commons.version}</version>
+        <version>${spring.data.commons.version}</version>
         <exclusions>
           <exclusion>
             <groupId>org.slf4j</groupId>
@@ -104,7 +123,17 @@
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
-        <version>${hibernate-version}</version>
+        <version>${hibernate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.javax.persistence</groupId>
+        <artifactId>hibernate-jpa-2.1-api</artifactId>
+        <version>${hibernate.jpa.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf</artifactId>
+        <version>${thymeleaf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.thymeleaf</groupId>
@@ -114,7 +143,7 @@
       <dependency>
         <groupId>nz.net.ultraq.thymeleaf</groupId>
         <artifactId>thymeleaf-layout-dialect</artifactId>
-        <version>${thymeleaf-layout-dialect.version}</version>
+        <version>${thymeleaf.layout.dialect.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
@@ -130,17 +159,17 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
-        <version>${jcl-slf4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>${commons-logging.version}</version>
+        <version>${jcl.slf4j.version}</version>
       </dependency>
       <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${postgresql.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>${hikaricp.version}</version>
       </dependency>
       <dependency>
         <groupId>org.flywaydb</groupId>
@@ -150,7 +179,7 @@
       <dependency>
         <groupId>com.github.ulisesbocchio</groupId>
         <artifactId>jasypt-spring-boot</artifactId>
-        <version>${jasypt-spring-boot.version}</version>
+        <version>${jasypt.spring.boot.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -162,25 +191,31 @@
   </dependencyManagement>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven.dependency.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven.compiler.plugin.version}</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${maven.war.plugin.version}</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <modules>

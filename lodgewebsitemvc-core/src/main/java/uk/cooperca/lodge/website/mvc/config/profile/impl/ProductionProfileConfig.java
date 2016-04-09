@@ -1,12 +1,13 @@
 package uk.cooperca.lodge.website.mvc.config.profile.impl;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import uk.cooperca.lodge.website.mvc.config.profile.ProfileConfig;
 
 import javax.sql.DataSource;
@@ -26,13 +27,14 @@ public class ProductionProfileConfig implements ProfileConfig {
     @Bean
     @Override
     public DataSource dataSource() {
-        // TODO
-        DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-        driver.setUrl(env.getProperty("jdbc.url"));
-        driver.setUsername(env.getProperty("jdbc.username"));
-        driver.setPassword(env.getProperty("jdbc.password"));
-        return driver;
+        HikariConfig config = new HikariConfig();
+        config.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        config.setJdbcUrl(env.getProperty("jdbc.url"));
+        config.setUsername(env.getProperty("jdbc.username"));
+        config.setPassword(env.getProperty("jdbc.password"));
+        config.setMaximumPoolSize(env.getProperty("jdbc.maximumPoolSize", Integer.class));
+        config.setPoolName(env.getProperty("jdbc.poolName"));
+        return new HikariDataSource(config);
     }
 
     @Bean(initMethod = "migrate")

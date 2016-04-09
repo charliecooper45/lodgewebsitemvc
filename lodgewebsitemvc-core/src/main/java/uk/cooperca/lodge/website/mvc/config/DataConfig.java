@@ -11,10 +11,12 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import uk.cooperca.lodge.website.mvc.config.profile.ProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.DevelopmentProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.ProductionProfileConfig;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
 
 /**
@@ -25,6 +27,7 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories(basePackages = "uk.cooperca.lodge.website.mvc.repository",
         entityManagerFactoryRef = "localContainerEntityManagerFactory")
+@EnableTransactionManagement
 @EnableEncryptableProperties
 @PropertySource("classpath:application-${spring.profiles.active}.properties")
 @Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class})
@@ -46,7 +49,7 @@ public class DataConfig {
 
     @Bean
     @DependsOn("flyway")
-    public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactory() {
+    public EntityManagerFactory localContainerEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(profileConfig.dataSource());
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
@@ -55,13 +58,13 @@ public class DataConfig {
         properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         entityManagerFactory.setJpaProperties(properties);
         entityManagerFactory.afterPropertiesSet();
-        return entityManagerFactory;
+        return entityManagerFactory.getObject();
     }
 
     @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(localContainerEntityManagerFactory().getObject());
+        transactionManager.setEntityManagerFactory(localContainerEntityManagerFactory());
         return transactionManager;
     }
 }

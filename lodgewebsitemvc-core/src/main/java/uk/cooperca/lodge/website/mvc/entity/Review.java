@@ -1,6 +1,7 @@
 package uk.cooperca.lodge.website.mvc.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Represents a review of the lodge by a user.
@@ -9,7 +10,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "reviews")
-public class Review {
+public class Review implements Serializable {
+
+    private static final long serialVersionUID = -7336266513743395625L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_id_seq")
