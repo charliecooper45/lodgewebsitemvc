@@ -27,6 +27,7 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories(basePackages = "uk.cooperca.lodge.website.mvc.repository",
         entityManagerFactoryRef = "localContainerEntityManagerFactory")
+@ComponentScan(basePackages = { "uk.cooperca.lodge.website.mvc.service" })
 @EnableTransactionManagement
 @EnableEncryptableProperties
 @PropertySource("classpath:application-${spring.profiles.active}.properties")

@@ -73,8 +73,17 @@ footer .footer-address {
     height: 50vw;
 }
 
-/* media queries */
+/* reviews */
+#reviews-table {
+    width: 100%;
+}
 
+/* pagination */
+table .main {
+    width: 100%;
+}
+
+/* media queries */
 @media screen and (min-width:768px) {
     .title {
         display: inherit;

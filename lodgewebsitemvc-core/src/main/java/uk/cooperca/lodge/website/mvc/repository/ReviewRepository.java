@@ -1,6 +1,6 @@
 package uk.cooperca.lodge.website.mvc.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import uk.cooperca.lodge.website.mvc.entity.Review;
 
@@ -10,5 +10,5 @@ import uk.cooperca.lodge.website.mvc.entity.Review;
  * @author Charlie Cooper
  */
 @Repository
-public interface ReviewRepository extends CrudRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 }

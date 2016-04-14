@@ -13,10 +13,12 @@ public class V1__Create_tables implements SpringJdbcMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         jdbcTemplate.execute(
-                "CREATE TABLE reviews (" +
-                    "id SERIAL PRIMARY KEY, " +
-                    "review VARCHAR(500) NOT NULL" +
-                ");"
+            "CREATE TABLE reviews (" +
+                "id SERIAL PRIMARY KEY, " +
+                "review VARCHAR(500) NOT NULL," +
+                "score VARCHAR(5) NOT NULL," +
+                "created_at TIMESTAMP NOT NULL" +
+            ");"
         );
     }
 }

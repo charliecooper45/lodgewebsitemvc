@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layouts/layout" th:with="page='reviews'">
+  <head>
+    <title>Reviews</title>
+  </head>
+  <body>
+    <div class="container" layout:fragment="content">
+      <div class="row">
+        <div class="box">
+          <div class="col-md-12">
+            <table id="reviews-table" class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th class="main">Review</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="review: ${reviews.content}">
+                  <td th:text="${review.createdAt.toString('dd/MM/yyyy')}">17/12/2014</td>
+                  <td th:text="${review.review}">Review</td>
+                  <td>
+                    <input class="rating rating-loading" th:attr="value=${review.score.ordinal() + 1}" data-size="xs"
+                         data-readonly="true" data-show-clear="false" data-show-caption="false" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-12 text-center">
+            <ul layout:replace="fragments/pagination :: pagination(${reviews}, 'reviews')" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,12 +1,12 @@
 package uk.cooperca.lodge.website.mvc.db.seed;
 
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
+import org.joda.time.DateTime;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.cooperca.lodge.website.mvc.entity.Review;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,17 +17,30 @@ import java.util.List;
  */
 public class V1_1__Populate_reviews_table implements SpringJdbcMigration {
 
-    private static final String INSERT_STATEMENT = "INSERT INTO reviews (review) VALUES (?)";
+    private static final String INSERT_STATEMENT = "INSERT INTO reviews (review, score, created_at) " +
+            "VALUES (?, ?, ?)";
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
-        List<Review> reviews = Arrays.asList(new Review("A really nice lodge, we loved our time there."));
+        List<Review> reviews = Arrays.asList(
+            new Review("A really nice lodge, we loved our time there.", Review.Score.FOUR, DateTime.now()),
+            new Review("Good location. Shower didn't work", Review.Score.TWO, DateTime.now().minusDays(1)),
+            new Review("Spent a weekend here with friends, we all enjoyed the fresh coastal air. " +
+                    "Couple of great local pubs.", Review.Score.FIVE, DateTime.now().minusDays(1)),
+            new Review("Rained non stop, no one told us it would rain in Cornwall in December.", Review.Score.ONE,
+                    DateTime.now().minusWeeks(2)),
+            new Review("A great area of the country. Our seventh visit and every one has been perfect. We take our two " +
+                    "dogs who absolutely love it! Will be back again as soon as we can afford it!", Review.Score.FIVE,
+                    DateTime.now().minusWeeks(8))
+        );
 
         jdbcTemplate.batchUpdate(INSERT_STATEMENT, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement statement, int index) throws SQLException {
                 Review review = reviews.get(index);
                 statement.setString(1, review.getReview());
+                statement.setString(2, review.getScore().name());
+                statement.setTimestamp(3, new Timestamp(review.getCreatedAt().getMillis()));
             }
 
             @Override

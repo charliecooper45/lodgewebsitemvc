@@ -1,5 +1,8 @@
 package uk.cooperca.lodge.website.mvc.entity;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,7 +15,19 @@ import java.io.Serializable;
 @Table(name = "reviews")
 public class Review implements Serializable {
 
+    // TODO: user
     private static final long serialVersionUID = -7336266513743395625L;
+
+    /**
+     * User defined score for the review.
+     */
+    public static enum Score {
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_id_seq")
@@ -23,12 +38,22 @@ public class Review implements Serializable {
     @Column(name = "review", nullable = false)
     private String review;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "score", nullable = false)
+    private Score score;
+
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Column(name = "created_at", nullable = false)
+    private DateTime createdAt;
+
     public Review() {
         // for Hibernate
     }
 
-    public Review(String review) {
+    public Review(String review, Score score, DateTime createdAt) {
         this.review = review;
+        this.score = score;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -41,5 +66,21 @@ public class Review implements Serializable {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    public DateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(DateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
