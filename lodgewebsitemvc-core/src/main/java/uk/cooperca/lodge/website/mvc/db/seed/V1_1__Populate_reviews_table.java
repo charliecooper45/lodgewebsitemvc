@@ -23,14 +23,14 @@ public class V1_1__Populate_reviews_table implements SpringJdbcMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         List<Review> reviews = Arrays.asList(
-            new Review("A really nice lodge, we loved our time there.", Review.Score.FOUR, DateTime.now()),
-            new Review("Good location. Shower didn't work", Review.Score.TWO, DateTime.now().minusDays(1)),
+            new Review("A really nice lodge, we loved our time there.", 4, DateTime.now()),
+            new Review("Good location. Shower didn't work", 2, DateTime.now().minusDays(1)),
             new Review("Spent a weekend here with friends, we all enjoyed the fresh coastal air. " +
-                    "Couple of great local pubs.", Review.Score.FIVE, DateTime.now().minusDays(1)),
-            new Review("Rained non stop, no one told us it would rain in Cornwall in December.", Review.Score.ONE,
+                    "Couple of great local pubs.", 5, DateTime.now().minusDays(1)),
+            new Review("Rained non stop, no one told us it would rain in Cornwall in December.", 1,
                     DateTime.now().minusWeeks(2)),
             new Review("A great area of the country. Our seventh visit and every one has been perfect. We take our two " +
-                    "dogs who absolutely love it! Will be back again as soon as we can afford it!", Review.Score.FIVE,
+                    "dogs who absolutely love it! Will be back again as soon as we can afford it!", 5,
                     DateTime.now().minusWeeks(8))
         );
 
@@ -39,7 +39,7 @@ public class V1_1__Populate_reviews_table implements SpringJdbcMigration {
             public void setValues(PreparedStatement statement, int index) throws SQLException {
                 Review review = reviews.get(index);
                 statement.setString(1, review.getReview());
-                statement.setString(2, review.getScore().name());
+                statement.setInt(2, review.getScore());
                 statement.setTimestamp(3, new Timestamp(review.getCreatedAt().getMillis()));
             }
 

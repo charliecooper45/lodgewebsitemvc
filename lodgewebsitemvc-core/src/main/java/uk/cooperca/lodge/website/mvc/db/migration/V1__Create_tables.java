@@ -16,7 +16,7 @@ public class V1__Create_tables implements SpringJdbcMigration {
             "CREATE TABLE reviews (" +
                 "id SERIAL PRIMARY KEY, " +
                 "review VARCHAR(500) NOT NULL," +
-                "score VARCHAR(5) NOT NULL," +
+                "score INTEGER NOT NULL," +
                 "created_at TIMESTAMP NOT NULL" +
             ");"
         );

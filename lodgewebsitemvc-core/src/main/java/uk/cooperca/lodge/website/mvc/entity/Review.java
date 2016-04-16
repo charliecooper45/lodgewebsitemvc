@@ -18,17 +18,6 @@ public class Review implements Serializable {
     // TODO: user
     private static final long serialVersionUID = -7336266513743395625L;
 
-    /**
-     * User defined score for the review.
-     */
-    public static enum Score {
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_id_seq")
     @SequenceGenerator(name = "reviews_id_seq", sequenceName = "reviews_id_seq")
@@ -38,9 +27,8 @@ public class Review implements Serializable {
     @Column(name = "review", nullable = false)
     private String review;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "score", nullable = false)
-    private Score score;
+    private int score;
 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "created_at", nullable = false)
@@ -50,7 +38,7 @@ public class Review implements Serializable {
         // for Hibernate
     }
 
-    public Review(String review, Score score, DateTime createdAt) {
+    public Review(String review, int score, DateTime createdAt) {
         this.review = review;
         this.score = score;
         this.createdAt = createdAt;
@@ -68,11 +56,11 @@ public class Review implements Serializable {
         this.review = review;
     }
 
-    public Score getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Score score) {
+    public void setScore(int score) {
         this.score = score;
     }
 

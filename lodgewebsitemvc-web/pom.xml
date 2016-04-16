@@ -41,6 +41,14 @@
       <artifactId>thymeleaf-layout-dialect</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.github.jpenren</groupId>
+      <artifactId>thymeleaf-spring-data-dialect</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>uk.co.gcwilliams</groupId>
+      <artifactId>jodatime-thymeleaf-dialect</artifactId>
+    </dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
     </dependency>

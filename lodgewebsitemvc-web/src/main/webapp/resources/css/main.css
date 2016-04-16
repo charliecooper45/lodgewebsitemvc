@@ -22,7 +22,7 @@ body {
 
 .nav>li>a {
     padding: 10px 15px;
-    margin: 0 20px 0 20px;
+    margin: 0 0px 0 20px;
     color: #000000 !important;
 }
 
@@ -74,16 +74,26 @@ footer .footer-address {
 }
 
 /* reviews */
+.current-sort {
+    font-weight: bold;
+}
+
 #reviews-table {
     width: 100%;
 }
 
-/* pagination */
-table .main {
+#reviews-table .main {
     width: 100%;
 }
 
 /* media queries */
+@media screen and (max-width: 768px) {
+    /* reviews */
+    #reviews-table .main, td:nth-child(2) {
+        visibility: hidden;
+    }
+}
+
 @media screen and (min-width:768px) {
     .title {
         display: inherit;
@@ -122,7 +132,7 @@ table .main {
     }
 
     .nav>li>a {
-        padding: 35px;
+        padding: 30px 15px;
     }
 
     footer p {

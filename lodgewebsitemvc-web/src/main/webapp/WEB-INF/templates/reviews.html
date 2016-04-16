@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="/layouts/layout" th:with="page='reviews'">
+      layout:decorator="/layouts/layout" xmlns:sd="http://www.thymeleaf.org/spring-data" th:with="page='reviews'">
   <head>
     <title>Reviews</title>
   </head>
@@ -8,6 +8,15 @@
     <div class="container" layout:fragment="content">
       <div class="row">
         <div class="box">
+          <div class="col-md-12">
+            Sort:
+            <span><a th:class="${reviews.sort.toString() eq 'createdAt: DESC'} ? 'current-sort'" sd:pagination-sort="createdAt,desc">| Newest |</a></span>
+            <span><a th:class="${reviews.sort.toString() eq 'createdAt: ASC'} ? 'current-sort'" sd:pagination-sort="createdAt,asc"> Oldest |</a></span>
+            <span><a th:class="${reviews.sort.toString() eq 'score: DESC'} ? 'current-sort'" sd:pagination-sort="score,desc"> Highest Ratings |</a></span>
+            <span><a th:class="${reviews.sort.toString() eq 'score: ASC'} ? 'current-sort'" sd:pagination-sort="score,asc"> Lowest Ratings |</a></span>
+          </div>
+          <br />
+          <br />
           <div class="col-md-12">
             <table id="reviews-table" class="table">
               <thead>
@@ -19,10 +28,10 @@
               </thead>
               <tbody>
                 <tr th:each="review: ${reviews.content}">
-                  <td th:text="${review.createdAt.toString('dd/MM/yyyy')}">17/12/2014</td>
+                  <td th:text="${#joda.format(review.createdAt, 'dd/MM/yyyy')}">17/12/2014</td>
                   <td th:text="${review.review}">Review</td>
                   <td>
-                    <input class="rating rating-loading" th:attr="value=${review.score.ordinal() + 1}" data-size="xs"
+                    <input class="rating rating-loading" th:attr="value=${review.score}" data-size="xs"
                          data-readonly="true" data-show-clear="false" data-show-caption="false" />
                   </td>
                 </tr>
@@ -30,7 +39,7 @@
             </table>
           </div>
           <div class="col-md-12 text-center">
-            <ul layout:replace="fragments/pagination :: pagination(${reviews}, 'reviews')" />
+            <ul class="pagination" sd:pagination="full" />
           </div>
         </div>
       </div>

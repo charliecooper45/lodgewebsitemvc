@@ -2,8 +2,9 @@ package uk.cooperca.lodge.website.mvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,8 @@ public class ReviewsController {
     private ReviewService reviewService;
 
     @RequestMapping
-    public String showReviews(Model model, Pageable pageable) {
-        if (pageable == null) {
-            pageable = new PageRequest(0, PAGE_SIZE);
-        }
+    public String showReviews(Model model,
+                              @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, value = PAGE_SIZE) Pageable pageable) {
         Page<Review> reviews = reviewService.getReviews(pageable);
         model.addAttribute("reviews", reviews);
         return "reviews";

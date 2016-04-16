@@ -31,7 +31,7 @@ public class DataConfigTest {
         Iterable<Review> reviews = repository.findAll();
         assertNotNull(reviews);
         long count = repository.count();
-        assertEquals(1, count);
+        assertEquals(5, count);
 
         assertNotNull(service);
         reviews = service.getReviews(new PageRequest(0, 1));

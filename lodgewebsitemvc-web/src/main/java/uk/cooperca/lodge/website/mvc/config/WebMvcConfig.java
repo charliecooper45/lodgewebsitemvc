@@ -5,15 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.servlet.config.annotation.*;
+import org.thymeleaf.dialect.springdata.SpringDataDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
-import java.util.List;
+import uk.co.gcwilliams.jodatime.thymeleaf.JodaTimeDialect;
 
 /**
  * Configuration class for Spring MVC.
@@ -22,6 +20,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
+@EnableSpringDataWebSupport
 @ComponentScan(basePackages = { "uk.cooperca.lodge.website.mvc.controller" })
 @Import(DataConfig.class)
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -41,6 +40,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(new LayoutDialect());
+        templateEngine.addDialect(new SpringDataDialect());
+        templateEngine.addDialect(new JodaTimeDialect());
         return templateEngine;
     }
 
@@ -68,12 +69,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
-    }
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
-        resolver.setFallbackPageable(null);
-        argumentResolvers.add(resolver);
     }
 }
