@@ -18,6 +18,5 @@ public interface ReviewService {
      *
      * @return the reviews
      */
-    // TODO: sort
     public Page<Review> getReviews(Pageable pageable);
 }

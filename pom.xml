@@ -34,10 +34,10 @@
     <flyway.version>4.0</flyway.version>
     <postgresql.version>9.4.1208</postgresql.version>
     <hikaricp.version>2.4.5</hikaricp.version>
-    <junit.version>4.12</junit.version>
     <jasypt.spring.boot.version>1.6</jasypt.spring.boot.version>
     <joda.time.version>2.9.3</joda.time.version>
     <jadira.usertype.version>5.0.0.GA</jadira.usertype.version>
+    <junit.version>4.12</junit.version>
     <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
     <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
     <maven.war.plugin.version>2.6</maven.war.plugin.version>

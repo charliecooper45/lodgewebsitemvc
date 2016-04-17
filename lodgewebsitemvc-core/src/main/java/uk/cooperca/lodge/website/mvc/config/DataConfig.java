@@ -31,7 +31,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableEncryptableProperties
 @PropertySource("classpath:application-${spring.profiles.active}.properties")
-@Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class})
+@Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class, CacheConfig.class})
 public class DataConfig {
 
     @Autowired

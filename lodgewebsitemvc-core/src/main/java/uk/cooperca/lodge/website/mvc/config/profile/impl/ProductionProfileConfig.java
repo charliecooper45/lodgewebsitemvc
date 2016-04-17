@@ -24,8 +24,8 @@ public class ProductionProfileConfig implements ProfileConfig {
     @Autowired
     private Environment env;
 
-    @Bean
     @Override
+    @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(env.getProperty("jdbc.driverClassName"));
@@ -37,8 +37,8 @@ public class ProductionProfileConfig implements ProfileConfig {
         return new HikariDataSource(config);
     }
 
-    @Bean(initMethod = "migrate")
     @Override
+    @Bean(initMethod = "migrate")
     public Flyway flyway() {
         Flyway flyway = new Flyway();
         flyway.setLocations(env.getProperty("flyway.locations"));

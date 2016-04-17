@@ -23,8 +23,8 @@ public class DevelopmentProfileConfig implements ProfileConfig {
     @Autowired
     private Environment env;
 
-    @Bean
     @Override
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource driver = new DriverManagerDataSource();
         driver.setDriverClassName(env.getProperty("jdbc.driverClassName"));
@@ -34,8 +34,8 @@ public class DevelopmentProfileConfig implements ProfileConfig {
         return driver;
     }
 
-    @Bean(initMethod = "migrate", destroyMethod = "clean")
     @Override
+    @Bean(initMethod = "migrate", destroyMethod = "clean")
     public Flyway flyway() {
         Flyway flyway = new Flyway();
         flyway.setLocations(env.getProperty("flyway.locations"));
