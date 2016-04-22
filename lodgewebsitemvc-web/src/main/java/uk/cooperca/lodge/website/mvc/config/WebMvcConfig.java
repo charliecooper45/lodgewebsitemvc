@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -22,7 +23,7 @@ import uk.co.gcwilliams.jodatime.thymeleaf.JodaTimeDialect;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @ComponentScan(basePackages = { "uk.cooperca.lodge.website.mvc.controller" })
-@Import(DataConfig.class)
+@Import(CoreConfig.class)
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
@@ -42,6 +43,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         templateEngine.addDialect(new LayoutDialect());
         templateEngine.addDialect(new SpringDataDialect());
         templateEngine.addDialect(new JodaTimeDialect());
+        templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
     }
 
@@ -59,6 +61,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/gallery").setViewName("gallery");
         registry.addViewController("/lodge").setViewName("lodge");
         registry.addViewController("/contact").setViewName("contact");
+        registry.addViewController("/account").setViewName("account");
     }
 
     @Override

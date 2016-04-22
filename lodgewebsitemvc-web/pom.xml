@@ -29,6 +29,10 @@
       <artifactId>spring-data-commons</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
     </dependency>
@@ -47,6 +51,10 @@
     <dependency>
       <groupId>uk.co.gcwilliams</groupId>
       <artifactId>jodatime-thymeleaf-dialect</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-springsecurity4</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

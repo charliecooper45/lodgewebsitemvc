@@ -18,7 +18,7 @@ import uk.cooperca.lodge.website.mvc.service.ReviewService;
  */
 @Controller
 @RequestMapping("/reviews")
-public class ReviewsController {
+public class ReviewController {
 
     private static final int PAGE_SIZE = 2;
 

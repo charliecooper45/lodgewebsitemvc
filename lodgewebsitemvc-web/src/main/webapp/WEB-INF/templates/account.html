@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layouts/layout" th:with="page='account'">
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="container" layout:fragment="content">
+      <div class="row">
+        <div class="box">
+          Welcome to your account! <!-- TODO: personalise/externalise -->
+
+          <div th:text="${#authentication}">
+            The value of the "name" property of the authentication object should appear here.
+          </div>
+          <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Log out" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

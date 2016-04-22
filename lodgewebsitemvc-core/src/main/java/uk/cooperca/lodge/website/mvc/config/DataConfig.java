@@ -20,18 +20,17 @@ import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
 
 /**
- * The main configuration class for data related beans. Imports another configuration class based on the defined profile.
+ * The configuration class for data related beans. Imports another configuration class based on the defined Spring profile.
  *
  * @author Charlie Cooper
  */
 @Configuration
 @EnableJpaRepositories(basePackages = "uk.cooperca.lodge.website.mvc.repository",
         entityManagerFactoryRef = "localContainerEntityManagerFactory")
-@ComponentScan(basePackages = { "uk.cooperca.lodge.website.mvc.service" })
 @EnableTransactionManagement
 @EnableEncryptableProperties
 @PropertySource("classpath:application-${spring.profiles.active}.properties")
-@Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class, CacheConfig.class})
+@Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class})
 public class DataConfig {
 
     @Autowired
