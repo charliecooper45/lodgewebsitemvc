@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Represents a review of the lodge by a user.
+ * A review of the lodge by a user.
  *
  * @author Charlie Cooper
  */
@@ -66,9 +66,5 @@ public class Review implements Serializable {
 
     public DateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }

@@ -4,11 +4,11 @@ import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * Initial migration to create tables.
+ * Migration to create the reviews table.
  *
  * @author Charlie Cooper
  */
-public class V1__Create_tables implements SpringJdbcMigration {
+public class V1__Create_reviews_table implements SpringJdbcMigration {
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {

@@ -10,6 +10,11 @@ import uk.cooperca.lodge.website.mvc.entity.Review;
 import uk.cooperca.lodge.website.mvc.repository.ReviewRepository;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 
+/**
+ * Implementation of the {@link ReviewService} interface.
+ *
+ * @author Charlie Cooper
+ */
 @Service
 @CacheConfig(cacheNames = "reviews")
 public class ReviewServiceImpl implements ReviewService {

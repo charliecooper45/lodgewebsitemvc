@@ -25,6 +25,7 @@ import java.util.Properties;
  * @author Charlie Cooper
  */
 @Configuration
+@ComponentScan(basePackages = { "uk.cooperca.lodge.website.mvc.service" })
 @EnableJpaRepositories(basePackages = "uk.cooperca.lodge.website.mvc.repository",
         entityManagerFactoryRef = "localContainerEntityManagerFactory")
 @EnableTransactionManagement
