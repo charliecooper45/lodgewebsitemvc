@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layouts/layout">
+  <head>
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="container register" layout:fragment="content">
+      <div class="row">
+        <div class="box">
+          <div class="col-md-offset-4 col-md-4">
+            <h2 class="intro-text text-center">Register</h2>
+
+            <form th:object="${registerCommand}" th:action="@{/register}" method="post">
+              <span class="help-block text-center" th:if="${#fields.hasErrors()}">
+                <div th:if="${#fields.hasGlobalErrors()}">
+                  <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+              </span>
+
+              <label>Email</label>
+              <input type="text" th:field="*{email}" class="form-control" />
+              <span class="help-block" th:if="${#fields.hasErrors('email')}">
+                <ul>
+                  <li th:each="error : ${#fields.errors('email')}" th:text="${error}" />
+                </ul>
+              </span>
+
+              <label>Confirm Email</label>
+              <input type="text" th:field="*{confirmEmail}" class="form-control" autocomplete="off" />
+              <span class="help-block" th:if="${#fields.hasErrors('confirmEmail')}">
+                <ul>
+                  <li th:each="error : ${#fields.errors('confirmEmail')}" th:text="${error}" />
+                </ul>
+              </span>
+
+              <label>Password</label>
+              <input type="password" th:field="*{password}" class="form-control" />
+              <span class="help-block" th:if="${#fields.hasErrors('password')}">
+                <ul>
+                  <li th:each="error : ${#fields.errors('password')}" th:text="${error}" />
+                </ul>
+              </span>
+
+              <label>Confirm Password</label>
+              <input type="password" th:field="*{confirmPassword}" class="form-control" />
+              <span class="help-block" th:if="${#fields.hasErrors('confirmPassword')}">
+                <ul>
+                  <li th:each="error : ${#fields.errors('confirmPassword')}" th:text="${error}" />
+                </ul>
+              </span>
+
+              <label>First Name</label>
+              <input type="text" th:field="*{firstName}" class="form-control" />
+              <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
+                <ul>
+                  <li th:each="error : ${#fields.errors('firstName')}" th:text="${error}" />
+                </ul>
+              </span>
+
+              <label>Last Name</label>
+              <input type="text" th:field="*{lastName}" class="form-control" />
+              <span class="help-block" th:if="${#fields.hasErrors('lastName')}">
+                <ul>
+                  <li th:each="error : ${#fields.errors('lastName')}" th:text="${error}" />
+                </ul>
+              </span>
+
+              <br />
+              <input type="submit" value="Register" class="btn btn-md btn-primary btn-block" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,7 +1,6 @@
 package uk.cooperca.lodge.website.mvc.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,8 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!optional.isPresent()) {
             throw new UsernameNotFoundException("email address not registered");
         }
-        User user = optional.get();
-        // TODO: authorities
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), AuthorityUtils.NO_AUTHORITIES);
+        return optional.get();
     }
 }

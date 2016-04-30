@@ -92,6 +92,15 @@ footer .footer-address {
     color: #761c19;
 }
 
+/* register */
+.register .help-block {
+    color: #761c19;
+}
+.register .help-block ul {
+    padding: 0;
+    list-style-type: none;
+}
+
 /* media queries */
 @media screen and (max-width: 768px) {
     /* reviews */
