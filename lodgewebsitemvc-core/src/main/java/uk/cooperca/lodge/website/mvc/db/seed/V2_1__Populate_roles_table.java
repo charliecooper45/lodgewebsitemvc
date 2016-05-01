@@ -19,6 +19,7 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
  *
  * @author Charlie Cooper
  */
+// TODO: this should be in the migration table as we need it in production
 public class V2_1__Populate_roles_table implements SpringJdbcMigration {
 
     private static final String INSERT_STATEMENT = "INSERT INTO roles (role_name, created_at) VALUES (?, ?)";

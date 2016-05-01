@@ -19,8 +19,8 @@ public class Review implements Serializable {
     private static final long serialVersionUID = -7336266513743395625L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_id_seq")
-    @SequenceGenerator(name = "reviews_id_seq", sequenceName = "reviews_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_seq")
+    @SequenceGenerator(name = "reviews_seq", sequenceName = "reviews_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false, unique = true)
     private int id;
 

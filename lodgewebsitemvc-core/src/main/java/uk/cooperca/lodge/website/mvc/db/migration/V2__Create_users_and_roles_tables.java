@@ -13,11 +13,11 @@ public class V2__Create_users_and_roles_tables implements SpringJdbcMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         jdbcTemplate.execute(
-                "CREATE TABLE roles (" +
-                    "id SERIAL PRIMARY KEY," +
-                    "role_name VARCHAR(500) NOT NULL," +
-                    "created_at TIMESTAMP NOT NULL" +
-                ");"
+            "CREATE TABLE roles (" +
+                "id SERIAL PRIMARY KEY," +
+                "role_name VARCHAR(500) NOT NULL," +
+                "created_at TIMESTAMP NOT NULL" +
+            ");"
         );
 
         jdbcTemplate.execute(
