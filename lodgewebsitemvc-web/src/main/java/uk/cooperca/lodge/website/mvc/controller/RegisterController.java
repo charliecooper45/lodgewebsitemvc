@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,9 @@ public class RegisterController {
     private UserRepository userRepository;
 
     @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @RequestMapping
@@ -57,13 +61,19 @@ public class RegisterController {
         }
 
         Role role = roleRepository.findByRoleName(ROLE_USER);
-        User user = new User(command.getEmail(), command.getPassword(), command.getFirstName(), command.getLastName(),
+        User user = new User(command.getEmail(), encoder.encode(command.getPassword()), command.getFirstName(), command.getLastName(),
                 role, DateTime.now());
         user = userRepository.save(user);
 
         // log the new user in
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "redirect:/register/success";
+    }
+
+    @RequestMapping("/success")
+    public String registerSuccess() {
         return "registerSuccess";
     }
 }

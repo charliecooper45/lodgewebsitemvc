@@ -23,7 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO: password encryption/decryption
         Optional<User> optional = service.getUserByEmail(username);
         if (!optional.isPresent()) {
             throw new UsernameNotFoundException("email address not registered");

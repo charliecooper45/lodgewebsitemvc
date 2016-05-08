@@ -1,4 +1,4 @@
-package uk.cooperca.lodge.website.mvc.db.seed;
+package uk.cooperca.lodge.website.mvc.db.migration;
 
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.joda.time.DateTime;
@@ -15,11 +15,10 @@ import java.util.List;
 import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
 
 /**
- * Seeds the roles table with data for local development.
+ * Seeds the roles table with our supported roles.
  *
  * @author Charlie Cooper
  */
-// TODO: this should be in the migration table as we need it in production
 public class V2_1__Populate_roles_table implements SpringJdbcMigration {
 
     private static final String INSERT_STATEMENT = "INSERT INTO roles (role_name, created_at) VALUES (?, ?)";

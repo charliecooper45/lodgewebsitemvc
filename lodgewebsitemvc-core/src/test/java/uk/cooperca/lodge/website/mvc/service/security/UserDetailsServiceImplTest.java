@@ -30,7 +30,6 @@ public class UserDetailsServiceImplTest {
         UserDetails userDetails = service.loadUserByUsername("bob@gmail.com");
         assertNotNull(userDetails);
         assertEquals("bob@gmail.com", userDetails.getUsername());
-        assertEquals("password", userDetails.getPassword());
 
         try {
             service.loadUserByUsername("bob@hotmail.com");

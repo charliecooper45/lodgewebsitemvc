@@ -4,6 +4,7 @@ import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.joda.time.DateTime;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
 import java.sql.PreparedStatement;
@@ -26,10 +27,9 @@ public class V2_2__Populate_users_table implements SpringJdbcMigration {
     private static final String ROLE_STATEMENT = "SELECT id FROM roles WHERE role_name = ?";
 
     @Override
-    // TODO: password encryption
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         List<User> users = Arrays.asList(
-                new User("bob@gmail.com", "password", "Bob", "Smith", null, DateTime.now())
+                new User("bob@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null, DateTime.now())
         );
 
         Integer adminId = jdbcTemplate.queryForObject(ROLE_STATEMENT, new Object[]{ RoleName.ROLE_ADMIN.name() }, Integer.class);
