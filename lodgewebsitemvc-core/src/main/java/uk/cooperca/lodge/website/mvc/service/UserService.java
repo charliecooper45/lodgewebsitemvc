@@ -1,5 +1,6 @@
 package uk.cooperca.lodge.website.mvc.service;
 
+import uk.cooperca.lodge.website.mvc.command.RegisterCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
 import java.util.Optional;
@@ -19,4 +20,13 @@ public interface UserService {
      * @return an optional containing the user if present
      */
     public Optional<User> getUserByEmail(String email);
+
+    /**
+     * Registers a new user on the lodge website platform.
+     *
+     * @param command the command object holding the registration request
+     *
+     * @return the registered user
+     */
+    public User registerUser(RegisterCommand command);
 }
