@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout" xmlns:sd="http://www.thymeleaf.org/spring-data" th:with="page='reviews'">
   <head>
-    <title>Reviews</title>
+    <title th:text="#{website.reviews}">Reviews</title>
   </head>
   <body>
     <div class="container" layout:fragment="content">
       <div class="row">
         <div class="box">
           <div class="col-md-12">
-            Sort:
-            <span><a th:class="${reviews.sort.toString() eq 'createdAt: DESC'} ? 'current-sort'" sd:pagination-sort="createdAt,desc">| Newest |</a></span>
-            <span><a th:class="${reviews.sort.toString() eq 'createdAt: ASC'} ? 'current-sort'" sd:pagination-sort="createdAt,asc"> Oldest |</a></span>
-            <span><a th:class="${reviews.sort.toString() eq 'score: DESC'} ? 'current-sort'" sd:pagination-sort="score,desc"> Highest Ratings |</a></span>
-            <span><a th:class="${reviews.sort.toString() eq 'score: ASC'} ? 'current-sort'" sd:pagination-sort="score,asc"> Lowest Ratings |</a></span>
+            <span th:text="#{reviews.sort}">Sort:</span>
+            <span>|&nbsp;<a th:class="${reviews.sort.toString() eq 'createdAt: DESC'} ? 'current-sort'" sd:pagination-sort="createdAt,desc" th:text="#{reviews.newest}">Newest</a></span>&nbsp;|
+            <span>&nbsp;<a th:class="${reviews.sort.toString() eq 'createdAt: ASC'} ? 'current-sort'" sd:pagination-sort="createdAt,asc" th:text="#{reviews.oldest}">Oldest</a></span>&nbsp;|
+            <span>&nbsp;<a th:class="${reviews.sort.toString() eq 'score: DESC'} ? 'current-sort'" sd:pagination-sort="score,desc" th:text="#{reviews.highestRating}">Highest Ratings</a></span>&nbsp;|
+            <span>&nbsp;<a th:class="${reviews.sort.toString() eq 'score: ASC'} ? 'current-sort'" sd:pagination-sort="score,asc" th:text="#{reviews.lowestRating}">Lowest Ratings</a></span>&nbsp;|
           </div>
           <br />
           <br />
@@ -21,9 +21,9 @@
             <table id="reviews-table" class="table">
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th class="main">Review</th>
-                  <th>Score</th>
+                  <th th:text="#{reviews.date}">Date</th>
+                  <th class="main" th:text="#{reviews.review}">Review</th>
+                  <th th:text="#{reviews.score}">Score</th>
                 </tr>
               </thead>
               <tbody>

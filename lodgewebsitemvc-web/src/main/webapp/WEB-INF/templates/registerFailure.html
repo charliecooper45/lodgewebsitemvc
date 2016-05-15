@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout">
 <head>
-  <title>Registration Successful</title>
+  <title th:text="#{registerFailure.title}">Registration Failure</title>
 </head>
 <body>
 <div class="container" layout:fragment="content">
   <div class="row">
     <div class="box text-center">
-      <h2 class="intro-text text-center">Registration Error</h2>
-      <p>Unfortunately there was an error creating your account.</p>
+      <h2 class="intro-text text-center" th:text="#{registerFailure.title}">Registration Failure</h2>
+      <p th:text="#{registerFailure.text}">Unfortunately there was an error creating your account.</p>
       <p th:text="${errorText}" />
     </div>
   </div>

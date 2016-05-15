@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <body>
     <header layout:fragment="header(page)">
-      <div class="title">Spring MVC Lodge Website</div>
+      <div class="title" th:text="#{website.title}">Spring MVC Lodge Website</div>
       <div class="address-bar">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
       <br />
       <nav class="navbar navbar-default" role="navigation">
@@ -14,27 +14,27 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="@{/}">Spring MVC Lodge Website</a>
+            <a class="navbar-brand" th:href="@{/}" th:text="#{website.title}">Spring MVC Lodge Website</a>
           </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
               <li>
-                <a th:href="@{/}" th:classappend="${page == 'index'} ? selected">Home</a>
+                <a th:href="@{/}" th:classappend="${page == 'index'} ? selected" th:text="#{website.home}">Home</a>
               </li>
               <li>
-                <a th:href="@{/gallery}" th:classappend="${page == 'gallery'} ? selected">Gallery</a>
+                <a th:href="@{/gallery}" th:classappend="${page == 'gallery'} ? selected" th:text="#{website.gallery}">Gallery</a>
               </li>
               <li>
-                <a th:href="@{/lodge}" th:classappend="${page == 'lodge'} ? selected">The Lodge</a>
+                <a th:href="@{/lodge}" th:classappend="${page == 'lodge'} ? selected" th:text="#{website.lodge}">The Lodge</a>
               </li>
               <li>
-                <a th:href="@{/contact}" th:classappend="${page == 'contact'} ? selected">Contact</a>
+                <a th:href="@{/contact}" th:classappend="${page == 'contact'} ? selected" th:text="#{website.contact}">Contact</a>
               </li>
               <li>
-                <a th:href="@{/reviews}" th:classappend="${page == 'reviews'} ? selected">Reviews</a>
+                <a th:href="@{/reviews}" th:classappend="${page == 'reviews'} ? selected" th:text="#{website.reviews}">Reviews</a>
               </li>
               <li>
-                <a th:href="@{/account}" th:classappend="${page == 'account'} ? selected">Account</a>
+                <a th:href="@{/account}" th:classappend="${page == 'account'} ? selected" th:text="#{website.account}">Account</a>
               </li>
             </ul>
           </div>

@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout">
   <head>
-    <title>Registration Successful</title>
+    <title th:text="#{registerSuccess.title}">Registration Successful</title>
   </head>
   <body>
     <div class="container" layout:fragment="content">
       <div class="row">
         <div class="box text-center">
-          <h2>Thank you for registering!</h2>
-          <p>You can now access your account <a th:href="@{/account}">here</a></p>
+          <h2 th:text="#{registerSuccess.text}">Thank you for registering!</h2>
+          <p><a th:href="@{/account}" th:text="#{registerSuccess.accountLink}">You can now access your account here</a></p>
         </div>
       </div>
     </div>

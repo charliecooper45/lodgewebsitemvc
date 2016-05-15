@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout" th:with="page='gallery'">
   <head>
-    <title>Gallery</title>
+    <title th:text="#{website.gallery}">Gallery</title>
   </head>
   <body>
     <div class="container" layout:fragment="content">

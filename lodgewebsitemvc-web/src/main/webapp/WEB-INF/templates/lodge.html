@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout" th:with="page='lodge'">
   <head>
-    <title>The Lodge</title>
+    <title th:text="#{website.lodge}">The Lodge</title>
   </head>
   <body>
     <div class="container" layout:fragment="content">

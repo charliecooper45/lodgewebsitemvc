@@ -2,28 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout" th:with="page='account'">
   <head>
-    <title>Login</title>
+    <title th:text="#{login.title}">Login</title>
   </head>
   <body>
     <div class="container" layout:fragment="content">
       <div class="row">
         <div class="box">
           <div class="col-md-offset-4 col-md-4">
-            <h2 class="intro-text text-center">Login</h2>
+            <h2 class="intro-text text-center" th:text="#{login.title}">Login</h2>
             <form th:action="@{/login}" method="post" class="login-form">
-              <label for="username">Username</label>
+              <label for="username" th:text="#{login.email}">Email</label>
               <input type="text" id="username" name="username" class="form-control" />
-              <label for="password">Password</label>
+              <label for="password" th:text="#{login.password}">Password</label>
               <input type="password" id="password" name="password" class="form-control" />
               <div th:if="${loginError}" class="error-message">
                 <br />
-                <p>Incorrect email or password provided</p>
+                <p th:text="#{login.error}">Incorrect email or password provided</p>
               </div>
               <br />
-              <input type="submit" value="Log in" class="btn btn-md btn-primary btn-block" />
+              <input type="submit" value="Log In" class="btn btn-md btn-primary btn-block" th:value="#{login.submit}" />
             </form>
             <br />
-            <div class="text-center">Don't have an account? Click <a th:href="@{/register}">here</a></div>
+            <div class="text-center"><a th:href="@{/register}" th:text="#{login.registerLink}">Don't have an account? Click here</a></div>
           </div>
         </div>
       </div>
