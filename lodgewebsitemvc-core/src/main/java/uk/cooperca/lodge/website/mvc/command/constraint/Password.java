@@ -15,7 +15,6 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -35,11 +34,20 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @ReportAsSingleViolation
 @NotNull
-@Size(min = 5, max = 10)
 public @interface Password {
     String message() default "password does not meet minimum requirements";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
+    /**
+     * @return size the element must be higher or equal to
+     */
+    int min() default 0;
+
+    /**
+     * @return size the element must be lower or equal to
+     */
+    int max() default Integer.MAX_VALUE;
 }

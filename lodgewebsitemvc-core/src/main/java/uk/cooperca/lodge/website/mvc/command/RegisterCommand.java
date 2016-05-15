@@ -10,18 +10,17 @@ import uk.cooperca.lodge.website.mvc.command.constraint.Password;
  *
  * @author Charlie Cooper
  */
-@Equals(first = "email", second = "confirmEmail", message = "email fields do not match")
-@Equals(first = "password", second = "confirmPassword", message = "password fields do not match")
+// TODO: unit tests for registration
+@Equals(first = "email", second = "confirmEmail")
+@Equals(first = "password", second = "confirmPassword")
 public class RegisterCommand {
 
-    @NotBlank
     @Email(regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     private String email;
 
-    @NotBlank
     private String confirmEmail;
 
-    @Password
+    @Password(min = 5, max = 15)
     private String password;
 
     private String confirmPassword;

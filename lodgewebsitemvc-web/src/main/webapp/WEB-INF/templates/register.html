@@ -2,21 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="/layouts/layout">
   <head>
-    <title>Register</title>
+    <title th:text="#{register.title}">Register</title>
   </head>
   <body>
     <div class="container register" layout:fragment="content">
       <div class="row">
         <div class="box">
           <div class="col-md-offset-4 col-md-4">
-            <h2 class="intro-text text-center">Register</h2>
+            <h2 class="intro-text text-center" th:text="#{register.title}">Register</h2>
 
             <form th:object="${registerCommand}" th:action="@{/register}" method="post">
               <span class="help-block text-center" th:if="${#fields.hasGlobalErrors()}">
                 <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
               </span>
 
-              <label>Email</label>
+              <label th:text="#{register.email}">Email</label>
               <input type="text" th:field="*{email}" class="form-control" />
               <span class="help-block" th:if="${#fields.hasErrors('email')}">
                 <ul>
@@ -24,7 +24,7 @@
                 </ul>
               </span>
 
-              <label>Confirm Email</label>
+              <label th:text="#{register.confirmEmail}">Confirm Email</label>
               <input type="text" th:field="*{confirmEmail}" class="form-control" autocomplete="off" />
               <span class="help-block" th:if="${#fields.hasErrors('confirmEmail')}">
                 <ul>
@@ -32,7 +32,8 @@
                 </ul>
               </span>
 
-              <label>Password</label>
+              <label th:text="#{register.password}">Password</label>&nbsp;
+              <i class="fa fa-question-circle-o" th:title="#{register.passwordTitle}"/>
               <input type="password" th:field="*{password}" class="form-control" />
               <span class="help-block" th:if="${#fields.hasErrors('password')}">
                 <ul>
@@ -40,7 +41,7 @@
                 </ul>
               </span>
 
-              <label>Confirm Password</label>
+              <label th:text="#{register.confirmPassword}">Confirm Password</label>
               <input type="password" th:field="*{confirmPassword}" class="form-control" />
               <span class="help-block" th:if="${#fields.hasErrors('confirmPassword')}">
                 <ul>
@@ -48,7 +49,7 @@
                 </ul>
               </span>
 
-              <label>First Name</label>
+              <label th:text="#{register.firstName}">First Name</label>
               <input type="text" th:field="*{firstName}" class="form-control" />
               <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
                 <ul>
@@ -56,7 +57,7 @@
                 </ul>
               </span>
 
-              <label>Last Name</label>
+              <label th:text="#{register.lastName}">Last Name</label>
               <input type="text" th:field="*{lastName}" class="form-control" />
               <span class="help-block" th:if="${#fields.hasErrors('lastName')}">
                 <ul>
@@ -65,7 +66,7 @@
               </span>
 
               <br />
-              <input type="submit" value="Register" class="btn btn-md btn-primary btn-block" />
+              <input type="submit" value="Register" class="btn btn-md btn-primary btn-block" th:value="#{register.submit}"/>
             </form>
           </div>
         </div>

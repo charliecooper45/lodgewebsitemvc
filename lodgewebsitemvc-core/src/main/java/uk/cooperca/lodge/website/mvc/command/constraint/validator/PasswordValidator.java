@@ -14,17 +14,27 @@ import static java.lang.Character.*;
  */
 public class PasswordValidator implements ConstraintValidator<Password, Object> {
 
+    private int min;
+    private int max;
+
     @Override
-    public void initialize(Password constraintAnnotation) {
-        // nothing to do
+    public void initialize(Password password) {
+        this.min = password.min();
+        this.max = password.max();
     }
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         String password = (String) value;
+
+        // correct length
+        if (password.length() < min || password.length() > max) {
+            return false;
+        }
+
+        // one upper case character and one digit
         int upper = 0;
         int digit = 0;
-
         for (char c : password.toCharArray()) {
             if (isSpaceChar(c)) {
                 return false;
@@ -34,7 +44,6 @@ public class PasswordValidator implements ConstraintValidator<Password, Object> 
                 digit++;
             }
         }
-
         if (upper >= 1 && digit >= 1) {
             return true;
         }
