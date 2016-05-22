@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.entity.User.Language;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,14 +23,15 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
  */
 public class V2_2__Populate_users_table implements SpringJdbcMigration {
 
-    private static final String INSERT_STATEMENT = "INSERT INTO users (email, password, first_name, last_name, role_id, created_at) " +
-            "VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_STATEMENT = "INSERT INTO users (email, password, first_name, last_name, role_id, language_preference, created_at) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String ROLE_STATEMENT = "SELECT id FROM roles WHERE role_name = ?";
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         List<User> users = Arrays.asList(
-                new User("bob@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null, DateTime.now())
+                new User("bob@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
+                        Language.EN, DateTime.now())
         );
 
         Integer adminId = jdbcTemplate.queryForObject(ROLE_STATEMENT, new Object[]{ RoleName.ROLE_ADMIN.name() }, Integer.class);
@@ -44,7 +46,8 @@ public class V2_2__Populate_users_table implements SpringJdbcMigration {
                 statement.setString(3, user.getFirstName());
                 statement.setString(4, user.getLastName());
                 statement.setInt(5, userId);
-                statement.setTimestamp(6, new Timestamp(user.getCreatedAt().getMillis()));
+                statement.setString(6, user.getLanguage().name());
+                statement.setTimestamp(7, new Timestamp(user.getCreatedAt().getMillis()));
             }
 
             @Override

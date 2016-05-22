@@ -61,8 +61,8 @@ footer p {
     padding: 0 0 20px 0;
 }
 
-footer .footer-address {
-    padding-top: 20px;
+footer #languages p {
+    float: right;
 }
 
 /* lodge */
@@ -152,10 +152,6 @@ footer .footer-address {
 
     footer p {
         padding-top: 20px;
-    }
-
-    footer .footer-address {
-        display: none;
     }
 
     /* lodge */

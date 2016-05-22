@@ -10,5 +10,4 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({CacheConfig.class, DataConfig.class})
-public class CoreConfig {
-}
+public class CoreConfig {}

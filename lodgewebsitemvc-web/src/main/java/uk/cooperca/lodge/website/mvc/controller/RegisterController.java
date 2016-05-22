@@ -53,7 +53,7 @@ public class RegisterController {
             return "registerFailure";
         }
 
-        User user = userService.registerUser(command);
+        User user = userService.registerUser(command, locale);
         // log the new user in
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

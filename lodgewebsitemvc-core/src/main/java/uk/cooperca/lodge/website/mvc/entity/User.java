@@ -19,6 +19,11 @@ import java.util.Collection;
 @Table(name = "users")
 public class User implements Serializable, UserDetails {
 
+    public static enum Language {
+        // our supported locales
+        EN, RU
+    }
+
     private static final long serialVersionUID = -880044838119981686L;
 
     @Id
@@ -43,6 +48,10 @@ public class User implements Serializable, UserDetails {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "language_preference", nullable = false)
+    private Language language;
+
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
@@ -51,12 +60,14 @@ public class User implements Serializable, UserDetails {
         // for Hibernate
     }
 
-    public User(String email, String password, String firstName, String lastName, Role role, DateTime createdAt) {
+    public User(String email, String password, String firstName, String lastName, Role role, Language language,
+                DateTime createdAt) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.language = language;
         this.createdAt = createdAt;
     }
 
@@ -106,6 +117,14 @@ public class User implements Serializable, UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     @Override

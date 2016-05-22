@@ -3,6 +3,7 @@ package uk.cooperca.lodge.website.mvc.service;
 import uk.cooperca.lodge.website.mvc.command.RegisterCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -25,8 +26,9 @@ public interface UserService {
      * Registers a new user on the lodge website platform.
      *
      * @param command the command object holding the registration request
+     * @param locale the locale of the new user
      *
      * @return the registered user
      */
-    public User registerUser(RegisterCommand command);
+    public User registerUser(RegisterCommand command, Locale locale);
 }
