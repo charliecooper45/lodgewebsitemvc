@@ -17,6 +17,7 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import uk.co.gcwilliams.jodatime.thymeleaf.JodaTimeDialect;
+import uk.cooperca.lodge.website.mvc.config.util.WebMvcConfigImportSelector;
 
 /**
  * Configuration class for Spring MVC.
@@ -27,7 +28,7 @@ import uk.co.gcwilliams.jodatime.thymeleaf.JodaTimeDialect;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @ComponentScan(basePackages = { "uk.cooperca.lodge.website.mvc.controller" })
-@Import(CoreConfig.class)
+@Import(WebMvcConfigImportSelector.class)
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean

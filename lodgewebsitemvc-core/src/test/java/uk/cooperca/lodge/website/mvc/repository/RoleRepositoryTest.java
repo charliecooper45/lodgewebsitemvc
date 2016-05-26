@@ -16,7 +16,7 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_USER;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {CoreConfig.class})
-@TestPropertySource(properties = {"spring.profiles.active=dev", "jasypt.encryptor.password=password"})
+@TestPropertySource(properties = {"spring.profiles.active=test", "jasypt.encryptor.password=password"})
 public class RoleRepositoryTest {
 
     @Autowired

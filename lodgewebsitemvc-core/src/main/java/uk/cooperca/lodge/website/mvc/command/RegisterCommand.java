@@ -10,7 +10,6 @@ import uk.cooperca.lodge.website.mvc.command.constraint.Password;
  *
  * @author Charlie Cooper
  */
-// TODO: unit tests for registration
 @Equals(first = "email", second = "confirmEmail")
 @Equals(first = "password", second = "confirmPassword")
 public class RegisterCommand {

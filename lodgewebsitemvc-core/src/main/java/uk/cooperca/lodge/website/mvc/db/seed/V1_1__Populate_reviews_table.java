@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Seeds the reviews table with data for local development.
+ * Seeds the reviews table with data for local development and testing.
  *
  * @author Charlie Cooper
  */

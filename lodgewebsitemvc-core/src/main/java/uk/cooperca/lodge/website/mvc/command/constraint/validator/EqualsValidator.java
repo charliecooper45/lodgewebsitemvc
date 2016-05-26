@@ -27,10 +27,10 @@ public class EqualsValidator implements ConstraintValidator<Equals, Object> {
     }
 
     @Override
-    public boolean isValid(Object property, ConstraintValidatorContext context) {
+    public boolean isValid(Object object, ConstraintValidatorContext context) {
         try {
-            final Object firstValue = BeanUtils.getProperty(property, first);
-            final Object secondValue = BeanUtils.getProperty(property, second);
+            final Object firstValue = BeanUtils.getProperty(object, first);
+            final Object secondValue = BeanUtils.getProperty(object, second);
 
             if (firstValue == null && secondValue == null) {
                 return true;
@@ -39,7 +39,7 @@ public class EqualsValidator implements ConstraintValidator<Equals, Object> {
                 return true;
             }
         } catch (Exception e) {
-            LOGGER.warn("Error comparing property {}", property, e);
+            LOGGER.warn("Error comparing property {}", object, e);
         }
         return false;
     }
