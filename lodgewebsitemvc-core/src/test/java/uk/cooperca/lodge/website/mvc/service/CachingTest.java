@@ -1,26 +1,18 @@
 package uk.cooperca.lodge.website.mvc.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.cooperca.lodge.website.mvc.config.CoreConfig;
+import uk.cooperca.lodge.website.mvc.AbstractCoreTest;
 import uk.cooperca.lodge.website.mvc.entity.Review;
 
 import static org.junit.Assert.*;
 
-// TODO: superclass?
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {CoreConfig.class})
-@TestPropertySource(properties = {"spring.profiles.active=test", "jasypt.encryptor.password=password"})
-public class CachingTest {
+public class CachingTest extends AbstractCoreTest {
 
     @Autowired
     private ReviewService service;
