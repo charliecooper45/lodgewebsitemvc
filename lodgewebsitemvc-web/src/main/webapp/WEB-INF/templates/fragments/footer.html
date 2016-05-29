@@ -14,6 +14,9 @@
             </form>
           </div>
           <div sec:authorize="isAuthenticated()" class="col-xs-4" id="logout">
+            <form th:action="@{/account}">
+              <button class="btn btn-link"><i class="fa fa-user" />&nbsp;<span sec:authentication="principal.firstName" />&nbsp;&nbsp;</button>
+            </form>
             <form th:action="@{/logout}" method="post">
               <button class="btn btn-link"><i class="fa fa-sign-out" />&nbsp;Log Out</button>
             </form>
