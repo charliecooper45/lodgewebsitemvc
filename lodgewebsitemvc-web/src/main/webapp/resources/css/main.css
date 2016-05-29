@@ -58,7 +58,20 @@ footer {
 
 footer p {
     margin: 0;
-    padding: 0 0 20px 0;
+    padding: 20px 0 20px 0;
+}
+
+footer form {
+    display: inline-block;
+    float: left;
+}
+
+footer #login-register, #logout {
+    padding: 20px 0 0 0;
+}
+
+footer .btn {
+    padding: 0;
 }
 
 footer #languages p {
@@ -148,10 +161,6 @@ footer #languages p {
 
     .nav>li>a {
         padding: 30px 15px;
-    }
-
-    footer p {
-        padding-top: 20px;
     }
 
     /* lodge */

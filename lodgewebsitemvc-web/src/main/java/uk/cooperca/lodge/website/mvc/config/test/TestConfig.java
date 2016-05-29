@@ -2,6 +2,8 @@ package uk.cooperca.lodge.website.mvc.config.test;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
@@ -23,5 +25,10 @@ public class TestConfig {
     @Bean
     public ReviewService reviewService() {
         return mock(ReviewService.class);
+    }
+
+    @Bean
+    public SecurityExpressionHandler securityExpressionHandler() {
+        return new DefaultWebSecurityExpressionHandler();
     }
 }

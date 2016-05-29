@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <body>
     <footer layout:fragment="footer">
       <div class="container">
         <div class="row">
-          <div class="col-xs-4 col-xs-offset-4 text-center">
-            <!-- TODO: login/register/logged in as -->
+          <div sec:authorize="isAnonymous()" class="col-xs-4" id="login-register">
+            <form th:action="@{/login}">
+              <button th:action="@{/login}" class="btn btn-link"><i class="fa fa-sign-in" />&nbsp;Login&nbsp;&nbsp;</button>
+            </form>
+            <form th:action="@{/register}">
+              <button class="btn btn-link"><i class="fa fa-user-plus" />&nbsp;Register</button>
+            </form>
+          </div>
+          <div sec:authorize="isAuthenticated()" class="col-xs-4" id="logout">
+            <form th:action="@{/logout}" method="post">
+              <button class="btn btn-link"><i class="fa fa-sign-out" />&nbsp;Log Out</button>
+            </form>
+          </div>
+          <div class="col-xs-4 text-center">
             <p>&copy; Charlie Cooper 2016</p>
           </div>
-          <div id="languages" class="col-xs-4 text-center">
-            <!-- TODO: only show this if not logged in -->
+          <div sec:authorize="isAnonymous()" id="languages" class="col-xs-4 text-center">
             <p>
               <a href="?lang=en"><image th:src="@{/resources/img/gb.png}" th:alt="EN" th:title="#{footer.english}"/></a>
               &nbsp;
