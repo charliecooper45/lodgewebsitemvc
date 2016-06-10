@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import uk.cooperca.lodge.website.mvc.config.util.SecurityConfigImportSelector;
 import uk.cooperca.lodge.website.mvc.security.CustomAuthenticationSuccessHandler;
 
 import java.util.Locale;
@@ -30,7 +31,7 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_ADMIN;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = {"uk.cooperca.lodge.website.mvc.service.security"})
-@Import(DataConfig.class)
+@Import(SecurityConfigImportSelector.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

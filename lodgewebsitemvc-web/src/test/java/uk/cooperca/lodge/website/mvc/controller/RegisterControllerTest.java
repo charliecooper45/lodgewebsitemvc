@@ -17,6 +17,7 @@ import static org.codehaus.groovy.runtime.InvokerHelper.asList;
 import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -60,6 +61,7 @@ public class RegisterControllerTest extends AbstractControllerTest {
 
         // existing user
         mockMvc.perform(post("/register")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .params(map))
                 .andExpect(status().isOk())
@@ -70,6 +72,7 @@ public class RegisterControllerTest extends AbstractControllerTest {
 
         // new user
         mockMvc.perform(post("/register")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .params(map))
                 .andExpect(status().isFound())
@@ -119,6 +122,7 @@ public class RegisterControllerTest extends AbstractControllerTest {
 
     private void expectFieldError(MultiValueMap<String, String> map, String field) throws Exception {
         mockMvc.perform(post("/register")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .params(map))
                 .andExpect(status().isOk())

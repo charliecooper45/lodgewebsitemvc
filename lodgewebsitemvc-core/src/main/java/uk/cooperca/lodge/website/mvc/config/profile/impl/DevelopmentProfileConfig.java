@@ -16,7 +16,7 @@ import javax.sql.DataSource;
  *
  * @author Charlie Cooper
  */
-@Profile({"dev", "test"})
+@Profile({"dev"})
 @Configuration
 public class DevelopmentProfileConfig implements ProfileConfig {
 

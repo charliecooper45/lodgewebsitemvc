@@ -10,7 +10,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import uk.cooperca.lodge.website.mvc.config.SecurityConfig;
 import uk.cooperca.lodge.website.mvc.config.WebMvcConfig;
+import uk.cooperca.lodge.website.mvc.service.UserService;
+
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 /**
  * Abstract base class for all controller test classes.
@@ -18,7 +22,7 @@ import uk.cooperca.lodge.website.mvc.config.WebMvcConfig;
  * @author Charlie Cooper
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebMvcConfig.class})
+@ContextConfiguration(classes = {WebMvcConfig.class, SecurityConfig.class})
 @WebAppConfiguration
 @TestPropertySource(properties = {"spring.profiles.active=test", "jasypt.encryptor.password=password"})
 public abstract class AbstractControllerTest {
@@ -30,8 +34,9 @@ public abstract class AbstractControllerTest {
 
     @Before
     public void setup() {
-        // TODO: reset mocks
-        //Mockito.reset(todoServiceMock);
-        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(applicationContext)
+                .apply(springSecurity())
+                .build();
     }
 }

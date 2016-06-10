@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -34,7 +35,7 @@ public class ReviewControllerTest extends AbstractControllerTest {
         PageImpl<Review> page = new PageImpl<>(reviews, pageRequest, 2);
         when(reviewService.getReviews(any(Pageable.class))).thenReturn(page);
 
-        mockMvc.perform(post("/reviews"))
+        mockMvc.perform(post("/reviews").with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("reviews"))
                 .andExpect(model().attributeExists("reviews"))
