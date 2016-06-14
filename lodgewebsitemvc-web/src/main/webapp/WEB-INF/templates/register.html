@@ -11,8 +11,8 @@
           <div class="col-md-offset-4 col-md-4">
             <h2 class="intro-text text-center" th:text="#{register.title}">Register</h2>
 
-            <form th:object="${registerCommand}" th:action="@{/register}" method="post">
-              <span class="help-block text-center" th:if="${#fields.hasGlobalErrors()}">
+            <form th:object="${userCommand}" th:action="@{/register}" method="post">
+              <span class="help-block" th:if="${#fields.hasGlobalErrors()}">
                 <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
               </span>
 

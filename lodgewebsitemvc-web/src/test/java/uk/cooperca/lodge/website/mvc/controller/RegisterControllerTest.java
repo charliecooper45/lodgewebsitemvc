@@ -2,13 +2,11 @@ package uk.cooperca.lodge.website.mvc.controller;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import uk.cooperca.lodge.website.mvc.command.RegisterCommand;
+import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
-import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -23,9 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class RegisterControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    private UserService userService;
-    
     private final String email = "sarah@gmail.com";
     private final String password = "1Password";
     private final String firstName = "Sarah";
@@ -35,7 +30,7 @@ public class RegisterControllerTest extends AbstractControllerTest {
     public void testRegister() throws Exception {
         mockMvc.perform(get("/register"))
             .andExpect(status().isOk())
-            .andExpect(model().attribute("registerCommand", any(RegisterCommand.class)))
+            .andExpect(model().attribute("userCommand", any(UserCommand.class)))
             .andExpect(view().name("register"));
     }
 
@@ -80,11 +75,11 @@ public class RegisterControllerTest extends AbstractControllerTest {
                 .andExpect(redirectedUrl("/register/success"))
                 .andExpect(model().hasNoErrors());
         verify(userService, times(2)).getUserByEmail(email);
-        ArgumentCaptor<RegisterCommand> argumentCaptor = ArgumentCaptor.forClass(RegisterCommand.class);
+        ArgumentCaptor<UserCommand> argumentCaptor = ArgumentCaptor.forClass(UserCommand.class);
         verify(userService).registerUser(argumentCaptor.capture(), anyObject());
         verifyNoMoreInteractions(userService);
 
-        RegisterCommand command = argumentCaptor.getValue();
+        UserCommand command = argumentCaptor.getValue();
         assertEquals(email, command.getEmail());
         assertEquals(email, command.getConfirmEmail());
         assertEquals(password, command.getPassword());
@@ -127,7 +122,7 @@ public class RegisterControllerTest extends AbstractControllerTest {
                 .params(map))
                 .andExpect(status().isOk())
                 .andExpect(view().name("register"))
-                .andExpect(model().attributeHasFieldErrors("registerCommand", field));
+                .andExpect(model().attributeHasFieldErrors("userCommand", field));
         verifyZeroInteractions(userService);
     }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="/layouts/layout" th:with="page='account'">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layouts/layout"
+      th:with="page='account'" class="account">
   <head>
     <title th:text="#{website.home}">Home</title>
   </head>
@@ -8,14 +8,44 @@
     <div class="container" layout:fragment="content">
       <div class="row">
         <div class="box">
-          Welcome to your account! <!-- TODO: personalise/externalise -->
-
-          <div th:text="${#authentication}">
-            The value of the "name" property of the authentication object should appear here.
+          <div class="col-xs-4 col-sm-3">
+            <ul class="nav nav-tabs tabs-left">
+              <li class="active"><a href="#account" data-toggle="tab"><i class="fa fa-user" />&nbsp;<span th:text="#{account.account}">Account</span></a></li>
+              <li><a href="#reviews" data-toggle="tab"><i class="fa fa-star" />&nbsp;<span th:text="#{account.reviews}">Reviews</span></a></li>
+              <li><a href="#bookings" data-toggle="tab"><i class="fa fa-calendar-check-o" />&nbsp;<span th:text="#{account.bookings}">Bookings</span></a></li>
+              <li><a href="#settings" data-toggle="tab"><i class="fa fa-cog" />&nbsp;<span th:text="#{account.settings}">Settings</span></a></li>
+            </ul>
           </div>
-          <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Log out"/>
-          </form>
+
+          <div class="col-xs-8 col-sm-9">
+            <div class="tab-content">
+              <div class="tab-pane active" id="account">
+                <form th:object="${user}">
+                  <label th:text="#{register.email}">Email</label>&nbsp;
+                  <i class="fa fa-pencil" th:title="#{account.updateEmail}" data-toggle="modal" data-target="#email-modal" />
+                  <input type="text" th:field="*{email}" class="form-control" />
+                  <br />
+                  <label th:text="#{register.firstName}">First Name</label>&nbsp;
+                  <i class="fa fa-pencil" th:title="#{account.updateFirstName}" data-toggle="modal" data-target="#first-name-modal" />
+                  <input type="text" th:field="*{firstName}" class="form-control" />
+                  <br />
+                  <label th:text="#{register.lastName}">Last Name</label>&nbsp;
+                  <i class="fa fa-pencil" th:title="#{account.updateLastName}" data-toggle="modal" data-target="#last-name-modal" />
+                  <input type="text" th:field="*{lastName}" class="form-control" />
+                </form>
+                <br />
+                <button type="button" class="btn btn-default" th:text="#{account.passwordButton}">Update Password</button>
+
+                <!-- Modals -->
+                <div layout:replace="fragments/modals/account :: emailModal" />
+                <div layout:replace="fragments/modals/account :: firstNameModal" />
+                <div layout:replace="fragments/modals/account :: lastNameModal" />
+              </div>
+              <div class="tab-pane" id="reviews">Reviews</div>
+              <div class="tab-pane" id="bookings">Bookings</div>
+              <div class="tab-pane" id="settings">Settings</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

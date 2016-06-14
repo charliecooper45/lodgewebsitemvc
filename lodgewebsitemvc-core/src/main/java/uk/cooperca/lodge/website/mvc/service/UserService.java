@@ -1,6 +1,6 @@
 package uk.cooperca.lodge.website.mvc.service;
 
-import uk.cooperca.lodge.website.mvc.command.RegisterCommand;
+import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
 import java.util.Locale;
@@ -30,5 +30,35 @@ public interface UserService {
      *
      * @return the registered user
      */
-    public User registerUser(RegisterCommand command, Locale locale);
+    public User registerUser(UserCommand command, Locale locale);
+
+    /**
+     * Updates the given user's email address.
+     *
+     * @param email the new email address for the user
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    public int updateEmail(String email, int id);
+
+    /**
+     * Updates the given user's first name.
+     *
+     * @param firstName the new first name for the user
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    public int updateFirstName(String firstName, int id);
+
+    /**
+     * Updates the given user's last name.
+     *
+     * @param lastName the new last name for the user
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    public int updateLastName(String lastName, int id);
 }

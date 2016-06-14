@@ -1,7 +1,7 @@
 package uk.cooperca.lodge.website.mvc.command.constraint.validator;
 
 import org.junit.Test;
-import uk.cooperca.lodge.website.mvc.command.RegisterCommand;
+import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.command.constraint.Equals;
 
 import static org.junit.Assert.assertFalse;
@@ -20,30 +20,30 @@ public class EqualsValidatorTest {
         validator.initialize(equals);
 
         // not matching
-        RegisterCommand command = new RegisterCommand();
+        UserCommand command = new UserCommand();
         command.setEmail("bob@gmail.com");
         command.setConfirmEmail("bob@gmail.co.uk");
         assertFalse(validator.isValid(command, null));
 
         // one blank
-        command = new RegisterCommand();
+        command = new UserCommand();
         command.setEmail("bob@gmail.com");
         command.setConfirmEmail("");
         assertFalse(validator.isValid(command, null));
 
         // one null
-        command = new RegisterCommand();
+        command = new UserCommand();
         command.setEmail("bob@gmail.com");
         assertFalse(validator.isValid(command, null));
 
         // matching
-        command = new RegisterCommand();
+        command = new UserCommand();
         command.setEmail("bob@gmail.com");
         command.setConfirmEmail("bob@gmail.com");
         assertTrue(validator.isValid(command, null));
 
         // both null
-        command = new RegisterCommand();
+        command = new UserCommand();
         assertTrue(validator.isValid(command, null));
     }
 }

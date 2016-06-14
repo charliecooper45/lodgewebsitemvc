@@ -1,20 +1,16 @@
 package uk.cooperca.lodge.website.mvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.cooperca.lodge.website.mvc.command.RegisterCommand;
+import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
-import javax.validation.Valid;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -25,22 +21,19 @@ import java.util.Optional;
  */
 @Controller
 @RequestMapping("/register")
-public class RegisterController {
+public class RegisterController extends AbstractController {
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MessageSource messageSource;
-
     @RequestMapping
     public String register(Model model) {
-        model.addAttribute("registerCommand", new RegisterCommand());
+        model.addAttribute("userCommand", new UserCommand());
         return "register";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doRegister(Model model, @Valid RegisterCommand command, BindingResult result, Locale locale) {
+    public String doRegister(Model model, @Validated UserCommand command, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return "register";
         }
@@ -53,10 +46,8 @@ public class RegisterController {
             return "registerFailure";
         }
 
-        User user = userService.registerUser(command, locale);
         // log the new user in
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUser(userService.registerUser(command, locale));
         return "redirect:/register/success";
     }
 

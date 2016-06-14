@@ -4,17 +4,24 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import uk.cooperca.lodge.website.mvc.command.constraint.Equals;
 import uk.cooperca.lodge.website.mvc.command.constraint.Password;
+import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.EmailValidationGroup;
+import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.FirstNameValidationGroup;
+import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.LastNameValidationGroup;
+
+import javax.validation.groups.Default;
 
 /**
- * Command object that represents an attempt by a user to register on the platform.
+ * Command object that represents an attempt to update/create a user on the platform.
  *
  * @author Charlie Cooper
  */
-@Equals(first = "email", second = "confirmEmail")
+@Equals(groups = {Default.class, EmailValidationGroup.class}, first = "email", second = "confirmEmail")
 @Equals(first = "password", second = "confirmPassword")
-public class RegisterCommand {
+public class UserCommand {
 
-    @Email(regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @Email(groups = {Default.class, EmailValidationGroup.class},
+           regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @NotBlank(groups = {Default.class, EmailValidationGroup.class})
     private String email;
 
     private String confirmEmail;
@@ -24,10 +31,10 @@ public class RegisterCommand {
 
     private String confirmPassword;
 
-    @NotBlank
+    @NotBlank(groups = {Default.class, FirstNameValidationGroup.class})
     private String firstName;
 
-    @NotBlank
+    @NotBlank(groups = {Default.class, LastNameValidationGroup.class})
     private String lastName;
 
     public String getEmail() {

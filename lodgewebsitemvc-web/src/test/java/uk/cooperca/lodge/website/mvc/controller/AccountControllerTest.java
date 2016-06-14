@@ -1,0 +1,196 @@
+package uk.cooperca.lodge.website.mvc.controller;
+
+import org.junit.Test;
+import org.springframework.security.core.context.SecurityContext;
+import uk.cooperca.lodge.website.mvc.command.UserCommand;
+import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.test.WithCustomUser;
+
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
+
+import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+public class AccountControllerTest extends AbstractControllerTest {
+
+    @Test
+    public void testAccount() throws Exception {
+        mockMvc.perform(get("/account").with(csrf()))
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    @WithCustomUser
+    public void testAccountWithUser() throws Exception {
+        mockMvc.perform(get("/account").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("user", any(User.class)))
+                .andExpect(view().name("account"));
+    }
+
+    @Test
+    public void testUpdateNotLoggedIn() throws Exception {
+        String newEmail = "bill@hotmail.com";
+        UserCommand command = new UserCommand();
+        command.setConfirmEmail(newEmail);
+        mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(getObjectWriter().writeValueAsString(command)))
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("http://localhost/login"));
+        verifyZeroInteractions(userService);
+    }
+
+    @Test
+    @WithCustomUser
+    public void testUpdateEmail() throws Exception {
+        String newEmail = "bill@hotmail.com";
+        User currentUser = getCurrentUser();
+        when(userService.getUserByEmail(newEmail)).thenReturn(
+                Optional.of(new User(newEmail, currentUser.getPassword(), currentUser.getFirstName(), currentUser.getLastName(),
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.getCreatedAt()))
+        );
+
+        // blank emails
+        UserCommand command = new UserCommand();
+        command.setEmail("");
+        command.setConfirmEmail("");
+        String data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(2)))
+                .andExpect(jsonPath("$.[*]", containsInAnyOrder(
+                        "Email is required",
+                        "Not a valid email address"
+                )));
+        verifyZeroInteractions(userService);
+
+        // not a valid email
+        command = new UserCommand();
+        command.setEmail("asdsad");
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(2)))
+                .andExpect(jsonPath("$.[*]", containsInAnyOrder(
+                    "Both email fields must match",
+                    "Not a valid email address"
+                )));
+        verifyZeroInteractions(userService);
+
+        // email addresses don't match
+        command.setEmail(newEmail);
+        command.setConfirmEmail("bill@hotmail2.com");
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Both email fields must match")));
+        verifyZeroInteractions(userService);
+
+        // correct update
+        command.setConfirmEmail(newEmail);
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(0)))
+                .andExpect(mvcResult -> {
+                    HttpSession session = mvcResult.getRequest().getSession();
+                    SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
+                    User user = (User) securityContext.getAuthentication().getPrincipal();
+                    assertEquals(user.getEmail(), newEmail);
+                });
+        verify(userService).getUserByEmail(newEmail);
+        verify(userService).updateEmail(eq(newEmail), anyInt());
+    }
+
+    @Test
+    @WithCustomUser
+    public void testUpdateFirstName() throws Exception {
+        String newFirstName = "William";
+        User currentUser = getCurrentUser();
+        when(userService.getUserByEmail(currentUser.getEmail())).thenReturn(
+                Optional.of(new User(currentUser.getEmail(), currentUser.getPassword(), newFirstName, currentUser.getLastName(),
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.getCreatedAt()))
+        );
+
+        // blank first name
+        UserCommand command = new UserCommand();
+        String data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/firstname").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("First name is required")));
+        verifyZeroInteractions(userService);
+
+        // correct update
+        command.setFirstName(newFirstName);
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/firstname").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(0)))
+                .andExpect(mvcResult -> {
+                    HttpSession session = mvcResult.getRequest().getSession();
+                    SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
+                    User user = (User) securityContext.getAuthentication().getPrincipal();
+                    assertEquals(user.getFirstName(), newFirstName);
+                });
+        verify(userService).getUserByEmail(currentUser.getEmail());
+        verify(userService).updateFirstName(eq(newFirstName), anyInt());
+    }
+
+    @Test
+    @WithCustomUser
+    public void testUpdateLastName() throws Exception {
+        String newLastName = "Smith";
+        User currentUser = getCurrentUser();
+        when(userService.getUserByEmail(currentUser.getEmail())).thenReturn(
+                Optional.of(new User(currentUser.getEmail(), currentUser.getPassword(), currentUser.getFirstName(), newLastName,
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.getCreatedAt()))
+        );
+
+        // blank first name
+        UserCommand command = new UserCommand();
+        String data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/lastname").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Last name is required")));
+        verifyZeroInteractions(userService);
+
+        // correct update
+        command.setLastName(newLastName);
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/lastname").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(0)))
+                .andExpect(mvcResult -> {
+                    HttpSession session = mvcResult.getRequest().getSession();
+                    SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
+                    User user = (User) securityContext.getAuthentication().getPrincipal();
+                    assertEquals(user.getLastName(), newLastName);
+                });
+        verify(userService).getUserByEmail(currentUser.getEmail());
+        verify(userService).updateLastName(eq(newLastName), anyInt());
+    }
+}
