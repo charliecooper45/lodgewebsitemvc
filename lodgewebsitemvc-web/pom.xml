@@ -99,6 +99,7 @@
     <dependency>
       <groupId>javax.el</groupId>
       <artifactId>javax.el-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -139,7 +140,7 @@
   </dependencies>
 
   <build>
-    <finalName>lodgewebsiteweb</finalName>
+    <finalName>mvcweb</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

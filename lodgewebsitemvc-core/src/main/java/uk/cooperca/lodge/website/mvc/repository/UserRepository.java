@@ -19,6 +19,15 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
+     * Retrieves the user with the given identifier.
+     *
+     * @param id the identifier of the user
+     *
+     * @return an optional containing the user if present
+     */
+    public Optional<User> findById(int id);
+
+    /**
      * Retrieves the user with the given email address.
      *
      * @param email the email address of the user

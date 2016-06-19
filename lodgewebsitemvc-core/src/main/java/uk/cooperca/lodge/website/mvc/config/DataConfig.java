@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.ProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.DevelopmentProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.ProductionProfileConfig;
@@ -33,7 +34,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableEncryptableProperties
 @PropertySource("classpath:application-${spring.profiles.active}.properties")
-@Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class})
+@Import({DevelopmentProfileConfig.class, ProductionProfileConfig.class, MessagingConfig.class})
 public class DataConfig {
 
     @Autowired

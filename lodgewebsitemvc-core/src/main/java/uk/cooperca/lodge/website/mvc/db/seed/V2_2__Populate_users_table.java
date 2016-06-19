@@ -30,9 +30,9 @@ public class V2_2__Populate_users_table implements SpringJdbcMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         List<User> users = Arrays.asList(
-                new User("bob@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
+                new User("testcc45@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
                         Language.EN, DateTime.now()),
-                new User("anton@live.ru", new BCryptPasswordEncoder().encode("Frefd2s"), "Anton", "Igniski", null,
+                new User("testcc46@gmail.com", new BCryptPasswordEncoder().encode("Frefd2s"), "Anton", "Igniski", null,
                         Language.RU, DateTime.now())
         );
 

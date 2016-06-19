@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
 
   <name>lodgewebsitemvc</name>
-  <description>An interactive website for the Cooper family lodge allowing users to sign up and make/edit bookings</description>
+  <description>An interactive website for the Cooper family lodge allowing users to sign up, leave reviews and make/edit bookings</description>
   <inceptionYear>2016</inceptionYear>
   <developers>
     <developer>
@@ -23,7 +23,11 @@
     <spring.data.jpa.version>1.9.4.RELEASE</spring.data.jpa.version>
     <spring.data.commons.version>1.11.4.RELEASE</spring.data.commons.version>
     <spring.security.version>4.0.4.RELEASE</spring.security.version>
+    <spring.amqp.version>1.6.0.RELEASE</spring.amqp.version>
+    <spring.rabbit.version>1.6.0.RELEASE</spring.rabbit.version>
+    <spring.rabbit.test.version>1.6.0.RELEASE</spring.rabbit.test.version>
     <hibernate.version>5.1.0.Final</hibernate.version>
+    <dom4j.version>1.6.1</dom4j.version>
     <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
     <hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
     <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
@@ -32,7 +36,10 @@
     <thymeleaf.jodatime.dialect.version>1.3</thymeleaf.jodatime.dialect.version>
     <thymeleaf.extras.springsecurity4.version>2.1.2.RELEASE</thymeleaf.extras.springsecurity4.version>
     <jackson.version>2.7.4</jackson.version>
-    <json-path.version>2.2.0</json-path.version>
+    <velocity.version>1.7</velocity.version>
+    <velocity.tools.version>2.0</velocity.tools.version>
+    <javax.mail-api.version>1.5.5</javax.mail-api.version>
+    <javax.mail.version>1.5.1</javax.mail.version>
     <javax.validation.version>1.1.0.Final</javax.validation.version>
     <javax.servlet.version>3.1.0</javax.servlet.version>
     <javax.el-api.version>3.0.0</javax.el-api.version>
@@ -46,9 +53,10 @@
     <jadira.usertype.version>5.0.0.GA</jadira.usertype.version>
     <commons.beanutils.version>1.9.2</commons.beanutils.version>
     <groovy.version>2.4.6</groovy.version>
-    <mockito.core.version>1.10.19</mockito.core.version>
     <hamcrest.version>1.3</hamcrest.version>
+    <mockito.core.version>1.10.19</mockito.core.version>
     <junit.version>4.12</junit.version>
+    <json-path.version>2.2.0</json-path.version>
     <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
     <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
     <maven.war.plugin.version>2.6</maven.war.plugin.version>
@@ -81,6 +89,11 @@
             <artifactId>commons-logging</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -161,9 +174,35 @@
         <version>${spring.security.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-amqp</artifactId>
+        <version>${spring.amqp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit</artifactId>
+        <version>${spring.rabbit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit-test</artifactId>
+        <version>${spring.rabbit.test.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-core</artifactId>
         <version>${hibernate.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>dom4j</groupId>
+        <artifactId>dom4j</artifactId>
+        <version>${dom4j.version}</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
@@ -221,6 +260,26 @@
         <version>${jackson.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity</artifactId>
+        <version>${velocity.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity-tools</artifactId>
+        <version>${velocity.tools.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>javax.mail-api</artifactId>
+        <version>${javax.mail-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>${javax.mail.version}</version>
+      </dependency>
+      <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>${javax.validation.version}</version>
@@ -235,7 +294,6 @@
         <groupId>javax.el</groupId>
         <artifactId>javax.el-api</artifactId>
         <version>${javax.el-api.version}</version>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
@@ -356,6 +414,7 @@
   <modules>
     <module>lodgewebsitemvc-web</module>
     <module>lodgewebsitemvc-core</module>
+    <module>lodgewebsitemvc-notification</module>
   </modules>
 
   <scm>

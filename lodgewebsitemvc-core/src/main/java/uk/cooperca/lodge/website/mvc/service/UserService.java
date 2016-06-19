@@ -14,6 +14,15 @@ import java.util.Optional;
 public interface UserService {
 
     /**
+     * Retrieves the user with the given identifier.
+     *
+     * @param id the identifier of the user
+     *
+     * @return an optional containing the user if present
+     */
+    public Optional<User> getUserById(int id);
+
+    /**
      * Retrieves the user with the given email address.
      *
      * @param email the email address of the user

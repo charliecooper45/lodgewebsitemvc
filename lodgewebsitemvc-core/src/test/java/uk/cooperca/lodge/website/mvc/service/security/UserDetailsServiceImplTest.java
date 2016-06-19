@@ -20,12 +20,12 @@ public class UserDetailsServiceImplTest extends AbstractCoreTest {
     public void test() {
         assertNotNull(service);
 
-        UserDetails userDetails = service.loadUserByUsername("bob@gmail.com");
+        UserDetails userDetails = service.loadUserByUsername("testcc45@gmail.com");
         assertNotNull(userDetails);
-        assertEquals("bob@gmail.com", userDetails.getUsername());
+        assertEquals("testcc45@gmail.com", userDetails.getUsername());
 
         try {
-            service.loadUserByUsername("bob@hotmail.com");
+            service.loadUserByUsername("testcc45@hotmail.com");
             fail();
         } catch (UsernameNotFoundException e) {
             assertEquals("email address not registered", e.getMessage());

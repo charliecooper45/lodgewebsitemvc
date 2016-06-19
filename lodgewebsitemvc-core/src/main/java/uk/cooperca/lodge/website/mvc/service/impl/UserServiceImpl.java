@@ -8,6 +8,7 @@ import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.Role;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.entity.User.Language;
+import uk.cooperca.lodge.website.mvc.messaging.NotificationMessageProducer;
 import uk.cooperca.lodge.website.mvc.repository.RoleRepository;
 import uk.cooperca.lodge.website.mvc.repository.UserRepository;
 import uk.cooperca.lodge.website.mvc.service.UserService;
@@ -34,6 +35,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private NotificationMessageProducer producer;
+
+    @Override
+    public Optional<User> getUserById(int id) {
+        return userRepository.findById(id);
+    }
+
     @Override
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -49,9 +58,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    // TODO: handle 0
     @Override
     public int updateEmail(String email, int id) {
-        return userRepository.updateEmail(email, id);
+        int value = userRepository.updateEmail(email, id);
+        if (value > 0) {
+//            producer.sendMessage(EMAIL_UPDATE, id);
+        }
+        return value;
     }
 
     @Override
