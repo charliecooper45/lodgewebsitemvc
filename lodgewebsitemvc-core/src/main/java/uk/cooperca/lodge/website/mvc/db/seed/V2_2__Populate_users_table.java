@@ -23,17 +23,17 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
  */
 public class V2_2__Populate_users_table implements SpringJdbcMigration {
 
-    private static final String INSERT_STATEMENT = "INSERT INTO users (email, password, first_name, last_name, role_id, language_preference, created_at) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_STATEMENT = "INSERT INTO users (email, password, first_name, last_name, role_id, " +
+            "language_preference, verified, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String ROLE_STATEMENT = "SELECT id FROM roles WHERE role_name = ?";
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         List<User> users = Arrays.asList(
                 new User("testcc45@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
-                        Language.EN, DateTime.now()),
+                        Language.EN, true, DateTime.now()),
                 new User("testcc46@gmail.com", new BCryptPasswordEncoder().encode("Frefd2s"), "Anton", "Igniski", null,
-                        Language.RU, DateTime.now())
+                        Language.RU, true, DateTime.now())
         );
 
         Integer adminId = jdbcTemplate.queryForObject(ROLE_STATEMENT, new Object[]{ RoleName.ROLE_ADMIN.name() }, Integer.class);
@@ -49,7 +49,8 @@ public class V2_2__Populate_users_table implements SpringJdbcMigration {
                 statement.setString(4, user.getLastName());
                 statement.setInt(5, userId);
                 statement.setString(6, user.getLanguage().name());
-                statement.setTimestamp(7, new Timestamp(user.getCreatedAt().getMillis()));
+                statement.setBoolean(7, user.isVerified());
+                statement.setTimestamp(8, new Timestamp(user.getCreatedAt().getMillis()));
             }
 
             @Override

@@ -37,6 +37,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public Optional<User> findByEmail(String email);
 
     /**
+     * Updates the given user's verification status.
+     *
+     * @param verified whether to update the user as verified or not
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    @Modifying
+    @Transactional
+    @Query("update User u set u.verified = ?1 where u.id = ?2")
+    public int updateVerified(boolean verified, int id);
+
+    /**
      * Updates the given user's email address.
      *
      * @param email the new email address for the user

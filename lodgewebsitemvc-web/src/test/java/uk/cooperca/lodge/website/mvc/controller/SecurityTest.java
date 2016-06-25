@@ -28,7 +28,7 @@ public class SecurityTest extends AbstractControllerTest {
     public void setup() {
         super.setup();
         when(userService.getUserByEmail(username)).thenReturn(
-                Optional.of(new User(username, password, "Edward", "Phillips", getUserRole(), Language.EN, DateTime.now()))
+                Optional.of(new User(username, password, "Edward", "Phillips", getUserRole(), Language.EN, true, DateTime.now()))
         );
     }
 

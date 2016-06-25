@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import uk.cooperca.lodge.website.mvc.AbstractCoreTest;
 import uk.cooperca.lodge.website.mvc.entity.Review;
+import uk.cooperca.lodge.website.mvc.service.ReviewService;
 
 import static org.junit.Assert.*;
 

@@ -52,6 +52,9 @@ public class User implements Serializable, UserDetails {
     @Column(name = "language_preference", nullable = false)
     private Language language;
 
+    @Column(name = "verified", nullable = false)
+    private boolean verified;
+
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
@@ -61,7 +64,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public User(String email, String password, String firstName, String lastName, Role role, Language language,
-                DateTime createdAt) {
+                boolean verified, DateTime createdAt) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -69,6 +72,7 @@ public class User implements Serializable, UserDetails {
         this.role = role;
         this.language = language;
         this.createdAt = createdAt;
+        this.verified = verified;
     }
 
     public int getId() {
@@ -125,6 +129,14 @@ public class User implements Serializable, UserDetails {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @Override

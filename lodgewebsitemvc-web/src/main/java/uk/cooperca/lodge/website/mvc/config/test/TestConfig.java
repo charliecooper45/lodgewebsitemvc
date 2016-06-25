@@ -6,6 +6,7 @@ import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
@@ -32,6 +33,11 @@ public class TestConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    public TokenManager tokenManager() {
+        return mock(TokenManager.class);
     }
 
     @Bean

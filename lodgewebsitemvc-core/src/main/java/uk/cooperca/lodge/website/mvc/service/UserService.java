@@ -42,6 +42,15 @@ public interface UserService {
     public User registerUser(UserCommand command, Locale locale);
 
     /**
+     * Verifies a users using the given JWT token.
+     *
+     * @param token the JWT token
+     *
+     * @return whether the user was successfully verified
+     */
+    public boolean verifyUser(String token);
+
+    /**
      * Updates the given user's email address.
      *
      * @param email the new email address for the user

@@ -18,6 +18,7 @@ import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.ProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.DevelopmentProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.ProductionProfileConfig;
+import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
@@ -75,5 +76,13 @@ public class DataConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public TokenManager tokenManager() {
+        TokenManager tokenManager = new TokenManager(env.getProperty("jwt.secret"), env.getProperty("domain"));
+        int verificationExpirationDays = env.getProperty("token.verification.expirationDays", Integer.class);
+        tokenManager.setVerificationExpirationDays(verificationExpirationDays);
+        return tokenManager;
     }
 }

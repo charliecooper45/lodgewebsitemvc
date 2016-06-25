@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.consumer.NotificationMessageConsumers;
 import uk.cooperca.lodge.website.mvc.email.EmailService;
+import uk.cooperca.lodge.website.mvc.link.LinkBuilder;
+import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import static org.mockito.Mockito.mock;
@@ -18,9 +20,9 @@ import static org.mockito.Mockito.mock;
  *
  * @author Charlie Cooper
  */
+@Configuration
 @RabbitListenerTest
 @Import(value = {MessagingConfig.class})
-@Configuration
 public class TestConfig {
 
     @Bean
@@ -46,5 +48,15 @@ public class TestConfig {
     @Bean
     public VelocityEngine velocityEngine() {
         return mock(VelocityEngine.class);
+    }
+
+    @Bean
+    public LinkBuilder linkBuilder() {
+        return mock(LinkBuilder.class);
+    }
+
+    @Bean
+    public TokenManager tokenManager() {
+        return mock(TokenManager.class);
     }
 }

@@ -30,7 +30,7 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_ADMIN;
  */
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = {"uk.cooperca.lodge.website.mvc.service.security"})
+@ComponentScan(basePackages = {"uk.cooperca.lodge.website.mvc.security"})
 @Import(SecurityConfigImportSelector.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

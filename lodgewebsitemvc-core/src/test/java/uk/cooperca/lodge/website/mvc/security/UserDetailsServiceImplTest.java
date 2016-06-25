@@ -1,4 +1,4 @@
-package uk.cooperca.lodge.website.mvc.service.security;
+package uk.cooperca.lodge.website.mvc.security;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

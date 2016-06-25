@@ -29,6 +29,7 @@ public class V2__Create_users_and_roles_tables implements SpringJdbcMigration {
                 "last_name VARCHAR(500) NOT NULL," +
                 "role_id INTEGER REFERENCES roles (id) NOT NULL," +
                 "language_preference VARCHAR(500) NOT NULL," +
+                "verified BOOLEAN NOT NULL," +
                 "created_at TIMESTAMP NOT NULL" +
             ");"
         );

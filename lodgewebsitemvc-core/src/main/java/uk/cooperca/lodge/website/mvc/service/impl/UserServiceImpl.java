@@ -11,12 +11,15 @@ import uk.cooperca.lodge.website.mvc.entity.User.Language;
 import uk.cooperca.lodge.website.mvc.messaging.NotificationMessageProducer;
 import uk.cooperca.lodge.website.mvc.repository.RoleRepository;
 import uk.cooperca.lodge.website.mvc.repository.UserRepository;
+import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_USER;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
 
 /**
  * Implementation of the {@link UserService} interface.
@@ -38,6 +41,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private NotificationMessageProducer producer;
 
+    @Autowired
+    private TokenManager tokenManager;
+
     @Override
     public Optional<User> getUserById(int id) {
         return userRepository.findById(id);
@@ -54,16 +60,30 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findByRoleName(ROLE_USER);
         Language language = Language.valueOf(locale.getLanguage().toUpperCase());
         User user = new User(command.getEmail(), encoder.encode(command.getPassword()), command.getFirstName(),
-                command.getLastName(), role, language, DateTime.now());
+                command.getLastName(), role, language, false, DateTime.now());
+        // TODO: send verification email
         return userRepository.save(user);
     }
 
-    // TODO: handle 0
+    @Override
+    public boolean verifyUser(String token) {
+        Map<String, String> body = (Map) tokenManager.decodeToken(token).getBody();
+        int id = Integer.valueOf(body.get("sub"));
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isPresent() && optional.get().isVerified()) {
+            if (userRepository.updateVerified(true, id) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // TODO: handle 0 for update methods
     @Override
     public int updateEmail(String email, int id) {
         int value = userRepository.updateEmail(email, id);
         if (value > 0) {
-//            producer.sendMessage(EMAIL_UPDATE, id);
+            producer.sendMessage(EMAIL_UPDATE, id);
         }
         return value;
     }

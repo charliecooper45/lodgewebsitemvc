@@ -2,6 +2,7 @@ package uk.cooperca.lodge.website.mvc.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import uk.cooperca.lodge.website.mvc.config.util.CoreConfigImportSelector;
 
 /**
  * The main configuration class for the core module. Imports other configuration classes.
@@ -9,5 +10,5 @@ import org.springframework.context.annotation.Import;
  * @author Charlie Cooper
  */
 @Configuration
-@Import({CacheConfig.class, DataConfig.class})
+@Import(CoreConfigImportSelector.class)
 public class CoreConfig {}

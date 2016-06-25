@@ -60,7 +60,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         User currentUser = getCurrentUser();
         when(userService.getUserByEmail(newEmail)).thenReturn(
                 Optional.of(new User(newEmail, currentUser.getPassword(), currentUser.getFirstName(), currentUser.getLastName(),
-                        currentUser.getRole(), currentUser.getLanguage(), currentUser.getCreatedAt()))
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.isVerified(), currentUser.getCreatedAt()))
         );
 
         // blank emails
@@ -127,7 +127,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         User currentUser = getCurrentUser();
         when(userService.getUserByEmail(currentUser.getEmail())).thenReturn(
                 Optional.of(new User(currentUser.getEmail(), currentUser.getPassword(), newFirstName, currentUser.getLastName(),
-                        currentUser.getRole(), currentUser.getLanguage(), currentUser.getCreatedAt()))
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.isVerified(), currentUser.getCreatedAt()))
         );
 
         // blank first name
@@ -164,7 +164,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         User currentUser = getCurrentUser();
         when(userService.getUserByEmail(currentUser.getEmail())).thenReturn(
                 Optional.of(new User(currentUser.getEmail(), currentUser.getPassword(), currentUser.getFirstName(), newLastName,
-                        currentUser.getRole(), currentUser.getLanguage(), currentUser.getCreatedAt()))
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.isVerified(), currentUser.getCreatedAt()))
         );
 
         // blank first name

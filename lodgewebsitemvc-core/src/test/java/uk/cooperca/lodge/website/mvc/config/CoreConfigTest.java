@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import uk.cooperca.lodge.website.mvc.AbstractCoreTest;
 import uk.cooperca.lodge.website.mvc.entity.Review;
 import uk.cooperca.lodge.website.mvc.repository.ReviewRepository;
+import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 
 import static org.junit.Assert.assertEquals;
@@ -19,6 +20,9 @@ public class CoreConfigTest extends AbstractCoreTest {
     @Autowired
     private ReviewService service;
 
+    @Autowired
+    private TokenManager tokenManager;
+
     @Test
     public void test() {
         assertNotNull(repository);
@@ -30,5 +34,7 @@ public class CoreConfigTest extends AbstractCoreTest {
         assertNotNull(service);
         reviews = service.getReviews(new PageRequest(0, 1));
         assertNotNull(reviews);
+
+        assertNotNull(tokenManager);
     }
 }
