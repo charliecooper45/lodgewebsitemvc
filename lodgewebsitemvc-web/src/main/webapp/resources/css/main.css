@@ -66,7 +66,7 @@ footer form {
     float: left;
 }
 
-footer #login-register, #logout {
+footer #login-register, footer #logout {
     padding: 20px 0 0 0;
 }
 
@@ -106,7 +106,7 @@ footer #languages p {
 }
 
 /* register */
-.register .help-block ul, p {
+.register .help-block ul, .register .help-block p {
     padding: 0;
     list-style-type: none;
     color: #761c19;
@@ -129,7 +129,7 @@ footer #languages p {
 /* media queries */
 @media screen and (max-width: 768px) {
     /* reviews */
-    #reviews-table .main, td:nth-child(2) {
+    #reviews-table .main, #reviews-table td:nth-child(2) {
         visibility: hidden;
     }
 
