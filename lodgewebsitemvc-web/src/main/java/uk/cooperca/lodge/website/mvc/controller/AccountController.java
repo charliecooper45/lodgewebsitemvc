@@ -35,7 +35,19 @@ public class AccountController extends AbstractController {
 
     // supported fields for updates
     public enum UpdateField {
-        EMAIL, FIRST_NAME, LAST_NAME
+        EMAIL("register.email"),
+        FIRST_NAME("register.firstName"),
+        LAST_NAME("register.lastName");
+
+        private final String messageCode;
+
+        UpdateField(String messageCode) {
+            this.messageCode = messageCode;
+        }
+
+        public String getMessageCode() {
+            return messageCode;
+        }
     }
 
     @Autowired
@@ -50,30 +62,32 @@ public class AccountController extends AbstractController {
     @RequestMapping(value = "/email", method = RequestMethod.PUT)
     public ResponseEntity<List<String>> updateEmail(@Validated(EmailValidationGroup.class) @RequestBody UserCommand command,
                                                     BindingResult result, Locale locale) {
-        if (result.hasErrors()) {
-            return errorResponse(result, locale);
-        }
         return handleUpdate(EMAIL, command, result, locale);
     }
 
     @RequestMapping(value = "/firstname", method = RequestMethod.PUT)
     public ResponseEntity<List<String>> updateFirstName(@Validated(FirstNameValidationGroup.class) @RequestBody UserCommand command,
                                                         BindingResult result, Locale locale) {
-        if (result.hasErrors()) {
-            return errorResponse(result, locale);
-        }
         return handleUpdate(FIRST_NAME, command, result, locale);
     }
 
     @RequestMapping(value = "/lastname", method = RequestMethod.PUT)
     public ResponseEntity<List<String>> updateLastName(@Validated(LastNameValidationGroup.class) @RequestBody UserCommand command,
                                                        BindingResult result, Locale locale) {
-        if (result.hasErrors()) {
-            return errorResponse(result, locale);
-        }
         return handleUpdate(LAST_NAME, command, result, locale);
     }
 
+    /**
+     * Method that handles updates to a user's account and returns a response with the body either set to a success message
+     * or a list of errors.
+     *
+     * @param field the field we are updating
+     * @param command the command sent to the API
+     * @param result the binding result
+     * @param locale the user's locale
+     *
+     * @return the response
+     */
     private ResponseEntity handleUpdate(UpdateField field, UserCommand command, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return errorResponse(result, locale);
@@ -94,6 +108,7 @@ public class AccountController extends AbstractController {
                 break;
         }
         setCurrentUser(userService.getUserByEmail(email).get());
-        return successResponse();
+        return successResponse("account.updateSuccess",
+                new String[]{messageSource.getMessage(field.getMessageCode(), null, locale)}, locale);
     }
 }

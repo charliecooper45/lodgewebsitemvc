@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
     public int updateEmail(String email, int id) {
         int value = userRepository.updateEmail(email, id);
         if (value > 0) {
+            // TODO: must handle error here
             producer.sendMessage(EMAIL_UPDATE, id);
         }
         return value;

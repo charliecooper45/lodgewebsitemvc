@@ -38,9 +38,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @TestPropertySource(properties = {"spring.profiles.active=test", "jasypt.encryptor.password=password"})
 public abstract class AbstractControllerTest extends AbstractController {
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(APPLICATION_JSON.getType(), APPLICATION_JSON.getSubtype(),
-            Charset.forName("utf8"));
-
     private final Role userRole;
     private final ObjectWriter objectWriter;
 

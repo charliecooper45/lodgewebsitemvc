@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
 /**
  * Abstract superclass for all controllers.
  *
@@ -37,10 +39,15 @@ public class AbstractController {
         List<String> errors = result.getAllErrors().stream()
                 .map(error -> messageSource.getMessage(error, locale))
                 .collect(Collectors.toList());
-        return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity.badRequest().contentType(APPLICATION_JSON).body(errors);
     }
 
-    protected ResponseEntity successResponse() {
-        return ResponseEntity.ok().body(Collections.EMPTY_LIST);
+    public ResponseEntity successResponse(String code, String[] args, Locale locale) {
+        String message = messageSource.getMessage(code, args, locale);
+        return ResponseEntity
+                .ok()
+                .contentType(APPLICATION_JSON)
+                .body(Collections.singletonList(message));
     }
+
 }

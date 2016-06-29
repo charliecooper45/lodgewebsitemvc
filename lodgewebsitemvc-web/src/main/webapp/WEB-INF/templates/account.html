@@ -7,6 +7,11 @@
   <body>
     <div class="container" layout:fragment="content">
       <div class="row">
+        <div id="update-alert" class="col-md-12 alert alert-success text-center" role="alert" hidden="true" >
+          Field has been updated!
+        </div>
+      </div>
+      <div class="row">
         <div class="box">
           <div class="col-xs-4 col-sm-3">
             <ul class="nav nav-tabs tabs-left">
@@ -34,6 +39,7 @@
                   <input type="text" th:field="*{lastName}" class="form-control" />
                 </form>
                 <br />
+                <!-- TODO -->
                 <button type="button" class="btn btn-default" th:text="#{account.passwordButton}">Update Password</button>
 
                 <!-- Modals -->

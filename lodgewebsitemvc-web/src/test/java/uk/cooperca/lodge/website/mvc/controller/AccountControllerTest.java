@@ -70,7 +70,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         String data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(2)))
                 .andExpect(jsonPath("$.[*]", containsInAnyOrder(
                         "Email is required",
@@ -84,7 +84,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(2)))
                 .andExpect(jsonPath("$.[*]", containsInAnyOrder(
                     "Both email fields must match",
@@ -98,7 +98,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(1)))
                 .andExpect(jsonPath("$.[*]", contains("Both email fields must match")));
         verifyZeroInteractions(userService);
@@ -108,8 +108,9 @@ public class AccountControllerTest extends AbstractControllerTest {
         data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.[*]", hasSize(0)))
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Email has been updated")))
                 .andExpect(mvcResult -> {
                     HttpSession session = mvcResult.getRequest().getSession();
                     SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
@@ -135,7 +136,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         String data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/firstname").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(1)))
                 .andExpect(jsonPath("$.[*]", contains("First name is required")));
         verifyZeroInteractions(userService);
@@ -145,8 +146,9 @@ public class AccountControllerTest extends AbstractControllerTest {
         data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/firstname").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.[*]", hasSize(0)))
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("First name has been updated")))
                 .andExpect(mvcResult -> {
                     HttpSession session = mvcResult.getRequest().getSession();
                     SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
@@ -172,7 +174,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         String data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/lastname").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(1)))
                 .andExpect(jsonPath("$.[*]", contains("Last name is required")));
         verifyZeroInteractions(userService);
@@ -182,8 +184,9 @@ public class AccountControllerTest extends AbstractControllerTest {
         data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/lastname").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.[*]", hasSize(0)))
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Last name has been updated")))
                 .andExpect(mvcResult -> {
                     HttpSession session = mvcResult.getRequest().getSession();
                     SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
