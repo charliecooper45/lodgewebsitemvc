@@ -46,9 +46,9 @@ public interface UserService {
      *
      * @param token the JWT token
      *
-     * @return whether the user was successfully verified
+     * @return the verified user if successful or null
      */
-    public boolean verifyUser(String token);
+    public User verifyUser(String token);
 
     /**
      * Updates the given user's email address.

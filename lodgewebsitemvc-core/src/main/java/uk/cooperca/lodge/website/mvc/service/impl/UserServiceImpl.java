@@ -11,7 +11,7 @@ import uk.cooperca.lodge.website.mvc.entity.User.Language;
 import uk.cooperca.lodge.website.mvc.messaging.NotificationMessageProducer;
 import uk.cooperca.lodge.website.mvc.repository.RoleRepository;
 import uk.cooperca.lodge.website.mvc.repository.UserRepository;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import java.util.Locale;
@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_USER;
 import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.NEW_USER;
 
 /**
  * Implementation of the {@link UserService} interface.
@@ -61,21 +62,25 @@ public class UserServiceImpl implements UserService {
         Language language = Language.valueOf(locale.getLanguage().toUpperCase());
         User user = new User(command.getEmail(), encoder.encode(command.getPassword()), command.getFirstName(),
                 command.getLastName(), role, language, false, DateTime.now());
-        // TODO: send verification email
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        if (user != null) {
+            producer.sendMessage(NEW_USER, user.getId());
+        }
+        return user;
     }
 
     @Override
-    public boolean verifyUser(String token) {
+    public User verifyUser(String token) {
         Map<String, String> body = (Map) tokenManager.decodeToken(token).getBody();
         int id = Integer.valueOf(body.get("sub"));
         Optional<User> optional = userRepository.findById(id);
-        if (optional.isPresent() && optional.get().isVerified()) {
-            if (userRepository.updateVerified(true, id) > 0) {
-                return true;
+        if (optional.isPresent()) {
+            User user = optional.get();
+            if (!user.isVerified() && userRepository.updateVerified(true, id) > 0) {
+                return userRepository.findById(id).get();
             }
         }
-        return false;
+        return null;
     }
 
     // TODO: handle 0 for update methods
@@ -83,7 +88,8 @@ public class UserServiceImpl implements UserService {
     public int updateEmail(String email, int id) {
         int value = userRepository.updateEmail(email, id);
         if (value > 0) {
-            // TODO: must handle error here
+            // TODO: must handle errors here (RabbitMQ down etc)
+            userRepository.updateVerified(false, id);
             producer.sendMessage(EMAIL_UPDATE, id);
         }
         return value;

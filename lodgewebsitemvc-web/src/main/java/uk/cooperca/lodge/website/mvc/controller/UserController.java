@@ -9,11 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.cooperca.lodge.website.mvc.entity.User;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.security.session.SessionManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
-
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Controller for operations on users that do not require authentication.
@@ -22,17 +19,26 @@ import java.util.Optional;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends AbstractController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SessionManager sessionManager;
 
     @RequestMapping(value = "/verify")
     public String verifyUser(@RequestParam("token") String token, Model model) {
         // TODO: we should attach the locale to the link we send to the user so we can return the correct error messages here
         // TODO: we should offer the user an option to request a new email
         try {
-            if (userService.verifyUser(token)) {
+            User user = userService.verifyUser(token);
+            if (user != null) {
+                if (isAuthenticated()) {
+                    setCurrentUser(user);
+                } else {
+                    sessionManager.expireUserSession(user.getId());
+                }
                 return "redirect:/user/verificationSuccess";
             }
             model.addAttribute("error", "Unable to verify your account, maybe you are already verified?");

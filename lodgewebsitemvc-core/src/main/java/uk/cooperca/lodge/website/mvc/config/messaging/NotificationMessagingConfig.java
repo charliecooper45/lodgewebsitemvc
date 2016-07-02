@@ -18,7 +18,7 @@ public class NotificationMessagingConfig {
     public static final String NOTIFICATION_TOPIC = "notification.topic";
 
     // queues
-    public static final String NOTIFICATION_EMAIL_UPDATE = "notification.queue";
+    public static final String NOTIFICATION_QUEUE = "notification.queue";
 
     @Bean
     public Exchange notificationTopic() {
@@ -27,12 +27,12 @@ public class NotificationMessagingConfig {
 
     @Bean
     public Queue notificationEmailUpdate() {
-        return new Queue(NOTIFICATION_EMAIL_UPDATE);
+        return new Queue(NOTIFICATION_QUEUE);
     }
 
     @Bean
     public Binding notificationEmailUpdateTopicBinding() {
         // routing key = notification.queue (the same as the queue name for now)
-        return BindingBuilder.bind(notificationEmailUpdate()).to(notificationTopic()).with(getRoutingKey(NOTIFICATION_EMAIL_UPDATE)).noargs();
+        return BindingBuilder.bind(notificationEmailUpdate()).to(notificationTopic()).with(getRoutingKey(NOTIFICATION_QUEUE)).noargs();
     }
 }

@@ -1,4 +1,4 @@
-package uk.cooperca.lodge.website.mvc.security;
+package uk.cooperca.lodge.website.mvc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

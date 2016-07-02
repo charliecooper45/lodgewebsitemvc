@@ -9,7 +9,7 @@ import uk.cooperca.lodge.website.mvc.config.CoreConfig;
 import uk.cooperca.lodge.website.mvc.config.SecurityConfig;
 import uk.cooperca.lodge.website.mvc.messaging.NotificationMessageProducer;
 import uk.cooperca.lodge.website.mvc.repository.UserRepository;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 
 /**
  * Abstract base class that loads the {@link CoreConfig} configuration class in the test Spring profile. This allows us

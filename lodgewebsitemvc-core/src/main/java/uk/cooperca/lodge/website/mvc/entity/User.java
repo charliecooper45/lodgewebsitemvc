@@ -170,4 +170,19 @@ public class User implements Serializable, UserDetails {
         // TODO: enabled
         return true;
     }
+
+    // TODO: commons for equals/hashcode
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            User user = (User) obj;
+            return user.getId() == id;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
 }

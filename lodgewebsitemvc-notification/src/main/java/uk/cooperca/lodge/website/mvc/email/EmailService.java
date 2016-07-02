@@ -40,11 +40,27 @@ public class EmailService {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) {
             switch(type) {
+                case NEW_USER:
+                    sendNewUserEmail(user.get());
+                    break;
                 case EMAIL_UPDATE:
                     sendEmailUpdateEmail(user.get());
                     break;
             }
         }
+    }
+
+    private void sendNewUserEmail(User user) {
+        sender.send(mimeMessage -> {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            message.setTo(user.getEmail());
+            message.setSubject("Lodge Website - Welcome!");
+            Map<String, Object> model = new HashMap();
+            model.put("user", user);
+            model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
+            String text = mergeTemplateIntoString(velocityEngine, "/template/welcome.vm", "UTF-8", model);
+            message.setText(text, true);
+        });
     }
 
     private void sendEmailUpdateEmail(User user) {

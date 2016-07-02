@@ -18,7 +18,7 @@ import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.ProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.DevelopmentProfileConfig;
 import uk.cooperca.lodge.website.mvc.config.profile.impl.ProductionProfileConfig;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.Properties;

@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import uk.cooperca.lodge.website.mvc.AbstractCoreTest;
 import uk.cooperca.lodge.website.mvc.entity.Review;
 import uk.cooperca.lodge.website.mvc.repository.ReviewRepository;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 
 import static org.junit.Assert.assertEquals;

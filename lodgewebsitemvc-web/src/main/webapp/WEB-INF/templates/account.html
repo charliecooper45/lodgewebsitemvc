@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layouts/layout"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" layout:decorator="/layouts/layout"
       th:with="page='account'" class="account">
   <head>
     <title th:text="#{website.home}">Home</title>
@@ -9,6 +10,11 @@
       <div class="row">
         <div id="update-alert" class="col-md-12 alert alert-success text-center" role="alert" hidden="true" >
           Field has been updated!
+        </div>
+      </div>
+      <div class="row">
+        <div th:if="${!user.isVerified()}" class="col-md-12 alert alert-danger text-center" role="alert">
+          <span sec:authentication="principal.firstName" /> please verify your account! Click <strong>here</strong> to send a new verification email.
         </div>
       </div>
       <div class="row">

@@ -8,6 +8,7 @@ package uk.cooperca.lodge.website.mvc.messaging.message;
 public class NotificationMessage {
 
     public enum Type {
+        NEW_USER,
         EMAIL_UPDATE
     }
 

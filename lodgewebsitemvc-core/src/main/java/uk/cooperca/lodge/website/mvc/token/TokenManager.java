@@ -1,4 +1,4 @@
-package uk.cooperca.lodge.website.mvc.security.token;
+package uk.cooperca.lodge.website.mvc.token;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.SignatureException;
@@ -38,6 +38,7 @@ public class TokenManager {
      * @return the encrypted token
      */
     public String generateVerificationToken(int userId) {
+        // TODO: maybe we should send the email address not the id?
         return Jwts.builder().setIssuer(domain)
                 .setSubject(String.valueOf(userId))
                 .setExpiration(now().plus(days(verificationExpirationDays)).toDate())

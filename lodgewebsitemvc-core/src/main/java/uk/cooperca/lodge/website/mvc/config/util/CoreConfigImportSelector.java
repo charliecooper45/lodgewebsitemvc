@@ -22,6 +22,7 @@ public class CoreConfigImportSelector implements ImportSelector, EnvironmentAwar
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+        // TODO: handle situation where no profile is given
         String profile = environment.getActiveProfiles()[0];
         if (!profile.equals(TEST_PROFILE)) {
             return new String[]{CacheConfig.class.getName(), DataConfig.class.getName()};

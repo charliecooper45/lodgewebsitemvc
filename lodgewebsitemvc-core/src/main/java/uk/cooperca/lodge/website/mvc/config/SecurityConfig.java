@@ -2,7 +2,6 @@ package uk.cooperca.lodge.website.mvc.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import uk.cooperca.lodge.website.mvc.config.util.SecurityConfigImportSelector;
 import uk.cooperca.lodge.website.mvc.security.CustomAuthenticationSuccessHandler;
+import uk.cooperca.lodge.website.mvc.security.session.SessionManager;
 
 import java.util.Locale;
 
@@ -28,9 +30,9 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_ADMIN;
  *
  * @author Charlie Cooper
  */
+// TODO: should we move this?
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = {"uk.cooperca.lodge.website.mvc.security"})
 @Import(SecurityConfigImportSelector.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -66,7 +68,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // TODO: if not authorised then this is the accessDenied page
             .and()
                 .exceptionHandling()
-                .accessDeniedPage("/accessDenied");
+                .accessDeniedPage("/accessDenied")
+            .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+                .expiredUrl("/login")
+                .sessionRegistry(sessionRegistry());
     }
 
     @Override
@@ -85,6 +93,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler(localeResolver());
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public SessionManager sessionManager() {
+        return new SessionManager();
     }
 
     @Bean

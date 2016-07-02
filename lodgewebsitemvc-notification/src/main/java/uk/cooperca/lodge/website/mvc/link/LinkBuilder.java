@@ -2,7 +2,7 @@ package uk.cooperca.lodge.website.mvc.link;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 
 /**
  * Class that builds links for use in notifications.

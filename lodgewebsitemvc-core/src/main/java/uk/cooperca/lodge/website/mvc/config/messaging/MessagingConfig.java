@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 
-import static uk.cooperca.lodge.website.mvc.config.messaging.NotificationMessagingConfig.NOTIFICATION_EMAIL_UPDATE;
+import static uk.cooperca.lodge.website.mvc.config.messaging.NotificationMessagingConfig.NOTIFICATION_QUEUE;
 
 /**
  * Configuration class that configures messaging using the AMQP protocol. This class is imported by other modules to set
@@ -66,7 +66,7 @@ public class MessagingConfig {
     @Bean
     public RabbitTemplate emailUpdateTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
-        template.setRoutingKey(getRoutingKey(NOTIFICATION_EMAIL_UPDATE));
+        template.setRoutingKey(getRoutingKey(NOTIFICATION_QUEUE));
         template.setMessageConverter(messageConverter());
         return template;
     }

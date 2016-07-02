@@ -19,9 +19,9 @@ import java.util.Properties;
  *
  * @author Charlie Cooper
  */
-@Import(value = {CoreConfig.class})
 @ComponentScan(basePackages = {"uk.cooperca.lodge.website.mvc.consumer", "uk.cooperca.lodge.website.mvc.email",
         "uk.cooperca.lodge.website.mvc.link"})
+@Import(value = {CoreConfig.class})
 public class NotificationConfig {
 
     @Autowired

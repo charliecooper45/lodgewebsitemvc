@@ -54,10 +54,15 @@ function update(url, data, modal, errorList) {
             window.location.reload(true);
         },
         error: function(data) {
-            errorList.empty();
-            $.each(data.responseJSON, function(index, value) {
-                errorList.append('<li>' + value + '</li>');
-            });
+            if (data.status === 403) {
+                // user is not logged in
+                window.location.replace('/login');
+            } else {
+                errorList.empty();
+                $.each(data.responseJSON, function(index, value) {
+                    errorList.append('<li>' + value + '</li>');
+                });
+            }
         }
     })
 }

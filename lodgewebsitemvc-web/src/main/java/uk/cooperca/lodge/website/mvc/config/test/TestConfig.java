@@ -3,12 +3,14 @@ package uk.cooperca.lodge.website.mvc.config.test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
+import uk.cooperca.lodge.website.mvc.service.impl.UserDetailsServiceImpl;
 
 import static org.mockito.Mockito.mock;
 
@@ -28,6 +30,11 @@ public class TestConfig {
     @Bean
     public ReviewService reviewService() {
         return mock(ReviewService.class);
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
     }
 
     @Bean

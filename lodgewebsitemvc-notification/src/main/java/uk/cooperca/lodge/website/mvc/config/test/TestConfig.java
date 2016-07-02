@@ -10,7 +10,7 @@ import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.consumer.NotificationMessageConsumers;
 import uk.cooperca.lodge.website.mvc.email.EmailService;
 import uk.cooperca.lodge.website.mvc.link.LinkBuilder;
-import uk.cooperca.lodge.website.mvc.security.token.TokenManager;
+import uk.cooperca.lodge.website.mvc.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import static org.mockito.Mockito.mock;

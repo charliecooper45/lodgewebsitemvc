@@ -12,7 +12,7 @@ import uk.cooperca.lodge.website.mvc.email.EmailService;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {NotificationConfig.class})
+@ContextConfiguration(classes = { NotificationConfig.class })
 @TestPropertySource(properties = {"spring.profiles.active=dev", "jasypt.encryptor.password=password"})
 @DirtiesContext
 public class NotificationConfigTest {
