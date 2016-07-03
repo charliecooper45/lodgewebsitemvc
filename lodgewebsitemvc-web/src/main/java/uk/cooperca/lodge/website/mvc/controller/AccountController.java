@@ -59,6 +59,12 @@ public class AccountController extends AbstractController {
         return "account";
     }
 
+    @RequestMapping(value = "/verification")
+    public String requestVerificationEmail() {
+        userService.requestVerificationEmail(getCurrentUser().getId());
+        return "verificationRequested";
+    }
+
     @RequestMapping(value = "/email", method = RequestMethod.PUT)
     public ResponseEntity<List<String>> updateEmail(@Validated(EmailValidationGroup.class) @RequestBody UserCommand command,
                                                     BindingResult result, Locale locale) {

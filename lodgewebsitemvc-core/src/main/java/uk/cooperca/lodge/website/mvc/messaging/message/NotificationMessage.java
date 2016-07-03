@@ -9,7 +9,7 @@ public class NotificationMessage {
 
     public enum Type {
         NEW_USER,
-        EMAIL_UPDATE
+        VERIFY_EMAIL
     }
 
     private Type type;

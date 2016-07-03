@@ -14,7 +14,13 @@
       </div>
       <div class="row">
         <div th:if="${!user.isVerified()}" class="col-md-12 alert alert-danger text-center" role="alert">
-          <span sec:authentication="principal.firstName" /> please verify your account! Click <strong>here</strong> to send a new verification email.
+          <span id="verification-message">
+            <span sec:authentication="principal.firstName" />
+            <span th:text="#{account.verificationMessage}">please verify your account!</span>
+            <a th:href="@{/account/verification}" th:text="#{account.verificationLink}">
+              Click here to request a new verification email.
+            </a>
+          </span>
         </div>
       </div>
       <div class="row">

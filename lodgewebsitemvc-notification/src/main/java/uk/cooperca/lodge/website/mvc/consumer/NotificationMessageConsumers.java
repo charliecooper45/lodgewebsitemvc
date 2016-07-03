@@ -28,7 +28,7 @@ public class NotificationMessageConsumers {
         LOGGER.info("Received message of type {} for user with ID {}", message.getType(), message.getUserId());
         switch (message.getType()) {
             case NEW_USER:
-            case EMAIL_UPDATE:
+            case VERIFY_EMAIL:
                 notifier.sendEmail(message.getType(), message.getUserId());
                 break;
         }

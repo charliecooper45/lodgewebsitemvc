@@ -42,6 +42,13 @@ public interface UserService {
     public User registerUser(UserCommand command, Locale locale);
 
     /**
+     * Requests a verification email for the user with the given id.
+     *
+     * @param id of the user to request the email for
+     */
+    public void requestVerificationEmail(int id);
+
+    /**
      * Verifies a users using the given JWT token.
      *
      * @param token the JWT token

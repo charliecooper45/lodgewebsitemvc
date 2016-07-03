@@ -43,7 +43,7 @@ public class EmailService {
                 case NEW_USER:
                     sendNewUserEmail(user.get());
                     break;
-                case EMAIL_UPDATE:
+                case VERIFY_EMAIL:
                     sendEmailUpdateEmail(user.get());
                     break;
             }

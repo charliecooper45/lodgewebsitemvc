@@ -114,6 +114,9 @@ footer #languages p {
 }
 
 /* account */
+.account #verification-message span, .account #verification-message a {
+    color: #a94442;
+}
 .account .fa-pencil {
     cursor: pointer;
 }

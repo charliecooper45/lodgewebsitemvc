@@ -13,7 +13,7 @@ import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
 import static org.joda.time.DateTime.now;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.VERIFY_EMAIL;
 import static uk.cooperca.lodge.website.mvc.token.TokenManager.SIGNATURE_ALGORITHM;
 
 public class UserServiceImplTest extends AbstractServiceTest {
@@ -94,6 +94,6 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
         // success
         userService.updateEmail(email, id);
-        verify(producer).sendMessage(EMAIL_UPDATE, 1);
+        verify(producer).sendMessage(VERIFY_EMAIL, 1);
     }
 }

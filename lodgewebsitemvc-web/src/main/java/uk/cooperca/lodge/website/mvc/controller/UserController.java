@@ -30,7 +30,6 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "/verify")
     public String verifyUser(@RequestParam("token") String token, Model model) {
         // TODO: we should attach the locale to the link we send to the user so we can return the correct error messages here
-        // TODO: we should offer the user an option to request a new email
         try {
             User user = userService.verifyUser(token);
             if (user != null) {

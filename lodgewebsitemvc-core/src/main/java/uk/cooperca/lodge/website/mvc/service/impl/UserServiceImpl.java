@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_USER;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.VERIFY_EMAIL;
 import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.NEW_USER;
 
 /**
@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void requestVerificationEmail(int id) {
+        producer.sendMessage(VERIFY_EMAIL, id);
+    }
+
+    @Override
     public User verifyUser(String token) {
         Map<String, String> body = (Map) tokenManager.decodeToken(token).getBody();
         int id = Integer.valueOf(body.get("sub"));
@@ -90,7 +95,7 @@ public class UserServiceImpl implements UserService {
         if (value > 0) {
             // TODO: must handle errors here (RabbitMQ down etc)
             userRepository.updateVerified(false, id);
-            producer.sendMessage(EMAIL_UPDATE, id);
+            producer.sendMessage(VERIFY_EMAIL, id);
         }
         return value;
     }

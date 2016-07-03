@@ -23,7 +23,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static uk.cooperca.lodge.website.mvc.config.messaging.NotificationMessagingConfig.NOTIFICATION_QUEUE;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.VERIFY_EMAIL;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
@@ -52,10 +52,10 @@ public class NotificationMessageConsumersTest {
         LatchCountDownAndCallRealMethodAnswer answer = new LatchCountDownAndCallRealMethodAnswer(1);
         doAnswer(answer).when(consumers).receiveMessage(any(NotificationMessage.class));
 
-        template.convertAndSend(NOTIFICATION_QUEUE, new NotificationMessage(EMAIL_UPDATE, 1));
+        template.convertAndSend(NOTIFICATION_QUEUE, new NotificationMessage(VERIFY_EMAIL, 1));
 
         assertTrue(answer.getLatch().await(10, TimeUnit.SECONDS));
         verify(consumers).receiveMessage(any(NotificationMessage.class));
-        verify(service).sendEmail(EMAIL_UPDATE, 1);
+        verify(service).sendEmail(VERIFY_EMAIL, 1);
     }
 }
