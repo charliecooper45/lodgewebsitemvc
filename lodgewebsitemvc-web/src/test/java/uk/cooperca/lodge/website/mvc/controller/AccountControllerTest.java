@@ -13,10 +13,12 @@ import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
@@ -58,16 +60,33 @@ public class AccountControllerTest extends AbstractControllerTest {
     public void testUpdateEmail() throws Exception {
         String newEmail = "bill@hotmail.com";
         User currentUser = getCurrentUser();
+        when(userService.getUserByEmail(anyString())).thenReturn(Optional.empty());
+        Optional<User> optional = Optional.of(new User(newEmail, currentUser.getPassword(), currentUser.getFirstName(), currentUser.getLastName(),
+                currentUser.getRole(), currentUser.getLanguage(), currentUser.isVerified(), currentUser.getCreatedAt()));
         when(userService.getUserByEmail(newEmail)).thenReturn(
-                Optional.of(new User(newEmail, currentUser.getPassword(), currentUser.getFirstName(), currentUser.getLastName(),
-                        currentUser.getRole(), currentUser.getLanguage(), currentUser.isVerified(), currentUser.getCreatedAt()))
+                optional,
+                Optional.empty(),
+                Optional.empty(),
+                optional
         );
 
-        // blank emails
+        // existing email
         UserCommand command = new UserCommand();
+        command.setEmail(newEmail);
+        command.setConfirmEmail(newEmail);
+        String data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Email already in use")));
+        verify(userService, never()).updateEmail(anyString(), anyInt());
+
+        // blank emails
+        command = new UserCommand();
         command.setEmail("");
         command.setConfirmEmail("");
-        String data = getObjectWriter().writeValueAsString(command);
+        data = getObjectWriter().writeValueAsString(command);
         mockMvc.perform(put("/account/email").with(csrf()).contentType(APPLICATION_JSON).content(data))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(APPLICATION_JSON))
@@ -76,7 +95,7 @@ public class AccountControllerTest extends AbstractControllerTest {
                         "Email is required",
                         "Not a valid email address"
                 )));
-        verifyZeroInteractions(userService);
+        verify(userService, never()).updateEmail(anyString(), anyInt());
 
         // not a valid email
         command = new UserCommand();
@@ -90,7 +109,7 @@ public class AccountControllerTest extends AbstractControllerTest {
                     "Both email fields must match",
                     "Not a valid email address"
                 )));
-        verifyZeroInteractions(userService);
+        verify(userService, never()).updateEmail(anyString(), anyInt());
 
         // email addresses don't match
         command.setEmail(newEmail);
@@ -101,7 +120,7 @@ public class AccountControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(1)))
                 .andExpect(jsonPath("$.[*]", contains("Both email fields must match")));
-        verifyZeroInteractions(userService);
+        verify(userService, never()).updateEmail(anyString(), anyInt());
 
         // correct update
         command.setConfirmEmail(newEmail);
@@ -117,7 +136,6 @@ public class AccountControllerTest extends AbstractControllerTest {
                     User user = (User) securityContext.getAuthentication().getPrincipal();
                     assertEquals(user.getEmail(), newEmail);
                 });
-        verify(userService).getUserByEmail(newEmail);
         verify(userService).updateEmail(eq(newEmail), anyInt());
     }
 

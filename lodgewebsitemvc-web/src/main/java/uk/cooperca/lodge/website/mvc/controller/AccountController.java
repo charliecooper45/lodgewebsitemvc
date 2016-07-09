@@ -87,7 +87,7 @@ public class AccountController extends AbstractController {
      * Method that handles updates to a user's account and returns a response with the body either set to a success message
      * or a list of errors.
      *
-     * @param field the field we are updating
+     * @param field the field to be updated
      * @param command the command sent to the API
      * @param result the binding result
      * @param locale the user's locale

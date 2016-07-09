@@ -33,19 +33,10 @@ public class RegisterController extends AbstractController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doRegister(Model model, @Validated UserCommand command, BindingResult result, Locale locale) {
+    public String doRegister(@Validated UserCommand command, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return "register";
         }
-
-        // first we check that a user with this email address is not registered
-        Optional<User> existingUser = userService.getUserByEmail(command.getEmail());
-        if (existingUser.isPresent()) {
-            String message = messageSource.getMessage("registerFailure.emailInUse", new Object[]{command.getEmail()}, locale);
-            model.addAttribute("errorText", message);
-            return "registerFailure";
-        }
-
         // log the new user in
         setCurrentUser(userService.registerUser(command, locale));
         return "redirect:/register/success";

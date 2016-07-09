@@ -3,6 +3,7 @@ package uk.cooperca.lodge.website.mvc.command;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import uk.cooperca.lodge.website.mvc.command.constraint.Equals;
+import uk.cooperca.lodge.website.mvc.command.constraint.NoUserWithEmail;
 import uk.cooperca.lodge.website.mvc.command.constraint.Password;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.EmailValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.FirstNameValidationGroup;
@@ -22,6 +23,7 @@ public class UserCommand {
     @Email(groups = {Default.class, EmailValidationGroup.class},
            regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     @NotBlank(groups = {Default.class, EmailValidationGroup.class})
+    @NoUserWithEmail(groups = {Default.class, EmailValidationGroup.class})
     private String email;
 
     private String confirmEmail;
