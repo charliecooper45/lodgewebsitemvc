@@ -13,15 +13,14 @@ import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.EmailValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.FirstNameValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.LastNameValidationGroup;
+import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.PasswordValidationGroup;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import java.util.List;
 import java.util.Locale;
 
-import static uk.cooperca.lodge.website.mvc.controller.AccountController.UpdateField.EMAIL;
-import static uk.cooperca.lodge.website.mvc.controller.AccountController.UpdateField.FIRST_NAME;
-import static uk.cooperca.lodge.website.mvc.controller.AccountController.UpdateField.LAST_NAME;
+import static uk.cooperca.lodge.website.mvc.controller.AccountController.UpdateField.*;
 
 
 /**
@@ -36,6 +35,7 @@ public class AccountController extends AbstractController {
     // supported fields for updates
     public enum UpdateField {
         EMAIL("register.email"),
+        PASSWORD("register.password"),
         FIRST_NAME("register.firstName"),
         LAST_NAME("register.lastName");
 
@@ -69,6 +69,12 @@ public class AccountController extends AbstractController {
     public ResponseEntity<List<String>> updateEmail(@Validated(EmailValidationGroup.class) @RequestBody UserCommand command,
                                                     BindingResult result, Locale locale) {
         return handleUpdate(EMAIL, command, result, locale);
+    }
+
+    @RequestMapping(value = "/password", method = RequestMethod.PUT)
+    public ResponseEntity<List<String>> updatePassword(@Validated(PasswordValidationGroup.class) @RequestBody UserCommand command,
+                                                       BindingResult result, Locale locale) {
+        return handleUpdate(PASSWORD, command, result, locale);
     }
 
     @RequestMapping(value = "/firstname", method = RequestMethod.PUT)
@@ -105,6 +111,9 @@ public class AccountController extends AbstractController {
                 // we must lookup using the new email address
                 email = command.getEmail();
                 userService.updateEmail(command.getEmail(), user.getId());
+                break;
+            case PASSWORD:
+                userService.updatePassword(command.getPassword(), user.getId());
                 break;
             case FIRST_NAME:
                 userService.updateFirstName(command.getFirstName(), user.getId());

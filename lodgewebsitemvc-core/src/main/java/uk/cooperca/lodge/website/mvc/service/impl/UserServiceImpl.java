@@ -101,6 +101,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updatePassword(String password, int id) {
+        int value = userRepository.updatePassword(encoder.encode(password), id);
+        if (value > 0) {
+            // TODO: send message to notify of password change
+//            producer.sendMessage(VERIFY_EMAIL, id);
+        }
+        return value;
+    }
+
+    @Override
     public int updateFirstName(String firstName, int id) {
         return userRepository.updateFirstName(firstName, id);
     }

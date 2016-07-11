@@ -11,6 +11,8 @@ public class UserValidationGroups {
 
     public interface EmailValidationGroup {}
 
+    public interface PasswordValidationGroup {}
+
     public interface FirstNameValidationGroup {}
 
     public interface LastNameValidationGroup {}

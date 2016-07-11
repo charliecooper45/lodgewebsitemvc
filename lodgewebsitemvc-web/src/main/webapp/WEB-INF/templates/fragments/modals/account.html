@@ -26,6 +26,32 @@
         </div>
       </div>
     </div>
+    <div layout:fragment="passwordModal" class="modal fade" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="password-modal-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="password-modal-label" th:text="#{account.password.label}">Update password</h4>
+          </div>
+          <div class="modal-body">
+            <label th:text="#{register.password}">Password</label>
+            <i class="fa fa-question-circle-o" th:title="#{register.passwordTitle}"/>
+            <input id="edit-password" type="password" class="form-control" />
+
+            <label th:text="#{register.confirmPassword}">Confirm Password</label>
+            <input id="confirm-edit-password" type="password" class="form-control" autocomplete="off" />
+
+            <span class="help-block">
+              <ul><!-- content loaded dynamically --></ul>
+            </span>
+          </div>
+          <div class="modal-footer">
+            <button id="save-password" type="button" class="btn btn-primary" th:text="#{modal.save}">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{modal.close}">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div layout:fragment="firstNameModal" class="modal fade" id="first-name-modal" tabindex="-1" role="dialog" aria-labelledby="first-name-modal-label">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

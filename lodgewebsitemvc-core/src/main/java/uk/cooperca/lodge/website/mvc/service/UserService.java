@@ -68,6 +68,16 @@ public interface UserService {
     public int updateEmail(String email, int id);
 
     /**
+     * Updates the given user's password.
+     *
+     * @param password the new password for the user
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    public int updatePassword(String password, int id);
+
+    /**
      * Updates the given user's first name.
      *
      * @param firstName the new first name for the user

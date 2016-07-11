@@ -8,6 +8,7 @@ import uk.cooperca.lodge.website.mvc.command.constraint.Password;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.EmailValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.FirstNameValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.LastNameValidationGroup;
+import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.PasswordValidationGroup;
 
 import javax.validation.groups.Default;
 
@@ -17,7 +18,7 @@ import javax.validation.groups.Default;
  * @author Charlie Cooper
  */
 @Equals(groups = {Default.class, EmailValidationGroup.class}, first = "email", second = "confirmEmail")
-@Equals(first = "password", second = "confirmPassword")
+@Equals(groups = {Default.class, PasswordValidationGroup.class}, first = "password", second = "confirmPassword")
 public class UserCommand {
 
     @Email(groups = {Default.class, EmailValidationGroup.class},
@@ -28,7 +29,7 @@ public class UserCommand {
 
     private String confirmEmail;
 
-    @Password(min = 5, max = 15)
+    @Password(groups = {Default.class, PasswordValidationGroup.class}, min = 5, max = 15)
     private String password;
 
     private String confirmPassword;

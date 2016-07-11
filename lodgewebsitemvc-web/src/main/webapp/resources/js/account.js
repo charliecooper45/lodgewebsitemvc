@@ -27,6 +27,16 @@ $('#email-modal').on('shown.bs.modal', function () {
     $('#edit-email').focus();
 })
 
+$('#save-password').click(function() {
+    var user = {};
+    user.password = $('#edit-password').val();
+    user.confirmPassword = $('#confirm-edit-password').val();
+    update('/account/password', JSON.stringify(user), $('#password-modal'), $('#password-modal .help-block ul'));
+});
+$('#password-modal').on('shown.bs.modal', function () {
+    $('#edit-password').focus();
+})
+
 $('#save-first-name').click(function() {
     var user = {};
     user.firstName = $('#edit-first-name').val();

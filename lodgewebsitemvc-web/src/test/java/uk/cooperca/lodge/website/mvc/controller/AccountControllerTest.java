@@ -141,6 +141,57 @@ public class AccountControllerTest extends AbstractControllerTest {
 
     @Test
     @WithCustomUser
+    public void testUpdatePassword() throws Exception {
+        String newPassword = "A1ValidPass";
+        User currentUser = getCurrentUser();
+        when(userService.getUserByEmail(currentUser.getEmail())).thenReturn(
+                Optional.of(new User(currentUser.getEmail(), newPassword, currentUser.getFirstName(), currentUser.getLastName(),
+                        currentUser.getRole(), currentUser.getLanguage(), currentUser.isVerified(), currentUser.getCreatedAt()))
+        );
+
+        // not a valid password
+        UserCommand command = new UserCommand();
+        command.setPassword("notavalidpassword");
+        command.setConfirmPassword("notavalidpassword");
+        String data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/password").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Password must be between 5 and 15 characters long and contain one upper case character and a digit")));
+        verify(userService, never()).updatePassword(anyString(), anyInt());
+
+        // passwords don't match
+        command.setPassword(newPassword);
+        command.setConfirmPassword("notavalidpassword");
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/password").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Both password fields must match")));
+        verify(userService, never()).updatePassword(anyString(), anyInt());
+
+        // correct update
+        command.setPassword(newPassword);
+        command.setConfirmPassword(newPassword);
+        data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/password").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Password has been updated")))
+                .andExpect(mvcResult -> {
+                    HttpSession session = mvcResult.getRequest().getSession();
+                    SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
+                    User user = (User) securityContext.getAuthentication().getPrincipal();
+                    assertEquals(user.getPassword(), "A1ValidPass");
+                });
+        verify(userService).updatePassword(eq(newPassword), anyInt());
+    }
+
+    @Test
+    @WithCustomUser
     public void testUpdateFirstName() throws Exception {
         String newFirstName = "William";
         User currentUser = getCurrentUser();

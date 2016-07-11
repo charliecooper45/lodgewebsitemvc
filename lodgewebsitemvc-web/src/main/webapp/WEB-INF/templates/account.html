@@ -51,13 +51,14 @@
                   <input type="text" th:field="*{lastName}" class="form-control" />
                 </form>
                 <br />
-                <!-- TODO -->
-                <button type="button" class="btn btn-default" th:text="#{account.passwordButton}">Update Password</button>
+                <button type="button" class="btn btn-default" th:text="#{account.passwordButton}" data-toggle="modal"
+                        data-target="#password-modal">Update Password</button>
 
                 <!-- Modals -->
                 <div layout:replace="fragments/modals/account :: emailModal" />
                 <div layout:replace="fragments/modals/account :: firstNameModal" />
                 <div layout:replace="fragments/modals/account :: lastNameModal" />
+                <div layout:replace="fragments/modals/account :: passwordModal" />
               </div>
               <div class="tab-pane" id="reviews">Reviews</div>
               <div class="tab-pane" id="bookings">Bookings</div>
