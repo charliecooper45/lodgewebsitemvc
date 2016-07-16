@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.entity.User.Language;
 import uk.cooperca.lodge.website.mvc.link.LinkBuilder;
 import uk.cooperca.lodge.website.mvc.service.NotificationService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
@@ -36,6 +37,9 @@ public class EmailNotificationService implements NotificationService {
     @Autowired
     private LinkBuilder linkBuilder;
 
+    private final String templateFolder = "/template/";
+    private final String velocitySuffix = ".vm";
+
     @Override
     public void handleNewUserEvent(int userId) {
         User user = getUser(userId);
@@ -46,7 +50,8 @@ public class EmailNotificationService implements NotificationService {
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
-            String text = mergeTemplateIntoString(velocityEngine, "/template/welcome.vm", "UTF-8", model);
+            String text = mergeTemplateIntoString(velocityEngine, getTemplate("welcome", user.getLanguage()), "UTF-8",
+                    model);
             message.setText(text, true);
         });
     }
@@ -61,7 +66,8 @@ public class EmailNotificationService implements NotificationService {
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
-            String text = mergeTemplateIntoString(velocityEngine, "/template/verify.vm", "UTF-8", model);
+            String text = mergeTemplateIntoString(velocityEngine, getTemplate("verify", user.getLanguage()), "UTF-8",
+                    model);
             message.setText(text, true);
         });
     }
@@ -75,7 +81,8 @@ public class EmailNotificationService implements NotificationService {
             message.setSubject("Lodge Website - Password Update");
             Map<String, Object> model = new HashMap();
             model.put("user", user);
-            String text = mergeTemplateIntoString(velocityEngine, "/template/password_update.vm", "UTF-8", model);
+            String text = mergeTemplateIntoString(velocityEngine, getTemplate("password_update", user.getLanguage()),
+                    "UTF-8", model);
             message.setText(text, true);
         });
     }
@@ -86,5 +93,9 @@ public class EmailNotificationService implements NotificationService {
             throw new IllegalArgumentException("user with ID " + id + " does not exist");
         }
         return user.get();
+    }
+
+    private String getTemplate(String templateName, Language language) {
+        return templateFolder + language.name().toLowerCase() + "/" + templateName + velocitySuffix;
     }
 }
