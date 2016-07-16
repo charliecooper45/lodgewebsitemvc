@@ -29,7 +29,6 @@ public class UserController extends AbstractController {
 
     @RequestMapping(value = "/verify")
     public String verifyUser(@RequestParam("token") String token, Model model) {
-        // TODO: we should attach the locale to the link we send to the user so we can return the correct error messages here
         try {
             User user = userService.verifyUser(token);
             if (user != null) {

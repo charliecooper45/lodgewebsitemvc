@@ -156,7 +156,6 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO: locked
         return true;
     }
 
@@ -167,7 +166,6 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        // TODO: enabled
         return true;
     }
 

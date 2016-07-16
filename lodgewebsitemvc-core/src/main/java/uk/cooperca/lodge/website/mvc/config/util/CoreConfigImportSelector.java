@@ -17,13 +17,14 @@ import uk.cooperca.lodge.website.mvc.config.test.TestConfig;
 public class CoreConfigImportSelector implements ImportSelector, EnvironmentAware {
 
     private static final String TEST_PROFILE = "test";
+    private static final String DEV_PROFILE = "dev";
 
     private Environment environment;
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        // TODO: handle situation where no profile is given
         String profile = environment.getActiveProfiles()[0];
+        profile = profile != null ? profile : DEV_PROFILE;
         if (!profile.equals(TEST_PROFILE)) {
             return new String[]{CacheConfig.class.getName(), DataConfig.class.getName()};
         }
