@@ -19,8 +19,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_USER;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.VERIFY_EMAIL;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
 import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.NEW_USER;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.PASSWORD_UPDATE;
 
 /**
  * Implementation of the {@link UserService} interface.
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void requestVerificationEmail(int id) {
-        producer.sendMessage(VERIFY_EMAIL, id);
+        producer.sendMessage(EMAIL_UPDATE, id);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class UserServiceImpl implements UserService {
         if (value > 0) {
             // TODO: must handle errors here (RabbitMQ down etc)
             userRepository.updateVerified(false, id);
-            producer.sendMessage(VERIFY_EMAIL, id);
+            producer.sendMessage(EMAIL_UPDATE, id);
         }
         return value;
     }
@@ -104,8 +105,7 @@ public class UserServiceImpl implements UserService {
     public int updatePassword(String password, int id) {
         int value = userRepository.updatePassword(encoder.encode(password), id);
         if (value > 0) {
-            // TODO: send message to notify of password change
-//            producer.sendMessage(VERIFY_EMAIL, id);
+            producer.sendMessage(PASSWORD_UPDATE, id);
         }
         return value;
     }

@@ -7,7 +7,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.cooperca.lodge.website.mvc.email.EmailService;
+import uk.cooperca.lodge.website.mvc.service.impl.EmailNotificationService;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 public class NotificationConfigTest {
 
     @Autowired
-    private EmailService notifier;
+    private EmailNotificationService notifier;
 
     @Test
     public void test() {

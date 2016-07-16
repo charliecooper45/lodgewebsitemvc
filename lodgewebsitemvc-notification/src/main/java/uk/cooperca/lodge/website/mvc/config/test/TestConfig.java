@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.mail.javamail.JavaMailSender;
 import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.consumer.NotificationMessageConsumers;
-import uk.cooperca.lodge.website.mvc.email.EmailService;
+import uk.cooperca.lodge.website.mvc.service.impl.EmailNotificationService;
 import uk.cooperca.lodge.website.mvc.link.LinkBuilder;
 import uk.cooperca.lodge.website.mvc.token.TokenManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
@@ -36,8 +36,8 @@ public class TestConfig {
     }
 
     @Bean
-    public EmailService emailService() {
-        return mock(EmailService.class);
+    public EmailNotificationService emailService() {
+        return mock(EmailNotificationService.class);
     }
 
     @Bean
