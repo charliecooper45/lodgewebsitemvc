@@ -2,11 +2,14 @@ package uk.cooperca.lodge.website.mvc.service;
 
 import io.jsonwebtoken.*;
 import org.junit.Test;
+import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
@@ -18,7 +21,22 @@ import static uk.cooperca.lodge.website.mvc.token.TokenManager.SIGNATURE_ALGORIT
 
 public class UserServiceImplTest extends AbstractServiceTest {
 
-    // TODO: test register
+    @Test
+    public void testRegisterUser() {
+        User user = mock(User.class);
+        when(user.getId()).thenReturn(1);
+        when(userRepository.save(any(User.class))).thenReturn(null, user);
+        UserCommand command = new UserCommand();
+        command.setPassword("1Password");
+
+        // error saving
+        userService.registerUser(command, Locale.ENGLISH);
+        verifyZeroInteractions(producer);
+
+        // saved successfully
+        userService.registerUser(command, Locale.ENGLISH);
+        verify(producer).sendMessage(NotificationMessage.Type.NEW_USER, 1);
+    }
 
     @Test
     public void testVerifyUser() {
