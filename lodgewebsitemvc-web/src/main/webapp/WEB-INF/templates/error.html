@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layouts/layout" class="error">
+  <head>
+    <title th:text="#{website.error}">Error Page</title>
+  </head>
+  <body>
+    <div class="container" layout:fragment="content">
+      <div class="row">
+        <div class="box text-center">
+          <!-- TODO: improve error page -->
+          <h3 th:text="#{error.errorMessage}">There has been an error</h3>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

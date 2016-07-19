@@ -93,17 +93,17 @@ public class AccountController extends AbstractController {
      * Method that handles updates to a user's account and returns a response with the body either set to a success message
      * or a list of errors.
      *
-     * @param field the field to be updated
+     * @param field   the field to be updated
      * @param command the command sent to the API
-     * @param result the binding result
-     * @param locale the user's locale
-     *
+     * @param result  the binding result
+     * @param locale  the user's locale
      * @return the response
      */
     private ResponseEntity handleUpdate(UpdateField field, UserCommand command, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return errorResponse(result, locale);
         }
+        // TODO: wrap these in an exception handler
         User user = getCurrentUser();
         String email = user.getEmail();
         switch (field) {
