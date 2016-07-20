@@ -7,6 +7,8 @@ import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.test.WithCustomUser;
 
 import javax.servlet.http.HttpSession;
+import java.io.UncheckedIOException;
+import java.net.ConnectException;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.any;
@@ -264,5 +266,21 @@ public class AccountControllerTest extends AbstractControllerTest {
                 });
         verify(userService).getUserByEmail(currentUser.getEmail());
         verify(userService).updateLastName(eq(newLastName), anyInt());
+    }
+
+    @Test
+    @WithCustomUser
+    public void testUpdateWithException() throws Exception {
+        String newLastName = "Smith";
+        when(userService.updateLastName("Smith", 0)).thenThrow(new UncheckedIOException(new ConnectException()));
+
+        UserCommand command = new UserCommand();
+        command.setLastName(newLastName);
+        String data = getObjectWriter().writeValueAsString(command);
+        mockMvc.perform(put("/account/lastname").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Unable to update field")));
     }
 }

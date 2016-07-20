@@ -7,12 +7,9 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.context.request.RequestContextHolder;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -42,11 +39,21 @@ public class AbstractController {
         getContext().setAuthentication(authentication);
     }
 
+    protected ResponseEntity errorResponse(Locale locale) {
+        String message = messageSource.getMessage("account.updateError", null, locale);
+        return ResponseEntity.badRequest()
+                .contentType(APPLICATION_JSON)
+                .body(Collections.singletonList(message));
+    }
+
     protected ResponseEntity errorResponse(BindingResult result, Locale locale) {
         List<String> errors = result.getAllErrors().stream()
                 .map(error -> messageSource.getMessage(error, locale))
                 .collect(Collectors.toList());
-        return ResponseEntity.badRequest().contentType(APPLICATION_JSON).body(errors);
+        return ResponseEntity
+                .badRequest()
+                .contentType(APPLICATION_JSON)
+                .body(errors);
     }
 
     public ResponseEntity successResponse(String code, String[] args, Locale locale) {

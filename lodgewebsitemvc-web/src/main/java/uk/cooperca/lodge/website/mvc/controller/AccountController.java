@@ -103,27 +103,30 @@ public class AccountController extends AbstractController {
         if (result.hasErrors()) {
             return errorResponse(result, locale);
         }
-        // TODO: wrap these in an exception handler
-        User user = getCurrentUser();
-        String email = user.getEmail();
-        switch (field) {
-            case EMAIL:
-                // we must lookup using the new email address
-                email = command.getEmail();
-                userService.updateEmail(command.getEmail(), user.getId());
-                break;
-            case PASSWORD:
-                userService.updatePassword(command.getPassword(), user.getId());
-                break;
-            case FIRST_NAME:
-                userService.updateFirstName(command.getFirstName(), user.getId());
-                break;
-            case LAST_NAME:
-                userService.updateLastName(command.getLastName(), user.getId());
-                break;
+        try {
+            User user = getCurrentUser();
+            String email = user.getEmail();
+            switch (field) {
+                case EMAIL:
+                    // we must lookup using the new email address
+                    email = command.getEmail();
+                    userService.updateEmail(command.getEmail(), user.getId());
+                    break;
+                case PASSWORD:
+                    userService.updatePassword(command.getPassword(), user.getId());
+                    break;
+                case FIRST_NAME:
+                    userService.updateFirstName(command.getFirstName(), user.getId());
+                    break;
+                case LAST_NAME:
+                    userService.updateLastName(command.getLastName(), user.getId());
+                    break;
+            }
+            setCurrentUser(userService.getUserByEmail(email).get());
+            return successResponse("account.updateSuccess",
+                    new String[]{messageSource.getMessage(field.getMessageCode(), null, locale)}, locale);
+        } catch (Exception e) {
+            return errorResponse(locale);
         }
-        setCurrentUser(userService.getUserByEmail(email).get());
-        return successResponse("account.updateSuccess",
-                new String[]{messageSource.getMessage(field.getMessageCode(), null, locale)}, locale);
     }
 }
