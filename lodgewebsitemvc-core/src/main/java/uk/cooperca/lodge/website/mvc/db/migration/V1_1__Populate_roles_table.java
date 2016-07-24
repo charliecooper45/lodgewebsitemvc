@@ -19,7 +19,7 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
  *
  * @author Charlie Cooper
  */
-public class V2_1__Populate_roles_table implements SpringJdbcMigration {
+public class V1_1__Populate_roles_table implements SpringJdbcMigration {
 
     private static final String INSERT_STATEMENT = "INSERT INTO roles (role_name, created_at) VALUES (?, ?)";
 

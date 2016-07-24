@@ -21,7 +21,7 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
  *
  * @author Charlie Cooper
  */
-public class V2_2__Populate_users_table implements SpringJdbcMigration {
+public class V1_2__Populate_users_table implements SpringJdbcMigration {
 
     private static final String INSERT_STATEMENT = "INSERT INTO users (email, password, first_name, last_name, role_id, " +
             "language_preference, verified, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

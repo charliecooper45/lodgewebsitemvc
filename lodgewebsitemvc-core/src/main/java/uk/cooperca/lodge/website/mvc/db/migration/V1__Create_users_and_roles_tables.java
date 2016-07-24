@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author Charlie Cooper
  */
-public class V2__Create_users_and_roles_tables implements SpringJdbcMigration {
+public class V1__Create_users_and_roles_tables implements SpringJdbcMigration {
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {

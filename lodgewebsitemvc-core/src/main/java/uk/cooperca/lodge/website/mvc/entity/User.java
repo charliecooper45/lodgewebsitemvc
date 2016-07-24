@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A registered user on the platform.
@@ -59,6 +60,9 @@ public class User implements Serializable, UserDetails {
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Review> reviews;
+
     public User() {
         // for Hibernate
     }
@@ -77,6 +81,10 @@ public class User implements Serializable, UserDetails {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -137,6 +145,10 @@ public class User implements Serializable, UserDetails {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     @Override

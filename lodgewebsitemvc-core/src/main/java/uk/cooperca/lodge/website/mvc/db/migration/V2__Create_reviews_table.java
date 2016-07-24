@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author Charlie Cooper
  */
-public class V1__Create_reviews_table implements SpringJdbcMigration {
+public class V2__Create_reviews_table implements SpringJdbcMigration {
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
@@ -17,7 +17,8 @@ public class V1__Create_reviews_table implements SpringJdbcMigration {
                 "id SERIAL PRIMARY KEY, " +
                 "review VARCHAR(500) NOT NULL," +
                 "score INTEGER NOT NULL," +
-                "created_at TIMESTAMP NOT NULL" +
+                "created_at TIMESTAMP NOT NULL," +
+                "user_id INTEGER REFERENCES users (id) NOT NULL" +
             ");"
         );
     }
