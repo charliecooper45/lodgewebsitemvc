@@ -32,8 +32,7 @@ public class Review implements Serializable {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
-
-
+    
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

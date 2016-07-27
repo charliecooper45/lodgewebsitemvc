@@ -23,9 +23,7 @@ $('#save-email').click(function() {
     user.confirmEmail = $('#confirm-edit-email').val();
     update('/account/email', JSON.stringify(user), $('#email-modal'), $('#email-modal .help-block ul'));
 });
-$('#email-modal').on('shown.bs.modal', function () {
-    $('#edit-email').focus();
-})
+setModalFocus($('#email-modal'), $('#edit-email'))
 
 $('#save-password').click(function() {
     var user = {};
@@ -33,29 +31,29 @@ $('#save-password').click(function() {
     user.confirmPassword = $('#confirm-edit-password').val();
     update('/account/password', JSON.stringify(user), $('#password-modal'), $('#password-modal .help-block ul'));
 });
-$('#password-modal').on('shown.bs.modal', function () {
-    $('#edit-password').focus();
-})
+setModalFocus($('#password-modal'), $('#edit-password'))
 
 $('#save-first-name').click(function() {
     var user = {};
     user.firstName = $('#edit-first-name').val();
     update('/account/firstname', JSON.stringify(user), $('#first-name-modal'), $('#first-name-modal .help-block ul'));
 });
-$('#first-name-modal').on('shown.bs.modal', function () {
-    $('#edit-first-name').focus();
-})
+setModalFocus($('#first-name-modal'), $('#edit-first-name'));
 
 $('#save-last-name').click(function() {
     var user = {};
     user.lastName = $('#edit-last-name').val();
     update('/account/lastname', JSON.stringify(user), $('#last-name-modal'), $('#last-name-modal .help-block ul'));
 });
-$('#last-name-modal').on('shown.bs.modal', function () {
-    $('#edit-last-name').focus();
-})
+setModalFocus($('#last-name-modal'), $('#edit-last-name'));
 
 /* common functions */
+function setModalFocus(modal, element) {
+    modal.on('shown.bs.modal', function () {
+        element.focus();
+    })
+}
+
 function update(url, data, modal, errorList) {
     $.ajax({
         type: 'PUT',
