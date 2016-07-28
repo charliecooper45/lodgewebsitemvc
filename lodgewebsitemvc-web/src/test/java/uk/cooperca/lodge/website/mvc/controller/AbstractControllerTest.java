@@ -18,6 +18,7 @@ import uk.cooperca.lodge.website.mvc.config.SecurityConfig;
 import uk.cooperca.lodge.website.mvc.config.WebMvcConfig;
 import uk.cooperca.lodge.website.mvc.entity.Role;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.service.ReviewService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import static org.mockito.Mockito.reset;
@@ -43,6 +44,9 @@ public abstract class AbstractControllerTest extends AbstractController {
     @Autowired
     protected UserService userService;
 
+    @Autowired
+    protected ReviewService reviewService;
+
     protected MockMvc mockMvc;
 
     public AbstractControllerTest() {
@@ -57,6 +61,7 @@ public abstract class AbstractControllerTest extends AbstractController {
                 .apply(springSecurity())
                 .build();
         reset(userService);
+        reset(reviewService);
     }
 
     protected ObjectWriter getObjectWriter() {

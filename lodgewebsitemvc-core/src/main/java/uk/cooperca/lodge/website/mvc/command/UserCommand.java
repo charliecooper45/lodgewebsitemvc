@@ -13,7 +13,7 @@ import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGrou
 import javax.validation.groups.Default;
 
 /**
- * Command object that represents an attempt to update/create a user on the platform.
+ * Command object that represents an attempt to update/create a user.
  *
  * @author Charlie Cooper
  */

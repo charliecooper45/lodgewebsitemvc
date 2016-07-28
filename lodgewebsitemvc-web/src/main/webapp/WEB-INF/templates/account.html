@@ -60,7 +60,13 @@
                 <div layout:replace="fragments/modals/account :: lastNameModal" />
                 <div layout:replace="fragments/modals/account :: passwordModal" />
               </div>
-              <div class="tab-pane" id="reviews">Reviews</div>
+              <div class="tab-pane" id="reviews">
+                <button type="button" class="btn btn-default" th:text="#{reviews.add}" data-toggle="modal"
+                        data-target="#add-review-modal">Add Review</button>
+
+                <!-- Modals -->
+                <div layout:replace="fragments/modals/reviews :: addReviewModal" />
+              </div>
               <div class="tab-pane" id="bookings">Bookings</div>
               <div class="tab-pane" id="settings">Settings</div>
             </div>

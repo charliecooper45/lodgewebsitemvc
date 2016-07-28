@@ -21,7 +21,7 @@ $('#save-email').click(function() {
     var user = {};
     user.email = $('#edit-email').val();
     user.confirmEmail = $('#confirm-edit-email').val();
-    update('/account/email', JSON.stringify(user), $('#email-modal'), $('#email-modal .help-block ul'));
+    updateOrCreate('PUT', '/account/email', JSON.stringify(user), $('#email-modal'), $('#email-modal .help-block ul'));
 });
 setModalFocus($('#email-modal'), $('#edit-email'))
 
@@ -29,23 +29,32 @@ $('#save-password').click(function() {
     var user = {};
     user.password = $('#edit-password').val();
     user.confirmPassword = $('#confirm-edit-password').val();
-    update('/account/password', JSON.stringify(user), $('#password-modal'), $('#password-modal .help-block ul'));
+    updateOrCreate('PUT', '/account/password', JSON.stringify(user), $('#password-modal'), $('#password-modal .help-block ul'));
 });
 setModalFocus($('#password-modal'), $('#edit-password'))
 
 $('#save-first-name').click(function() {
     var user = {};
     user.firstName = $('#edit-first-name').val();
-    update('/account/firstname', JSON.stringify(user), $('#first-name-modal'), $('#first-name-modal .help-block ul'));
+    updateOrCreate('PUT', '/account/firstname', JSON.stringify(user), $('#first-name-modal'), $('#first-name-modal .help-block ul'));
 });
 setModalFocus($('#first-name-modal'), $('#edit-first-name'));
 
 $('#save-last-name').click(function() {
     var user = {};
     user.lastName = $('#edit-last-name').val();
-    update('/account/lastname', JSON.stringify(user), $('#last-name-modal'), $('#last-name-modal .help-block ul'));
+    updateOrCreate('PUT', '/account/lastname', JSON.stringify(user), $('#last-name-modal'), $('#last-name-modal .help-block ul'));
 });
 setModalFocus($('#last-name-modal'), $('#edit-last-name'));
+
+/* reviews */
+$('#save-review').click(function() {
+    var review = {};
+    review.review = $('#review-text').val();
+    review.score = $('#review-score').val();
+    updateOrCreate('POST', '/reviews', JSON.stringify(review), $('#add-review-modal'), $('#add-review-modal .help-block ul'))
+});
+setModalFocus($('#add-review-modal'), $('#review-text'));
 
 /* common functions */
 function setModalFocus(modal, element) {
@@ -54,9 +63,9 @@ function setModalFocus(modal, element) {
     })
 }
 
-function update(url, data, modal, errorList) {
+function updateOrCreate(method, url, data, modal, errorList) {
     $.ajax({
-        type: 'PUT',
+        type: method,
         contentType : 'application/json',
         url: url,
         headers: {'X-CSRF-Token': token},
