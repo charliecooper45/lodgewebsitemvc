@@ -14,6 +14,8 @@ import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.repository.ReviewRepository;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 
+import java.util.List;
+
 /**
  * Implementation of the {@link ReviewService} interface.
  *
@@ -30,6 +32,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Cacheable
     public Page<Review> getReviews(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    @Override
+    public List<Review> getReviewsForUser(int id) {
+        return repository.findByUserId(id);
     }
 
     @Override

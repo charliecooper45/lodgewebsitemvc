@@ -15,6 +15,7 @@ import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGrou
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.LastNameValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.PasswordValidationGroup;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.service.ReviewService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import java.util.List;
@@ -53,8 +54,12 @@ public class AccountController extends AbstractController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @RequestMapping
     public String showAccount(Model model) {
+        model.addAttribute("reviews", reviewService.getReviewsForUser(getCurrentUser().getId()));
         model.addAttribute("user", getCurrentUser());
         return "account";
     }

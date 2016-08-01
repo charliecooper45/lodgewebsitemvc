@@ -6,6 +6,8 @@ import uk.cooperca.lodge.website.mvc.command.ReviewCommand;
 import uk.cooperca.lodge.website.mvc.entity.Review;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
+import java.util.List;
+
 /**
  * Service that allows the management of {@link Review}s.
  *
@@ -21,6 +23,15 @@ public interface ReviewService {
      * @return the reviews
      */
     public Page<Review> getReviews(Pageable pageable);
+
+    /**
+     * Returns the reviews for the given user.
+     *
+     * @param id the user's id
+     *
+     * @return the reviews for the user
+     */
+    public List<Review> getReviewsForUser(int id);
 
     /**
      * Adds a new review to the platform.

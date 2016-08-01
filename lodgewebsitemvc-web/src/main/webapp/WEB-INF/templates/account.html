@@ -64,6 +64,28 @@
                 <button type="button" class="btn btn-default" th:text="#{reviews.add}" data-toggle="modal"
                         data-target="#add-review-modal">Add Review</button>
 
+                <h3 th:if="${reviews.isEmpty()}" th:text="#{reviews.message}">You don't appear to have added any reviews yet</h3>
+
+                <table th:unless="${reviews.isEmpty()}" id="reviews-table" class="table">
+                  <thead>
+                    <tr>
+                      <th th:text="#{reviews.date}">Date</th>
+                      <th class="main" th:text="#{reviews.review}">Review</th>
+                      <th th:text="#{reviews.score}">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="review: ${reviews}">
+                      <td th:text="${#joda.format(review.createdAt, 'dd/MM/yyyy')}">17/12/2014</td>
+                      <td th:text="${review.review}">Review</td>
+                      <td>
+                        <input class="rating rating-loading" th:attr="value=${review.score}" data-size="xs"
+                               data-readonly="true" data-show-clear="false" data-show-caption="false" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
                 <!-- Modals -->
                 <div layout:replace="fragments/modals/reviews :: addReviewModal" />
               </div>
