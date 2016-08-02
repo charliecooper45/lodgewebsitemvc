@@ -10,7 +10,7 @@ import uk.cooperca.lodge.website.mvc.entity.Role;
  * @author Charlie Cooper
  */
 @Repository
-public interface RoleRepository extends CrudRepository<Role, Long> {
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 
     /**
      * Retrieves the role with the given name.

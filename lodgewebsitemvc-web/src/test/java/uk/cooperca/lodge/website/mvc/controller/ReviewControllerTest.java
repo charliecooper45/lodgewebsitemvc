@@ -13,6 +13,7 @@ import uk.cooperca.lodge.website.mvc.entity.Review;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.test.WithCustomUser;
 
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -69,6 +71,15 @@ public class ReviewControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.[*]", hasSize(1)))
                 .andExpect(jsonPath("$.[*]", contains("Review Added")));
         verify(reviewService).addReview(any(ReviewCommand.class), any(User.class));
+
+        // database down
+        when(reviewService.addReview(any(ReviewCommand.class), any(User.class))).thenThrow(mock(UncheckedIOException.class));
+        mockMvc.perform(post("/reviews").with(csrf()).contentType(APPLICATION_JSON).content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Unable to add review")));
+        verify(reviewService, times(2)).addReview(any(ReviewCommand.class), any(User.class));
     }
 
     @Test
@@ -121,5 +132,35 @@ public class ReviewControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*]", hasSize(1)))
                 .andExpect(jsonPath("$.[*]", contains("Score cannot be greater than 5")));
+    }
+
+    @Test
+    @WithCustomUser
+    public void testDeleteReview() throws Exception {
+        // correct update
+        mockMvc.perform(delete("/reviews/1").with(csrf()).contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Review Deleted")));
+        verify(reviewService, times(1)).deleteReview(1, 0);
+
+        // wrong user
+        doThrow(mock(SecurityException.class)).when(reviewService).deleteReview(1, 0);
+        mockMvc.perform(delete("/reviews/1").with(csrf()).contentType(APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("You are not the owner of this review")));
+        verify(reviewService, times(2)).deleteReview(1, 0);
+
+        // database down
+        doThrow(mock(UncheckedIOException.class)).when(reviewService).deleteReview(1, 0);
+        mockMvc.perform(delete("/reviews/1").with(csrf()).contentType(APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.[*]", hasSize(1)))
+                .andExpect(jsonPath("$.[*]", contains("Unable to delete review")));
+        verify(reviewService, times(3)).deleteReview(1, 0);
     }
 }

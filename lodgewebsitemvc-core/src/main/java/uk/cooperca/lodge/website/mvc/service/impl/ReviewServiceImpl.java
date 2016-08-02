@@ -44,4 +44,13 @@ public class ReviewServiceImpl implements ReviewService {
     public Review addReview(ReviewCommand command, User user) {
         return repository.save(new Review(command.getReview(), command.getScore(), DateTime.now(), user));
     }
+
+    @Override
+    @CacheEvict(allEntries = true)
+    public void deleteReview(int id, int userId) {
+        if (repository.findOne(id).getUser().getId() != userId) {
+            throw new SecurityException("review is not owned by user");
+        }
+        repository.delete(id);
+    }
 }

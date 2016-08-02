@@ -3,6 +3,7 @@ package uk.cooperca.lodge.website.mvc.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import uk.cooperca.lodge.website.mvc.entity.Review;
+import uk.cooperca.lodge.website.mvc.entity.User;
 
 import java.util.List;
 
@@ -12,14 +13,14 @@ import java.util.List;
  * @author Charlie Cooper
  */
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     /**
      * Returns the reviews for the given user.
      *
-     * @param id the user's id
+     * @param userId the user's id
      *
      * @return the reviews for the user
      */
-    public List<Review> findByUserId(int id);
+    public List<Review> findByUserId(int userId);
 }

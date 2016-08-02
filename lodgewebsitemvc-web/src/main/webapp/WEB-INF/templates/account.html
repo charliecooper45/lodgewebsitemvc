@@ -64,7 +64,7 @@
                 <button type="button" class="btn btn-default" th:text="#{reviews.add}" data-toggle="modal"
                         data-target="#add-review-modal">Add Review</button>
 
-                <h3 th:if="${reviews.isEmpty()}" th:text="#{reviews.message}">You don't appear to have added any reviews yet</h3>
+                <h3 th:if="${reviews.isEmpty()}" th:text="#{account.reviewsMessage}">You don't appear to have added any reviews yet</h3>
 
                 <table th:unless="${reviews.isEmpty()}" id="reviews-table" class="table">
                   <thead>
@@ -82,12 +82,17 @@
                         <input class="rating rating-loading" th:attr="value=${review.score}" data-size="xs"
                                data-readonly="true" data-show-clear="false" data-show-caption="false" />
                       </td>
+                      <td>
+                        <i class="fa fa-times" aria-hidden="true" th:title="#{account.deleteReview}" th:attr="data-review=${review.getId()}"
+                           data-toggle="modal" data-target="#delete-review-modal" />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
 
                 <!-- Modals -->
                 <div layout:replace="fragments/modals/reviews :: addReviewModal" />
+                <div layout:replace="fragments/modals/reviews :: deleteReviewModal" />
               </div>
               <div class="tab-pane" id="bookings">Bookings</div>
               <div class="tab-pane" id="settings">Settings</div>

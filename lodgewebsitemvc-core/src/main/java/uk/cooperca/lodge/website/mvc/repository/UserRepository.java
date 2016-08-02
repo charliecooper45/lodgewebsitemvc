@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 @SuppressWarnings("JpaQlInspection")
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * Retrieves the user with the given identifier.

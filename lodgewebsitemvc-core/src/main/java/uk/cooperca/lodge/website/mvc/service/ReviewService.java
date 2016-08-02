@@ -42,4 +42,12 @@ public interface ReviewService {
      * @return the review
      */
     public Review addReview(ReviewCommand command, User user);
+
+    /**
+     * Deletes the review with the given id.
+     *
+     * @param id the id of the review to delete
+     * @param userId the id of the user deleting the review
+     */
+    public void deleteReview(int id, int userId);
 }

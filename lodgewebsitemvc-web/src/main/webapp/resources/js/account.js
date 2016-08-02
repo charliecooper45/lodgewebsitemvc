@@ -16,12 +16,12 @@ $(function() {
     }
 });
 
-/* update user */
+/* account */
 $('#save-email').click(function() {
     var user = {};
     user.email = $('#edit-email').val();
     user.confirmEmail = $('#confirm-edit-email').val();
-    updateOrCreate('PUT', '/account/email', JSON.stringify(user), $('#email-modal'), $('#email-modal .help-block ul'));
+    ajax('PUT', '/account/email', JSON.stringify(user), $('#email-modal'));
 });
 setModalFocus($('#email-modal'), $('#edit-email'))
 
@@ -29,21 +29,21 @@ $('#save-password').click(function() {
     var user = {};
     user.password = $('#edit-password').val();
     user.confirmPassword = $('#confirm-edit-password').val();
-    updateOrCreate('PUT', '/account/password', JSON.stringify(user), $('#password-modal'), $('#password-modal .help-block ul'));
+    ajax('PUT', '/account/password', JSON.stringify(user), $('#password-modal'));
 });
 setModalFocus($('#password-modal'), $('#edit-password'))
 
 $('#save-first-name').click(function() {
     var user = {};
     user.firstName = $('#edit-first-name').val();
-    updateOrCreate('PUT', '/account/firstname', JSON.stringify(user), $('#first-name-modal'), $('#first-name-modal .help-block ul'));
+    ajax('PUT', '/account/firstname', JSON.stringify(user), $('#first-name-modal'));
 });
 setModalFocus($('#first-name-modal'), $('#edit-first-name'));
 
 $('#save-last-name').click(function() {
     var user = {};
     user.lastName = $('#edit-last-name').val();
-    updateOrCreate('PUT', '/account/lastname', JSON.stringify(user), $('#last-name-modal'), $('#last-name-modal .help-block ul'));
+    ajax('PUT', '/account/lastname', JSON.stringify(user), $('#last-name-modal'));
 });
 setModalFocus($('#last-name-modal'), $('#edit-last-name'));
 
@@ -52,9 +52,18 @@ $('#save-review').click(function() {
     var review = {};
     review.review = $('#review-text').val();
     review.score = $('#review-score').val();
-    updateOrCreate('POST', '/reviews', JSON.stringify(review), $('#add-review-modal'), $('#add-review-modal .help-block ul'))
+    ajax('POST', '/reviews', JSON.stringify(review), $('#add-review-modal'))
 });
 setModalFocus($('#add-review-modal'), $('#review-text'));
+
+$('#delete-review').click(function() {
+    var modal = $('#delete-review-modal');
+    ajax('DELETE', '/reviews/' + $(this).data('review'), null, $('#delete-review-modal'))
+});
+$('#delete-review-modal').on('show.bs.modal', function(e) {
+    var reviewId = $(e.relatedTarget).data('review');
+    $(e.currentTarget).find('#delete-review').attr('data-review', reviewId);
+});
 
 /* common functions */
 function setModalFocus(modal, element) {
@@ -63,7 +72,7 @@ function setModalFocus(modal, element) {
     })
 }
 
-function updateOrCreate(method, url, data, modal, errorList) {
+function ajax(method, url, data, modal) {
     $.ajax({
         type: method,
         contentType : 'application/json',
@@ -84,6 +93,7 @@ function updateOrCreate(method, url, data, modal, errorList) {
                 // user is not logged in
                 window.location.replace('/login');
             } else {
+                var errorList = modal.find('.help-block ul');
                 errorList.empty();
                 $.each(data.responseJSON, function(index, value) {
                     errorList.append('<li>' + value + '</li>');

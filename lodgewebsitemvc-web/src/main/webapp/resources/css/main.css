@@ -128,6 +128,13 @@ footer #languages p {
     padding: 0;
     list-style-type: none;
 }
+.account #reviews-table td {
+    vertical-align: middle;
+}
+.account #reviews-table .fa-times {
+    color: red;
+    cursor: pointer;
+}
 
 /* media queries */
 @media screen and (max-width: 768px) {

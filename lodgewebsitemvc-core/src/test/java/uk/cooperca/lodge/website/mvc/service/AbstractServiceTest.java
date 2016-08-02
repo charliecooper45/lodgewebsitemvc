@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.cooperca.lodge.website.mvc.config.CoreConfig;
 import uk.cooperca.lodge.website.mvc.config.SecurityConfig;
 import uk.cooperca.lodge.website.mvc.messaging.NotificationMessageProducer;
+import uk.cooperca.lodge.website.mvc.repository.ReviewRepository;
 import uk.cooperca.lodge.website.mvc.repository.UserRepository;
 import uk.cooperca.lodge.website.mvc.token.TokenManager;
 
@@ -27,6 +28,12 @@ public abstract class AbstractServiceTest {
 
     @Autowired
     protected UserRepository userRepository;
+
+    @Autowired
+    protected ReviewService reviewService;
+
+    @Autowired
+    protected ReviewRepository reviewRepository;
 
     @Autowired
     protected NotificationMessageProducer producer;

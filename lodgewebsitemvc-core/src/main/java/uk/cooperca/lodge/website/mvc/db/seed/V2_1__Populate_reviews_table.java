@@ -25,19 +25,21 @@ public class V2_1__Populate_reviews_table implements SpringJdbcMigration {
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
-        User user = jdbcTemplate.queryForObject(USER_ID_STATEMENT, new Object[]{ "Bob" },
+        User user1 = jdbcTemplate.queryForObject(USER_ID_STATEMENT, new Object[]{ "Bob" },
+                new BeanPropertyRowMapper<>(User.class));
+        User user2 = jdbcTemplate.queryForObject(USER_ID_STATEMENT, new Object[]{ "Anton" },
                 new BeanPropertyRowMapper<>(User.class));
 
         List<Review> reviews = Arrays.asList(
-            new Review("A really nice lodge, we loved our time there.", 4, DateTime.now(), user),
-            new Review("Good location. Shower didn't work", 2, DateTime.now().minusDays(1), user),
+            new Review("A really nice lodge, we loved our time there.", 4, DateTime.now(), user1),
+            new Review("Good location. Shower didn't work", 2, DateTime.now().minusDays(1), user1),
             new Review("Spent a weekend here with friends, we all enjoyed the fresh coastal air. " +
-                    "Couple of great local pubs.", 5, DateTime.now().minusDays(1), user),
+                    "Couple of great local pubs.", 5, DateTime.now().minusDays(1), user1),
             new Review("Rained non stop, no one told us it would rain in Cornwall in December.", 1,
-                    DateTime.now().minusWeeks(2), user),
+                    DateTime.now().minusWeeks(2), user1),
             new Review("A great area of the country. Our seventh visit and every one has been perfect. We take our two " +
                     "dogs who absolutely love it! Will be back again as soon as we can afford it!", 5,
-                    DateTime.now().minusWeeks(8), user)
+                    DateTime.now().minusWeeks(8), user2)
         );
 
         jdbcTemplate.batchUpdate(INSERT_STATEMENT, new BatchPreparedStatementSetter() {

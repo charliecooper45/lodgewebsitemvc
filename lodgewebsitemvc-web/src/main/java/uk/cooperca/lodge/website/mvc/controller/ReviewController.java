@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,7 +48,23 @@ public class ReviewController extends AbstractController {
         if (result.hasErrors()) {
             return errorResponse(result, locale);
         }
-        reviewService.addReview(command, getCurrentUser());
+        try {
+            reviewService.addReview(command, getCurrentUser());
+        } catch (Exception e) {
+            return errorResponse("reviews.addReviewError", locale);
+        }
         return successResponse("reviews.added", new String[]{}, locale);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<List<String>> deleteReview(@PathVariable("id") int id, Locale locale) {
+        try {
+            reviewService.deleteReview(id, getCurrentUser().getId());
+        } catch (SecurityException e) {
+            return errorResponse("reviews.wrongUser", locale);
+        } catch (Exception e) {
+            return errorResponse("reviews.deleteReviewError", locale);
+        }
+        return successResponse("reviews.deleted", new String[]{}, locale);
     }
 }
