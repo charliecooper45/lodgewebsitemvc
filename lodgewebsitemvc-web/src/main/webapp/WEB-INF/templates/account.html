@@ -40,15 +40,15 @@
                 <form th:object="${user}">
                   <label th:text="#{register.email}">Email</label>&nbsp;
                   <i class="fa fa-pencil" th:title="#{account.updateEmail}" data-toggle="modal" data-target="#email-modal" />
-                  <input type="text" th:field="*{email}" class="form-control" />
+                  <input type="text" th:field="*{email}" th:disabled="true" class="form-control" />
                   <br />
                   <label th:text="#{register.firstName}">First Name</label>&nbsp;
                   <i class="fa fa-pencil" th:title="#{account.updateFirstName}" data-toggle="modal" data-target="#first-name-modal" />
-                  <input type="text" th:field="*{firstName}" class="form-control" />
+                  <input type="text" th:field="*{firstName}" th:disabled="true" class="form-control" />
                   <br />
                   <label th:text="#{register.lastName}">Last Name</label>&nbsp;
                   <i class="fa fa-pencil" th:title="#{account.updateLastName}" data-toggle="modal" data-target="#last-name-modal" />
-                  <input type="text" th:field="*{lastName}" class="form-control" />
+                  <input type="text" th:field="*{lastName}" th:disabled="true" class="form-control" />
                 </form>
                 <br />
                 <button type="button" class="btn btn-default" th:text="#{account.passwordButton}" data-toggle="modal"
