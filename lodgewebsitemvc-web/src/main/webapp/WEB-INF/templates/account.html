@@ -94,8 +94,21 @@
                 <div layout:replace="fragments/modals/reviews :: addReviewModal" />
                 <div layout:replace="fragments/modals/reviews :: deleteReviewModal" />
               </div>
-              <div class="tab-pane" id="bookings">Bookings</div>
-              <div class="tab-pane" id="settings">Settings</div>
+              <div class="tab-pane" id="bookings">
+                <h4 class="text-center">Currently it is not possible to book online, please check back at a later date!</h4>
+              </div>
+              <div class="tab-pane" id="settings">
+                <form th:object="${user}">
+                  <label th:text="#{account.language}">Language</label>
+                  <select class="form-control" id="language-select">
+                    <option th:each="language : ${languages}" th:selected="${user.getLanguage().toString() eq language.toString()}"
+                            th:value="${language}" th:text="#{${'account.' + language.toString().toLowerCase()}}"></option>
+                  </select>
+                </form>
+
+                <!-- Modals -->
+                <div layout:replace="fragments/modals/settings :: languageModal" />
+              </div>
             </div>
           </div>
         </div>

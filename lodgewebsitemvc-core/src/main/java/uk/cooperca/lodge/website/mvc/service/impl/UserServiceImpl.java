@@ -118,4 +118,10 @@ public class UserServiceImpl implements UserService {
     public int updateLastName(String lastName, int id) {
         return userRepository.updateLastName(lastName, id);
     }
+
+    @Override
+    public int updateLanguage(String language, int id) {
+        Language userLanguage = Language.valueOf(language.toUpperCase().trim());
+        return userRepository.updateLanguage(userLanguage, id);
+    }
 }

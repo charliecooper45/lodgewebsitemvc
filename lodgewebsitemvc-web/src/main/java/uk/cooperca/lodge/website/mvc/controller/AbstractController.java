@@ -39,8 +39,8 @@ public class AbstractController {
         getContext().setAuthentication(authentication);
     }
 
-    protected ResponseEntity errorResponse(String code, Locale locale) {
-        String message = messageSource.getMessage(code, null, locale);
+    protected ResponseEntity errorResponse(String code, String[] args, Locale locale) {
+        String message = messageSource.getMessage(code, args, locale);
         return ResponseEntity.badRequest()
                 .contentType(APPLICATION_JSON)
                 .body(Collections.singletonList(message));

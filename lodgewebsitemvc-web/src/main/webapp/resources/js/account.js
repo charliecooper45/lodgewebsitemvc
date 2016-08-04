@@ -56,13 +56,22 @@ $('#save-review').click(function() {
 });
 setModalFocus($('#add-review-modal'), $('#review-text'));
 
-$('#delete-review').click(function() {
-    var modal = $('#delete-review-modal');
-    ajax('DELETE', '/reviews/' + $(this).data('review'), null, $('#delete-review-modal'))
-});
 $('#delete-review-modal').on('show.bs.modal', function(e) {
     var reviewId = $(e.relatedTarget).data('review');
     $(e.currentTarget).find('#delete-review').attr('data-review', reviewId);
+});
+$('#delete-review').click(function() {
+    ajax('DELETE', '/reviews/' + $(this).data('review'), null, $('#delete-review-modal'))
+});
+
+/* settings */
+$('#language-select').on('change', function() {
+    var modal = $('#language-modal');
+    modal.find('#save-language').attr('data-language', $("option:selected", this).val());
+    modal.modal('toggle');
+});
+$('#save-language').click(function() {
+    ajax('PUT', '/account/language?language=' + $(this).data('language'), null, $('#language-modal'));
 });
 
 /* common functions */

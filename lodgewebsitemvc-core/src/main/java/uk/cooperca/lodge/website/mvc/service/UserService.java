@@ -2,6 +2,7 @@ package uk.cooperca.lodge.website.mvc.service;
 
 import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.entity.User.Language;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -96,4 +97,14 @@ public interface UserService {
      * @return an int holding the number of rows updated
      */
     public int updateLastName(String lastName, int id);
+
+    /**
+     * Updates the given user's language preference.
+     *
+     * @param language the new language for the user
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    public int updateLanguage(String language, int id);
 }

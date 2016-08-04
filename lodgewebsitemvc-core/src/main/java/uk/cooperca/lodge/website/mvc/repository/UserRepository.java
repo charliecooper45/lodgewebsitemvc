@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.cooperca.lodge.website.mvc.entity.User;
+import uk.cooperca.lodge.website.mvc.entity.User.Language;
 
 import java.util.Optional;
 
@@ -100,4 +101,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Query("update User u set u.lastName = ?1 where u.id = ?2")
     public int updateLastName(String lastName, int id);
+
+
+    /**
+     * Updates the given user's language preference.
+     *
+     * @param language the new language for the user
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    @Modifying
+    @Transactional
+    @Query("update User u set u.language = ?1 where u.id = ?2")
+    public int updateLanguage(Language language, int id);
 }

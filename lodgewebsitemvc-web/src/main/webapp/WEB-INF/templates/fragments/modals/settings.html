@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <body>
+    <div layout:fragment="languageModal" class="modal fade" id="language-modal" tabindex="-1" role="dialog" aria-labelledby="language-modal-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="language-modal-label" th:text="#{modal.confirm}">Confirm</h4>
+          </div>
+          <div class="modal-body">
+            <p th:text="#{account.confirmSaveLanguage}"></p>
+
+            <span class="help-block">
+              <ul><!-- content loaded dynamically --></ul>
+            </span>
+          </div>
+          <div class="modal-footer">
+            <button id="save-language" type="button" class="btn btn-primary" th:text="#{modal.save}">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{modal.close}">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -9,6 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.EmailValidationGroup;
 import uk.cooperca.lodge.website.mvc.command.constraint.group.UserValidationGroups.FirstNameValidationGroup;
@@ -18,6 +20,8 @@ import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.service.ReviewService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,10 +61,14 @@ public class AccountController extends AbstractController {
     @Autowired
     private ReviewService reviewService;
 
+    @Autowired
+    private LocaleResolver localeResolver;
+
     @RequestMapping
     public String showAccount(Model model) {
         model.addAttribute("reviews", reviewService.getReviewsForUser(getCurrentUser().getId()));
         model.addAttribute("user", getCurrentUser());
+        model.addAttribute("languages", User.Language.values());
         return "account";
     }
 
@@ -92,6 +100,26 @@ public class AccountController extends AbstractController {
     public ResponseEntity<List<String>> updateLastName(@Validated(LastNameValidationGroup.class) @RequestBody UserCommand command,
                                                        BindingResult result, Locale locale) {
         return handleUpdate(LAST_NAME, command, result, locale);
+    }
+
+    @RequestMapping(value = "/language", method = RequestMethod.PUT)
+    public ResponseEntity<List<String>> updateLanguage(@RequestParam("language") String language, Locale locale,
+                                                       HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // TODO: refactor service layer to return the update user
+            User user = getCurrentUser();
+            userService.updateLanguage(language, user.getId());
+            user = userService.getUserByEmail(user.getEmail()).get();
+            setCurrentUser(user);
+            locale = new Locale(user.getLanguage().name());
+            localeResolver.setLocale(request, response, locale);
+            return successResponse("account.updateSuccess",
+                    new String[]{messageSource.getMessage("account.language", null, locale)}, locale);
+        } catch (IllegalArgumentException e) {
+            return errorResponse("account.unsupportedLanguage", new String[]{language}, locale);
+        } catch (Exception e) {
+            return errorResponse("account.updateError", null, locale);
+        }
     }
 
     /**
@@ -131,7 +159,7 @@ public class AccountController extends AbstractController {
             return successResponse("account.updateSuccess",
                     new String[]{messageSource.getMessage(field.getMessageCode(), null, locale)}, locale);
         } catch (Exception e) {
-            return errorResponse("account.updateError", locale);
+            return errorResponse("account.updateError", null, locale);
         }
     }
 }

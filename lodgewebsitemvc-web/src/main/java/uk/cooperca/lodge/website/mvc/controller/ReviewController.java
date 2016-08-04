@@ -51,7 +51,7 @@ public class ReviewController extends AbstractController {
         try {
             reviewService.addReview(command, getCurrentUser());
         } catch (Exception e) {
-            return errorResponse("reviews.addReviewError", locale);
+            return errorResponse("reviews.addReviewError", null, locale);
         }
         return successResponse("reviews.added", new String[]{}, locale);
     }
@@ -61,9 +61,9 @@ public class ReviewController extends AbstractController {
         try {
             reviewService.deleteReview(id, getCurrentUser().getId());
         } catch (SecurityException e) {
-            return errorResponse("reviews.wrongUser", locale);
+            return errorResponse("reviews.wrongUser", null, locale);
         } catch (Exception e) {
-            return errorResponse("reviews.deleteReviewError", locale);
+            return errorResponse("reviews.deleteReviewError", null, locale);
         }
         return successResponse("reviews.deleted", new String[]{}, locale);
     }

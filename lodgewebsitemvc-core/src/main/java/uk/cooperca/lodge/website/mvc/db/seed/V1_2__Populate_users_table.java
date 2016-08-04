@@ -32,7 +32,7 @@ public class V1_2__Populate_users_table implements SpringJdbcMigration {
         List<User> users = Arrays.asList(
                 new User("testcc45@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
                         Language.EN, true, DateTime.now()),
-                new User("testcc46@gmail.com", new BCryptPasswordEncoder().encode("Frefd2s"), "Anton", "Igniski", null,
+                new User("testcc46@gmail.com", new BCryptPasswordEncoder().encode("2Password"), "Anton", "Igniski", null,
                         Language.RU, true, DateTime.now())
         );
 
