@@ -30,7 +30,6 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_ADMIN;
  *
  * @author Charlie Cooper
  */
-// TODO: should we move this?
 @Configuration
 @EnableWebSecurity
 @Import(SecurityConfigImportSelector.class)
