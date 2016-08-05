@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
@@ -273,7 +274,7 @@ public class AccountControllerTest extends AbstractControllerTest {
     @WithCustomUser
     public void testUpdateWithException() throws Exception {
         String newLastName = "Smith";
-        when(userService.updateLastName("Smith", 0)).thenThrow(new UncheckedIOException(new ConnectException()));
+        doThrow(new UncheckedIOException(new ConnectException())).when(userService).updateLastName("Smith", 0);
 
         UserCommand command = new UserCommand();
         command.setLastName(newLastName);
@@ -288,7 +289,7 @@ public class AccountControllerTest extends AbstractControllerTest {
     @Test
     @WithCustomUser
     public void testUpdateLanguage() throws Exception {
-        when(userService.updateLanguage("ef", 0)).thenThrow(new IllegalArgumentException());
+        doThrow(new IllegalArgumentException()).when(userService).updateLanguage("ef", 0);
         User user = mock(User.class);
         when(userService.getUserByEmail("bill@gmail.com")).thenReturn(Optional.of(user));
         when(user.getLanguage()).thenReturn(User.Language.EN);

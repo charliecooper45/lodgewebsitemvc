@@ -63,10 +63,8 @@ public interface UserService {
      *
      * @param email the new email address for the user
      * @param id the id of the user to update
-     *
-     * @return an int holding the number of rows updated
      */
-    public int updateEmail(String email, int id);
+    public void updateEmail(String email, int id);
 
     /**
      * Updates the given user's password.
@@ -76,7 +74,7 @@ public interface UserService {
      *
      * @return an int holding the number of rows updated
      */
-    public int updatePassword(String password, int id);
+    public void updatePassword(String password, int id);
 
     /**
      * Updates the given user's first name.
@@ -86,7 +84,7 @@ public interface UserService {
      *
      * @return an int holding the number of rows updated
      */
-    public int updateFirstName(String firstName, int id);
+    public void updateFirstName(String firstName, int id);
 
     /**
      * Updates the given user's last name.
@@ -96,7 +94,7 @@ public interface UserService {
      *
      * @return an int holding the number of rows updated
      */
-    public int updateLastName(String lastName, int id);
+    public void updateLastName(String lastName, int id);
 
     /**
      * Updates the given user's language preference.
@@ -106,5 +104,5 @@ public interface UserService {
      *
      * @return an int holding the number of rows updated
      */
-    public int updateLanguage(String language, int id);
+    public void updateLanguage(String language, int id);
 }

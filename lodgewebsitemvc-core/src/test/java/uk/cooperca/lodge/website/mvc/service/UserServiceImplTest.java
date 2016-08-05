@@ -107,8 +107,13 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.updateEmail(email, id)).thenReturn(0, 1);
 
         // failed
-        userService.updateEmail(email, id);
-        verifyZeroInteractions(producer);
+        try {
+            userService.updateEmail(email, id);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("repository returned 0", e.getMessage());
+            verifyZeroInteractions(producer);
+        }
 
         // success
         userService.updateEmail(email, id);

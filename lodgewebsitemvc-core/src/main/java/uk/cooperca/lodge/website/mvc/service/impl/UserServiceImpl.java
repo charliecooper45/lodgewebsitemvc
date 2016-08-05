@@ -89,39 +89,44 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    // TODO: handle 0 for update methods
     @Override
-    public int updateEmail(String email, int id) {
-        int value = userRepository.updateEmail(email, id);
-        if (value > 0) {
-            userRepository.updateVerified(false, id);
-            producer.sendMessage(EMAIL_UPDATE, id);
-        }
-        return value;
+    public void updateEmail(String email, int id) {
+        handleUpdate(userRepository.updateEmail(email, id));
+        userRepository.updateVerified(false, id);
+        producer.sendMessage(EMAIL_UPDATE, id);
     }
 
     @Override
-    public int updatePassword(String password, int id) {
-        int value = userRepository.updatePassword(encoder.encode(password), id);
-        if (value > 0) {
-            producer.sendMessage(PASSWORD_UPDATE, id);
-        }
-        return value;
+    public void updatePassword(String password, int id) {
+        handleUpdate(userRepository.updatePassword(encoder.encode(password), id));
     }
 
     @Override
-    public int updateFirstName(String firstName, int id) {
-        return userRepository.updateFirstName(firstName, id);
+    public void updateFirstName(String firstName, int id) {
+        handleUpdate(userRepository.updateFirstName(firstName, id));
     }
 
     @Override
-    public int updateLastName(String lastName, int id) {
-        return userRepository.updateLastName(lastName, id);
+    public void updateLastName(String lastName, int id) {
+        handleUpdate(userRepository.updateLastName(lastName, id));
     }
 
     @Override
-    public int updateLanguage(String language, int id) {
+    public void updateLanguage(String language, int id) {
         Language userLanguage = Language.valueOf(language.toUpperCase().trim());
-        return userRepository.updateLanguage(userLanguage, id);
+        handleUpdate(userRepository.updateLanguage(userLanguage, id));
+    }
+
+    /**
+     * Handles the case where the repository methods return 0.
+     *
+     * @param value the value returned by the repository method
+     *
+     * @throws IllegalArgumentException if the value is zero
+     */
+    protected void handleUpdate(int value) {
+        if (value == 0) {
+            throw new IllegalArgumentException("repository returned 0");
+        }
     }
 }

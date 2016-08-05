@@ -20,7 +20,7 @@ import static org.springframework.security.core.context.SecurityContextHolder.ge
  *
  * @author Charlie Cooper
  */
-public class AbstractController {
+public abstract class AbstractController {
 
     @Autowired
     protected MessageSource messageSource;
