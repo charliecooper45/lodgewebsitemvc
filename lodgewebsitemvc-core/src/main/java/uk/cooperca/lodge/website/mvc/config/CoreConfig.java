@@ -2,6 +2,7 @@ package uk.cooperca.lodge.website.mvc.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import uk.cooperca.lodge.website.mvc.config.util.CoreConfigImportSelector;
 
 /**
@@ -10,5 +11,6 @@ import uk.cooperca.lodge.website.mvc.config.util.CoreConfigImportSelector;
  * @author Charlie Cooper
  */
 @Configuration
+@EnableScheduling
 @Import(CoreConfigImportSelector.class)
 public class CoreConfig {}
