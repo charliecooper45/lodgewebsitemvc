@@ -60,6 +60,10 @@ public class User implements Serializable, UserDetails {
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
 
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Column(name = "verification_request_at", nullable = false)
+    private DateTime verificationRequestAt;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Review> reviews;
 
@@ -76,6 +80,7 @@ public class User implements Serializable, UserDetails {
         this.role = role;
         this.language = language;
         this.createdAt = createdAt;
+        this.verificationRequestAt = createdAt;
         this.verified = verified;
     }
 
@@ -121,6 +126,10 @@ public class User implements Serializable, UserDetails {
 
     public DateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public DateTime getVerificationRequestAt() {
+        return verificationRequestAt;
     }
 
     public Role getRole() {

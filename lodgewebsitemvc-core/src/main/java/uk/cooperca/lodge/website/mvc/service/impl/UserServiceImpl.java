@@ -72,6 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void requestVerificationEmail(int id) {
+        userRepository.updateVerificationRequestAt(DateTime.now(), id);
         producer.sendMessage(EMAIL_UPDATE, id);
     }
 
@@ -93,6 +94,7 @@ public class UserServiceImpl implements UserService {
     public void updateEmail(String email, int id) {
         handleUpdate(userRepository.updateEmail(email, id));
         userRepository.updateVerified(false, id);
+        userRepository.updateVerificationRequestAt(DateTime.now(), id);
         producer.sendMessage(EMAIL_UPDATE, id);
     }
 

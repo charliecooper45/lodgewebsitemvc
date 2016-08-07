@@ -24,14 +24,14 @@ import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName;
 public class V1_2__Populate_users_table implements SpringJdbcMigration {
 
     private static final String INSERT_STATEMENT = "INSERT INTO users (email, password, first_name, last_name, role_id, " +
-            "language_preference, verified, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            "language_preference, verified, created_at, verification_request_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String ROLE_STATEMENT = "SELECT id FROM roles WHERE role_name = ?";
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         List<User> users = Arrays.asList(
                 new User("testcc45@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
-                        Language.EN, true, DateTime.now()),
+                        Language.EN, true, DateTime.now().minusDays(3)),
                 new User("testcc46@gmail.com", new BCryptPasswordEncoder().encode("2Password"), "Anton", "Igniski", null,
                         Language.RU, true, DateTime.now())
         );
@@ -51,6 +51,7 @@ public class V1_2__Populate_users_table implements SpringJdbcMigration {
                 statement.setString(6, user.getLanguage().name());
                 statement.setBoolean(7, user.isVerified());
                 statement.setTimestamp(8, new Timestamp(user.getCreatedAt().getMillis()));
+                statement.setTimestamp(9, new Timestamp(user.getVerificationRequestAt().getMillis()));
             }
 
             @Override

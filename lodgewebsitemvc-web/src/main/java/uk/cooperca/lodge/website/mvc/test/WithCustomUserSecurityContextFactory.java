@@ -22,7 +22,8 @@ public class WithCustomUserSecurityContextFactory implements WithSecurityContext
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
         Role userRole = new Role(Role.RoleName.ROLE_USER, DateTime.now());
-        User user = new User("bill@gmail.com", "23asds232dwaDsa", "Bill", "Smith", userRole, User.Language.EN, true, DateTime.now());
+        User user = new User("bill@gmail.com", "23asds232dwaDsa", "Bill", "Smith", userRole, User.Language.EN, true,
+                DateTime.now());
         Authentication auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
         context.setAuthentication(auth);
 

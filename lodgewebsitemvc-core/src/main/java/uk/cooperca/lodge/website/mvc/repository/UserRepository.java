@@ -1,5 +1,6 @@
 package uk.cooperca.lodge.website.mvc.repository;
 
+import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -115,4 +116,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Query("update User u set u.language = ?1 where u.id = ?2")
     public int updateLanguage(Language language, int id);
+
+    /**
+     * Updates the given user's verification request date.
+     *
+     * @param verificationRequestAt the new verification request date
+     * @param id the id of the user to update
+     *
+     * @return an int holding the number of rows updated
+     */
+    @Modifying
+    @Transactional
+    @Query("update User u set u.verificationRequestAt = ?1 where u.id = ?2")
+    public int updateVerificationRequestAt(DateTime verificationRequestAt, int id);
 }
