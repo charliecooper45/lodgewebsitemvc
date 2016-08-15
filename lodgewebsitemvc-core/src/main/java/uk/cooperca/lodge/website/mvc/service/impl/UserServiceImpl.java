@@ -19,9 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static uk.cooperca.lodge.website.mvc.entity.Role.RoleName.ROLE_USER;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.EMAIL_UPDATE;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.NEW_USER;
-import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.PASSWORD_UPDATE;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.*;
 
 /**
  * Implementation of the {@link UserService} interface.
@@ -54,6 +52,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Iterable<User> getUnverifiedUsersBefore(DateTime before) {
+        return userRepository.findByVerificationRequestAtBeforeAndVerifiedFalse(before);
     }
 
     @Override
@@ -91,10 +94,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void sendVerificationReminder(int id) {
+        producer.sendMessage(VERIFICATION_REMINDER, id);
+        handleUpdate(userRepository.updateVerificationRequestAt(DateTime.now(), id));
+    }
+
+    @Override
     public void updateEmail(String email, int id) {
         handleUpdate(userRepository.updateEmail(email, id));
-        userRepository.updateVerified(false, id);
-        userRepository.updateVerificationRequestAt(DateTime.now(), id);
+        handleUpdate(userRepository.updateVerified(false, id));
+        handleUpdate(userRepository.updateVerificationRequestAt(DateTime.now(), id));
         producer.sendMessage(EMAIL_UPDATE, id);
     }
 

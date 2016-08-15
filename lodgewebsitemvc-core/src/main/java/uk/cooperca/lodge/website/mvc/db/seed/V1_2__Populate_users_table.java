@@ -33,7 +33,7 @@ public class V1_2__Populate_users_table implements SpringJdbcMigration {
                 new User("testcc45@gmail.com", new BCryptPasswordEncoder().encode("1Password"), "Bob", "Smith", null,
                         Language.EN, true, DateTime.now().minusDays(3)),
                 new User("testcc46@gmail.com", new BCryptPasswordEncoder().encode("2Password"), "Anton", "Igniski", null,
-                        Language.RU, true, DateTime.now())
+                        Language.RU, false, DateTime.now().minusDays(6))
         );
 
         Integer adminId = jdbcTemplate.queryForObject(ROLE_STATEMENT, new Object[]{ RoleName.ROLE_ADMIN.name() }, Integer.class);

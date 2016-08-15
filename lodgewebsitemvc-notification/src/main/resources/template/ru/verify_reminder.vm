@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    #parse("/template/_header.vm")
+    <p>Hi ${user.firstName},</p>
+    <br />
+    <p>Just a reminder that your account on the Lodge Website is currently unverified.</p>
+    <p>Lost your verification email? Click <a href="${accountLink}">here</a> to login to your account and generate a new one.</p>
+    <br />
+    <p>Thanks,</p>
+    <p>The Lodge Website Team</p>
+  </body>
+</html>

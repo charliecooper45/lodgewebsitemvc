@@ -40,12 +40,15 @@ public class EmailNotificationService implements NotificationService {
     private final String templateFolder = "/template/";
     private final String velocitySuffix = ".vm";
 
+    // TODO: Russian emails
+    // TODO: remove duplication
     @Override
     public void handleNewUserEvent(int userId) {
         User user = getUser(userId);
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
+            // TODO: externalise subject
             message.setSubject("Lodge Website - Welcome!");
             Map<String, Object> model = new HashMap();
             model.put("user", user);
@@ -82,6 +85,22 @@ public class EmailNotificationService implements NotificationService {
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             String text = mergeTemplateIntoString(velocityEngine, getTemplate("password_update", user.getLanguage()),
+                    "UTF-8", model);
+            message.setText(text, true);
+        });
+    }
+
+    @Override
+    public void handleVerificationReminderEvent(int userId) {
+        User user = getUser(userId);
+        sender.send(mimeMessage -> {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            message.setTo(user.getEmail());
+            message.setSubject("Lodge Website - Verification Reminder");
+            Map<String, Object> model = new HashMap();
+            model.put("user", user);
+            model.put("accountLink", linkBuilder.getAccountLink());
+            String text = mergeTemplateIntoString(velocityEngine, getTemplate("verify_reminder", user.getLanguage()),
                     "UTF-8", model);
             message.setText(text, true);
         });

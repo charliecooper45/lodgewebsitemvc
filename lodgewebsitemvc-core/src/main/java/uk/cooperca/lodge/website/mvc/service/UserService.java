@@ -1,8 +1,8 @@
 package uk.cooperca.lodge.website.mvc.service;
 
+import org.joda.time.DateTime;
 import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
-import uk.cooperca.lodge.website.mvc.entity.User.Language;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -33,6 +33,15 @@ public interface UserService {
     public Optional<User> getUserByEmail(String email);
 
     /**
+     * Retrieves all unverified users that have not had a verification request sent since the given date.
+     *
+     * @param before the date verification was last requested
+     *
+     * @return the unverified users
+     */
+    public Iterable<User> getUnverifiedUsersBefore(DateTime before);
+
+    /**
      * Registers a new user on the lodge website platform.
      *
      * @param command the command object holding the registration request
@@ -59,6 +68,13 @@ public interface UserService {
     public User verifyUser(String token);
 
     /**
+     * Sends a reminder to the user to verify their account.
+     *
+     * @param id of the user to remind
+     */
+    public void sendVerificationReminder(int id);
+
+    /**
      * Updates the given user's email address.
      *
      * @param email the new email address for the user
@@ -71,8 +87,6 @@ public interface UserService {
      *
      * @param password the new password for the user
      * @param id the id of the user to update
-     *
-     * @return an int holding the number of rows updated
      */
     public void updatePassword(String password, int id);
 
@@ -81,8 +95,6 @@ public interface UserService {
      *
      * @param firstName the new first name for the user
      * @param id the id of the user to update
-     *
-     * @return an int holding the number of rows updated
      */
     public void updateFirstName(String firstName, int id);
 
@@ -91,8 +103,6 @@ public interface UserService {
      *
      * @param lastName the new last name for the user
      * @param id the id of the user to update
-     *
-     * @return an int holding the number of rows updated
      */
     public void updateLastName(String lastName, int id);
 
@@ -101,8 +111,6 @@ public interface UserService {
      *
      * @param language the new language for the user
      * @param id the id of the user to update
-     *
-     * @return an int holding the number of rows updated
      */
     public void updateLanguage(String language, int id);
 }

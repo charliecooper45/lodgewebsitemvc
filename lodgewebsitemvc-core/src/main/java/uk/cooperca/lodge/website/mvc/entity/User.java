@@ -204,4 +204,22 @@ public class User implements Serializable, UserDetails {
     public int hashCode() {
         return Integer.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        // TODO: improve
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                ", language=" + language +
+                ", verified=" + verified +
+                ", createdAt=" + createdAt +
+                ", verificationRequestAt=" + verificationRequestAt +
+                ", reviews=" + reviews +
+                '}';
+    }
 }

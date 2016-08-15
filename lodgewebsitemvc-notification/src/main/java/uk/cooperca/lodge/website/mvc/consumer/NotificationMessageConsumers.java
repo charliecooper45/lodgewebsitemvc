@@ -25,16 +25,20 @@ public class NotificationMessageConsumers {
 
     @RabbitListener(id = NOTIFICATION_QUEUE, queues = NOTIFICATION_QUEUE)
     public void receiveMessage(NotificationMessage message) {
-        LOGGER.info("Received message of type {} for user with ID {}", message.getType(), message.getUserId());
+        int id = message.getUserId();
+        LOGGER.info("Received message of type {} for user with ID {}", message.getType(), id);
         switch (message.getType()) {
             case NEW_USER:
-                emailNotificationService.handleNewUserEvent(message.getUserId());
+                emailNotificationService.handleNewUserEvent(id);
                 break;
             case EMAIL_UPDATE:
-                emailNotificationService.handleEmailUpdateEvent(message.getUserId());
+                emailNotificationService.handleEmailUpdateEvent(id);
                 break;
             case PASSWORD_UPDATE:
-                emailNotificationService.handlePasswordUpdateEvent(message.getUserId());
+                emailNotificationService.handlePasswordUpdateEvent(id);
+                break;
+            case VERIFICATION_REMINDER:
+                emailNotificationService.handleVerificationReminderEvent(id);
                 break;
         }
     }

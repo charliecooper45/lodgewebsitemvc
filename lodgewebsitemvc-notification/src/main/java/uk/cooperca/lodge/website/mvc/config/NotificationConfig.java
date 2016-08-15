@@ -20,7 +20,7 @@ import java.util.Properties;
  * @author Charlie Cooper
  */
 @ComponentScan(basePackages = {"uk.cooperca.lodge.website.mvc.consumer", "uk.cooperca.lodge.website.mvc.service",
-        "uk.cooperca.lodge.website.mvc.link"})
+        "uk.cooperca.lodge.website.mvc.link", "uk.cooperca.lodge.website.mvc.scheduling"})
 @Import(value = {CoreConfig.class})
 public class NotificationConfig {
 

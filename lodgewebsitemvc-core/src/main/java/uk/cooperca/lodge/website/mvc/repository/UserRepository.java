@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.entity.User.Language;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,6 +38,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @return an optional containing the user if present
      */
     public Optional<User> findByEmail(String email);
+
+    /**
+     * Retrieves the unverified users who last received a verification request before the given date.
+     *
+     * @param before the date requests were sent before
+     *
+     * @return the unverified users
+     */
+    public List<User> findByVerificationRequestAtBeforeAndVerifiedFalse(DateTime before);
 
     /**
      * Updates the given user's verification status.

@@ -27,4 +27,11 @@ public interface NotificationService {
      * @param userId the user's Id
      */
     public void handlePasswordUpdateEvent(int userId);
+
+    /**
+     * Handles the event where a user requires a reminder to verify their account.
+     *
+     * @param userId the user's Id
+     */
+    public void handleVerificationReminderEvent(int userId);
 }
