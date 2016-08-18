@@ -1,0 +1,32 @@
+{
+  "name": "lodgewebsitemvc-web",
+  "homepage": "https://github.com/charliecooper45/lodgewebsitemvc",
+  "authors": [
+    "Charlie Cooper <charliecooper98@gmail.com>"
+  ],
+  "description": "Web module of the Lodge Website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charliecooper45/lodgewebsitemvc"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^2.2.0",
+    "bootstrap-vertical-tabs": "^1.2.1",
+    "bootstrap-star-rating": "^4.0.1",
+    "modernizr-lite": "*",
+    "font-awesome": "^4.6.3",
+    "account": "./src/main/webapp/resources/js/account.js",
+    "main": "./src/main/webapp/resources/css/main.css",
+    "blueimp-gallery-css": "./src/main/webapp/resources/css/blueimp-gallery.min.css",
+    "blueimp-gallery-js": "./src/main/webapp/resources/js/blueimp-gallery.min.js",
+    "bootstrap-image-gallery": "./src/main/webapp/resources/js/bootstrap-image-gallery.min.js"
+  }
+}

@@ -27,5 +27,8 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+### Bower
+lodgewebsitemvc-web/src/main/webapp/resources/components
+
 
 
