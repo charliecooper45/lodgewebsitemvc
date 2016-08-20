@@ -106,7 +106,6 @@ public class AccountController extends AbstractController {
     public ResponseEntity<List<String>> updateLanguage(@RequestParam("language") String language, Locale locale,
                                                        HttpServletRequest request, HttpServletResponse response) {
         try {
-            // TODO: refactor service layer to return the update user
             User user = getCurrentUser();
             userService.updateLanguage(language, user.getId());
             user = userService.getUserByEmail(user.getEmail()).get();
