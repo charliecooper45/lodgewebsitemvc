@@ -1,6 +1,7 @@
 package uk.cooperca.lodge.website.mvc.service;
 
 import io.jsonwebtoken.*;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import uk.cooperca.lodge.website.mvc.command.UserCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
@@ -105,6 +106,8 @@ public class UserServiceImplTest extends AbstractServiceTest {
         int id = 1;
         String email = "mynewemail@yahoo.co.uk";
         when(userRepository.updateEmail(email, id)).thenReturn(0, 1);
+        when(userRepository.updateVerified(false, id)).thenReturn(1);
+        when(userRepository.updateVerificationRequestAt(any(DateTime.class), eq(id))).thenReturn(1);
 
         // failed
         try {
