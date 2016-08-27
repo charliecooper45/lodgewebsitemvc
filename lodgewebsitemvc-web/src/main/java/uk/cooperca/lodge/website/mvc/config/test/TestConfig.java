@@ -1,7 +1,9 @@
 package uk.cooperca.lodge.website.mvc.config.test;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -50,5 +52,13 @@ public class TestConfig {
     @Bean
     public SecurityExpressionHandler securityExpressionHandler() {
         return new DefaultWebSecurityExpressionHandler();
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:/messages");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
     }
 }

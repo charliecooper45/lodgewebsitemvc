@@ -2,6 +2,7 @@ package uk.cooperca.lodge.website.mvc.service.impl;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import uk.cooperca.lodge.website.mvc.service.NotificationService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,6 +39,9 @@ public class EmailNotificationService implements NotificationService {
     @Autowired
     private LinkBuilder linkBuilder;
 
+    @Autowired
+    private MessageSource messageSource;
+
     private final String templateFolder = "/template/";
     private final String velocitySuffix = ".vm";
 
@@ -48,8 +53,7 @@ public class EmailNotificationService implements NotificationService {
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
-            // TODO: externalise subject
-            message.setSubject("Lodge Website - Welcome!");
+            message.setSubject(messageSource.getMessage("email.newUser.subject", null, new Locale(user.getLanguage().name())));
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
@@ -65,7 +69,7 @@ public class EmailNotificationService implements NotificationService {
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
-            message.setSubject("Lodge Website - Email Update");
+            message.setSubject(messageSource.getMessage("email.emailUpdate.subject", null, new Locale(user.getLanguage().name())));
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
@@ -81,7 +85,7 @@ public class EmailNotificationService implements NotificationService {
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
-            message.setSubject("Lodge Website - Password Update");
+            message.setSubject(messageSource.getMessage("email.passwordUpdate.subject", null, new Locale(user.getLanguage().name())));
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             String text = mergeTemplateIntoString(velocityEngine, getTemplate("password_update", user.getLanguage()),
@@ -96,7 +100,7 @@ public class EmailNotificationService implements NotificationService {
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
-            message.setSubject("Lodge Website - Verification Reminder");
+            message.setSubject(messageSource.getMessage("email.verificationReminder.subject", null, new Locale(user.getLanguage().name())));
             Map<String, Object> model = new HashMap();
             model.put("user", user);
             model.put("accountLink", linkBuilder.getAccountLink());
