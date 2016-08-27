@@ -21,7 +21,7 @@ As mentioned above the aim of this project was to expose myself to the Spring fr
     * Logback
     * SL4J
 3. Persistence
-    * HibernateA`
+    * Hibernate
     * PostgreSQL
     * Flyway
     * HikariCP
@@ -62,7 +62,7 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
 
 ### Environment
 1. Three environments (controller via Spring profiles)
-    * dev, test, pro
+    * dev, test, prod
 
 ## Deployment
 TODO: (Teamcity, Apache, Nexus)
