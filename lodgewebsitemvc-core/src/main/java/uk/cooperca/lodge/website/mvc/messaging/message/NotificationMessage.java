@@ -11,6 +11,7 @@ public class NotificationMessage {
         NEW_USER,
         EMAIL_UPDATE,
         PASSWORD_UPDATE,
+        VERIFICATION_REQUEST,
         VERIFICATION_REMINDER
     }
 

@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.ui.velocity.VelocityEngineUtils.mergeTemplateIntoString;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type;
+import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessage.Type.*;
 
 /**
  * {@link NotificationService} implementation to send emails to users.
@@ -46,66 +48,71 @@ public class EmailNotificationService implements NotificationService {
     private final String velocitySuffix = ".vm";
 
     // TODO: Russian emails
-    // TODO: remove duplication
     @Override
     public void handleNewUserEvent(int userId) {
-        User user = getUser(userId);
-        sender.send(mimeMessage -> {
-            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-            message.setTo(user.getEmail());
-            message.setSubject(messageSource.getMessage("email.newUser.subject", null, new Locale(user.getLanguage().name())));
-            Map<String, Object> model = new HashMap();
-            model.put("user", user);
-            model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
-            String text = mergeTemplateIntoString(velocityEngine, getTemplate("welcome", user.getLanguage()), "UTF-8",
-                    model);
-            message.setText(text, true);
-        });
+        sendEmail(userId, NEW_USER);
     }
 
     @Override
     public void handleEmailUpdateEvent(int userId) {
-        User user = getUser(userId);
-        sender.send(mimeMessage -> {
-            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-            message.setTo(user.getEmail());
-            message.setSubject(messageSource.getMessage("email.emailUpdate.subject", null, new Locale(user.getLanguage().name())));
-            Map<String, Object> model = new HashMap();
-            model.put("user", user);
-            model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
-            String text = mergeTemplateIntoString(velocityEngine, getTemplate("verify", user.getLanguage()), "UTF-8",
-                    model);
-            message.setText(text, true);
-        });
+        sendEmail(userId, EMAIL_UPDATE);
     }
 
     @Override
     public void handlePasswordUpdateEvent(int userId) {
-        User user = getUser(userId);
-        sender.send(mimeMessage -> {
-            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-            message.setTo(user.getEmail());
-            message.setSubject(messageSource.getMessage("email.passwordUpdate.subject", null, new Locale(user.getLanguage().name())));
-            Map<String, Object> model = new HashMap();
-            model.put("user", user);
-            String text = mergeTemplateIntoString(velocityEngine, getTemplate("password_update", user.getLanguage()),
-                    "UTF-8", model);
-            message.setText(text, true);
-        });
+        sendEmail(userId, PASSWORD_UPDATE);
+    }
+
+    @Override
+    public void handleVerificationRequestEvent(int userId) {
+        sendEmail(userId, VERIFICATION_REQUEST);
     }
 
     @Override
     public void handleVerificationReminderEvent(int userId) {
+        sendEmail(userId, VERIFICATION_REMINDER);
+    }
+
+    private void sendEmail(int userId, Type type) {
         User user = getUser(userId);
+        final String template;
+        final String code;
+        Map<String, Object> model = new HashMap();
+        model.put("user", user);
+        switch (type) {
+            case NEW_USER:
+                template = "welcome";
+                code = "email.newUser.subject";
+                model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
+                break;
+            case EMAIL_UPDATE:
+                template = "verify";
+                code = "email.emailUpdate.subject";
+                model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
+                break;
+            case PASSWORD_UPDATE:
+                template = "password_update";
+                code = "email.passwordUpdate.subject";
+                break;
+            case VERIFICATION_REQUEST:
+                template = "verification_request";
+                code = "email.verificationRequest.subject";
+                model.put("verificationLink", linkBuilder.getVerificationLink(user.getId()));
+                break;
+            case VERIFICATION_REMINDER:
+                template = "verify_reminder";
+                code = "email.verificationReminder.subject";
+                model.put("accountLink", linkBuilder.getAccountLink());
+                break;
+            default:
+                throw new IllegalArgumentException("unknown verification type " + type);
+        }
+
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
-            message.setSubject(messageSource.getMessage("email.verificationReminder.subject", null, new Locale(user.getLanguage().name())));
-            Map<String, Object> model = new HashMap();
-            model.put("user", user);
-            model.put("accountLink", linkBuilder.getAccountLink());
-            String text = mergeTemplateIntoString(velocityEngine, getTemplate("verify_reminder", user.getLanguage()),
-                    "UTF-8", model);
+            message.setSubject(messageSource.getMessage(code, null, new Locale(user.getLanguage().name())));
+            String text = mergeTemplateIntoString(velocityEngine, getTemplate(template, user.getLanguage()), "UTF-8", model);
             message.setText(text, true);
         });
     }

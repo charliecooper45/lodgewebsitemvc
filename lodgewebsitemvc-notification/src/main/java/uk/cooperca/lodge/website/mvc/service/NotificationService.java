@@ -29,6 +29,13 @@ public interface NotificationService {
     public void handlePasswordUpdateEvent(int userId);
 
     /**
+     * Handles the event where a user requests a new verification email.
+     *
+     * @param userId the user's Id
+     */
+    public void handleVerificationRequestEvent(int userId);
+
+    /**
      * Handles the event where a user requires a reminder to verify their account.
      *
      * @param userId the user's Id

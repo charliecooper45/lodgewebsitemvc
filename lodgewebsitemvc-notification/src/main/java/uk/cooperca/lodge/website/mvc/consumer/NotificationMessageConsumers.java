@@ -37,6 +37,9 @@ public class NotificationMessageConsumers {
             case PASSWORD_UPDATE:
                 emailNotificationService.handlePasswordUpdateEvent(id);
                 break;
+            case VERIFICATION_REQUEST:
+                emailNotificationService.handleVerificationRequestEvent(id);
+                break;
             case VERIFICATION_REMINDER:
                 emailNotificationService.handleVerificationReminderEvent(id);
                 break;

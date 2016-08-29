@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void requestVerificationEmail(int id) {
         userRepository.updateVerificationRequestAt(DateTime.now(), id);
-        producer.sendMessage(EMAIL_UPDATE, id);
+        producer.sendMessage(VERIFICATION_REQUEST, id);
     }
 
     @Override
