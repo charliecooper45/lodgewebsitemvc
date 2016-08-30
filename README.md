@@ -61,7 +61,7 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
 5. Bower
 
 ### Environment
-1. Three environments (controller via Spring profiles)
+1. Three environments (controlled via Spring profiles)
     * dev, test, prod
 
 ## Deployment
