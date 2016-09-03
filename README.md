@@ -43,7 +43,7 @@ As mentioned above the aim of this project was to expose myself to the Spring fr
     * Spring Rabbit test
 
 ### Front end
-The front end is served via the Thymeleaf templating engine. JQuery is used extensively to make asychronous calls to the Java backend. Towards the end of the project I made the decision to update to Bower as dependency management was becoming difficult to maintain.
+The front end is served via the Thymeleaf templating engine. JQuery is used extensively to make asynchronous calls to the Java backend. Towards the end of the project I made the decision to update to Bower as dependency management was becoming difficult to maintain.
 
 1. Bootstrap
     * Font awesome
