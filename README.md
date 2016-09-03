@@ -54,10 +54,10 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
     * Modernizr
 3. Thymeleaf
     * Standard Layout Dialect
-4. HTML
-    * Local Storage
     * Spring Data Dialect
     * Spring Security Dialect
+4. HTML
+    * Local Storage
 5. Bower
 
 ### Environment
