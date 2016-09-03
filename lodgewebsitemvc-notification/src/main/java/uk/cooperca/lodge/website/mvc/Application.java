@@ -11,6 +11,6 @@ import uk.cooperca.lodge.website.mvc.config.NotificationConfig;
 public class Application {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(NotificationConfig.class);
+        new AnnotationConfigApplicationContext(NotificationConfig.class);
     }
 }
