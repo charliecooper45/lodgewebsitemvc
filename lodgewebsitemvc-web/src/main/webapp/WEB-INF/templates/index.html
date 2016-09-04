@@ -12,20 +12,133 @@
             <hr />
             <h2 class="intro-text text-center">Welcome to the Spring MVC Lodge demo application!</h2>
             <hr />
-            <p>
-              A demo website created to help me learn the Spring framework (especially Spring MVC). The idea for the website
-              came when I was creating a simple website for my parent's lodge in Cornwall (GitHub link <a href="https://github.com/charliecooper45/lodgewebsite" target="_blank">here</a>).
-              Their site is static with no interaction or persistence but provided a good basis and business idea for an interactive
-              website. The site allows users to create an account, register/manage bookings and leave feedback.
-              The main technologies used are listed below:
-            </p>
-            <ul>
-              <li>Spring (MVC)</li>
-              <li>Thymeleaf (layouts managed with the Thymeleaf Layout Dialect)</li>
-              <li>Maven</li>
-            </ul>
-            <p>As part of the project I decided to build and setup a Linux home server (the current distro is Ubuntu).</p>
+            <p>This project was inspired by my parents buying a holiday lodge in Cornwall, UK. They asked me to create a simple
+              <a href="https://github.com/charliecooper45/lodgewebsite">website</a> that gave users an overview of the lodge
+              itself and the surrounding area. I decided to use this opportunity to enhance the project and help me learn the
+              Spring framework. The enhancements to the static website are as follows:</p>
+
+            <ol>
+              <li>User accounts (registration/login and password reset)</li>
+              <li>Reviews (add/delete and view reviews)</li>
+              <li>Account management (update fields such as password, name and email)</li>
+              <li>Settings (users can set and update their language preference)</li>
+            </ol>
+
+            <h3>Stack</h3>
+            <h4>Back end</h4>
+            <p>As mentioned above the aim of this project was to expose myself to the Spring framework. With this in mind
+              the back end stack is very Spring focused. Please find a list of technologies below:</p>
+
+            <ol>
+              <li>Spring
+                <ul>
+                  <li>MVC</li>
+                  <li>Security</li>
+                  <li>Data</li>
+                  <li>AMQP</li>
+                  <li>Rabbit</li>
+                  <li>Mail</li>
+                </ul>
+              </li>
+              <li>Logging
+                <ul>
+                  <li>Logback</li>
+                  <li>SL4J</li>
+                </ul>
+              </li>
+              <li>Persistence
+                <ul>
+                  <li>Hibernate</li>
+                  <li>PostgreSQL</li>
+                  <li>Flyway</li>
+                  <li>HikariCP</li>
+                </ul>
+              </li>
+              <li>Maven
+                <ul>
+                  <li>Parent POM</li>
+                  <li>Three modules (web, core and notification)</li>
+                </ul>
+              </li>
+              <li>Velocity (for email templates)</li>
+              <li>JSON
+                <ul>
+                  <li>Json Web Tokens (for email links), jjwt library</li>
+                  <li>Jackson</li>
+                </ul>
+              </li>
+              <li>Properties
+                <ul>
+                  <li>jasypt</li>
+                  <li>jasypt Spring Boot</li>
+                </ul>
+              </li>
+              <li>Testing
+                <ul>
+                  <li>JUnit</li>
+                  <li>Spring Test</li>
+                  <li>Mockito</li>
+                  <li>JsonPath</li>
+                  <li>Spring Rabbit test</li>
+                </ul>
+              </li>
+            </ol>
+
+            <h4>Front end</h4>
+            <p>The front end is served via the Thymeleaf templating engine. JQuery is used extensively to make asynchronous
+              calls to the Java backend. Towards the end of the project I made the decision to update to Bower as dependency
+              management was becoming difficult to maintain.</p>
+
+            <ol>
+              <li>Bootstrap
+                <ul>
+                  <li>Font awesome</li>
+                  <li>Vertical tabs</li>
+                </ul>
+              </li>
+              <li>JavaScript
+                <ul>
+                  <li>AJAX</li>
+                  <li>JQuery</li>
+                  <li>Modernizr</li>
+                </ul>
+              </li>
+              <li>Thymeleaf
+                <ul>
+                  <li>Standard Layout Dialect</li>
+                  <li>Spring Data Dialect</li>
+                  <li>Spring Security Dialect</li>
+                </ul>
+              </li>
+              <li>HTML
+                <ul>
+                  <li>Local Storage</li>
+                </ul>
+              </li>
+              <li>Bower</li>
+            </ol>
+
+            <h4>Environment</h4>
+            <ol>
+              <li>Three environments (controlled via Spring profiles)
+                <ul>
+                  <li>dev, test, prod</li>
+                </ul>
+              </li>
+            </ol>
+
+
+            <h4>Deployment</h4>
+            <ol>
+              <li>Teamcity</li>
+              <li>Apache</li>
+              <li>Nexus</li>
+              <li>Tomcat</li>
+            </ol>
+
             <p>The source code can be viewed on GitHub <a href="https://github.com/charliecooper45/lodgewebsitemvc" target="_blank">here</a></p>
+
+            <h3>Test Accounts</h3>
           </div>
         </div>
       </div>
