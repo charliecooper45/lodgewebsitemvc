@@ -65,4 +65,4 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
     * dev, test, prod
 
 ## Deployment
-TODO: (Teamcity, Apache, Nexus)
+During the project I setup a home server running Ubuntu Linux. The application runs on Apache Tomcat and is served through Apache. The build process is currently not automated (this is a future improvement) but TeamCity is used for continuous integration.
