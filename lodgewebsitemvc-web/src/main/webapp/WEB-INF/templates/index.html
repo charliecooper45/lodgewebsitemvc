@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="/layouts/layout" th:with="page='index'">
+      layout:decorator="/layouts/layout" th:with="page='index'" class="index">
   <head>
     <title th:text="#{website.home}">Home</title>
   </head>
@@ -127,7 +127,6 @@
               </li>
             </ol>
 
-
             <h4>Deployment</h4>
             <ol>
               <li>Teamcity</li>
@@ -139,6 +138,29 @@
             <p>The source code can be viewed on GitHub <a href="https://github.com/charliecooper45/lodgewebsitemvc" target="_blank">here</a></p>
 
             <h3>Test Accounts</h3>
+            <p>Currently there are two test accounts (which can be used to login and view the website features), details are below:</p>
+            <table border="1">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th>Language</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>testcc45@gmail.com</td>
+                  <td>1Password</td>
+                  <td>English</td>
+                </tr>
+                <tr>
+                  <td>testcc46@gmail.com</td>
+                  <td>2Password</td>
+                  <td>Russian</td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
         </div>
       </div>
