@@ -136,6 +136,15 @@ footer #languages p {
     cursor: pointer;
 }
 
+/* index */
+.index table th {
+    text-align: center;
+}
+.index table td {
+    vertical-align: middle;
+    padding: 10px;
+}
+
 /* media queries */
 @media screen and (max-width: 768px) {
     /* reviews */
