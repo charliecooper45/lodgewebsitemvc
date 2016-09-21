@@ -16,7 +16,6 @@ $(function() {
     }
 });
 
-/* account */
 $('#save-email').click(function() {
     var user = {};
     user.email = $('#edit-email').val();

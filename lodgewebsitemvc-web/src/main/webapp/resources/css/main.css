@@ -145,6 +145,16 @@ footer #languages p {
     padding: 10px;
 }
 
+/* password */
+.password .help-block {
+    color: #b92c28;
+    text-align: center;
+}
+.password .help-block ul {
+    padding: 0;
+    list-style-type: none;
+}
+
 /* media queries */
 @media screen and (max-width: 768px) {
     /* reviews */

@@ -6,8 +6,12 @@ import io.jsonwebtoken.SignatureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.cooperca.lodge.website.mvc.command.PasswordCommand;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.security.session.SessionManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
@@ -51,5 +55,20 @@ public class UserController extends AbstractController {
     @RequestMapping("/verificationSuccess")
     public String verificationSuccess() {
         return "verificationSuccess";
+    }
+
+    @RequestMapping("/forgottenPassword")
+    public String forgottenPassword(Model model) {
+        model.addAttribute("passwordCommand", new PasswordCommand());
+        return "forgottenPassword";
+    }
+
+    @RequestMapping(value = "/requestPassword", method = RequestMethod.POST)
+    public String requestPassword(@Validated PasswordCommand command, BindingResult result) {
+        if (result.hasErrors()) {
+            return "forgottenPassword";
+        }
+        // TODO
+        return "passwordRequested";
     }
 }
