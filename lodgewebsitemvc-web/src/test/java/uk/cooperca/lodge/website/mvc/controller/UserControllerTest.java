@@ -4,14 +4,19 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import uk.cooperca.lodge.website.mvc.entity.User;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.codehaus.groovy.runtime.InvokerHelper.asList;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerTest extends AbstractControllerTest {
@@ -63,5 +68,45 @@ public class UserControllerTest extends AbstractControllerTest {
         mockMvc.perform(get("/user/verificationSuccess").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("verificationSuccess"));
+    }
+
+    @Test
+    public void testForgottenPassword() throws Exception {
+        mockMvc.perform(get("/user/forgottenPassword").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("forgottenPassword"));
+    }
+
+    @Test
+    public void testPasswordCommandValidation() throws Exception {
+        String email = "";
+        when(userService.getUserByEmail(anyString())).thenReturn(Optional.empty());
+        when(userService.getUserByEmail("test@yahoo.com")).thenReturn(Optional.of(mock(User.class)));
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("email", email);
+
+        // missing email
+        expectPasswordError(map);
+
+        // incorrect email
+        map.replace("email", asList("sdfadfsd.com"));
+
+        // non-existent user
+        map.replace("email", asList("test2@yahoo.com"));
+
+        // working
+        map.replace("email", asList("test@yahoo.com"));
+    }
+
+    private void expectPasswordError(MultiValueMap<String, String> map) throws Exception {
+        mockMvc.perform(post("/user/requestPassword")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .params(map))
+                .andExpect(status().isOk())
+                .andExpect(view().name("forgottenPassword"))
+                .andExpect(model().attributeHasFieldErrors("passwordCommand"));
+        // TODO: finish test
+//        verify(userService, never()).registerUser(Matchers.any(UserCommand.class), Matchers.any(Locale.class));
     }
 }

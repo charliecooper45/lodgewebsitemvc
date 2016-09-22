@@ -75,7 +75,7 @@ public class RegisterControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testValidation() throws Exception {
+    public void testUserCommandValidation() throws Exception {
         when(userService.getUserByEmail(anyString())).thenReturn(Optional.empty());
         when(userService.getUserByEmail("test@yahoo.com")).thenReturn(Optional.of(mock(User.class)));
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
