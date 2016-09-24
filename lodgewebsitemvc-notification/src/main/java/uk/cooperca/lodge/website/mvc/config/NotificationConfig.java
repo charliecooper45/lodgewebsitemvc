@@ -10,6 +10,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
+import uk.cooperca.lodge.website.mvc.password.PasswordGenerator;
+import uk.cooperca.lodge.website.mvc.password.impl.RandomPasswordGenerator;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -48,5 +50,10 @@ public class NotificationConfig {
         props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         factory.setVelocityProperties(props);
         return factory.createVelocityEngine();
+    }
+
+    @Bean
+    public PasswordGenerator passwordGenerator() {
+        return new RandomPasswordGenerator();
     }
 }

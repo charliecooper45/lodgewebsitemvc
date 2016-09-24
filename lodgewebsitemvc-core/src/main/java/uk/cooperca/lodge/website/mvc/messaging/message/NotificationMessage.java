@@ -12,7 +12,8 @@ public class NotificationMessage {
         EMAIL_UPDATE,
         PASSWORD_UPDATE,
         VERIFICATION_REQUEST,
-        VERIFICATION_REMINDER
+        VERIFICATION_REMINDER,
+        PASSWORD_RESET
     }
 
     private Type type;

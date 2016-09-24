@@ -43,6 +43,9 @@ public class NotificationMessageConsumers {
             case VERIFICATION_REMINDER:
                 emailNotificationService.handleVerificationReminderEvent(id);
                 break;
+            case PASSWORD_RESET:
+                emailNotificationService.handlePasswordResetEvent(id);
+                break;
         }
     }
 }

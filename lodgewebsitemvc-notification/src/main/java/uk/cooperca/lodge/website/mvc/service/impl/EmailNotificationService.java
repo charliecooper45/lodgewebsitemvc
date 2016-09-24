@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.entity.User.Language;
 import uk.cooperca.lodge.website.mvc.link.LinkBuilder;
+import uk.cooperca.lodge.website.mvc.password.PasswordGenerator;
 import uk.cooperca.lodge.website.mvc.service.NotificationService;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
@@ -44,6 +45,9 @@ public class EmailNotificationService implements NotificationService {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private PasswordGenerator passwordGenerator;
+
     private final String templateFolder = "/template/";
     private final String velocitySuffix = ".vm";
 
@@ -71,6 +75,11 @@ public class EmailNotificationService implements NotificationService {
     @Override
     public void handleVerificationReminderEvent(int userId) {
         sendEmail(userId, VERIFICATION_REMINDER);
+    }
+
+    @Override
+    public void handlePasswordResetEvent(int userId) {
+        sendEmail(userId, PASSWORD_RESET);
     }
 
     private void sendEmail(int userId, Type type) {
@@ -103,6 +112,15 @@ public class EmailNotificationService implements NotificationService {
                 template = "verify_reminder";
                 code = "email.verificationReminder.subject";
                 model.put("accountLink", linkBuilder.getAccountLink());
+                break;
+            case PASSWORD_RESET:
+                // TODO: not secure to send password as plain text
+                template = "password_reset";
+                code = "email.passwordReset.subject";
+                model.put("accountLink", linkBuilder.getAccountLink());
+                String password = passwordGenerator.generatePassword();
+                userService.updatePassword(password, user.getId());
+                model.put("password", password);
                 break;
             default:
                 throw new IllegalArgumentException("unknown verification type " + type);

@@ -207,19 +207,6 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String toString() {
-        // TODO: improve
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
-                ", language=" + language +
-                ", verified=" + verified +
-                ", createdAt=" + createdAt +
-                ", verificationRequestAt=" + verificationRequestAt +
-                ", reviews=" + reviews +
-                '}';
+        return super.toString();
     }
 }

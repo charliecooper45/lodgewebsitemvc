@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.mail.javamail.JavaMailSender;
 import uk.cooperca.lodge.website.mvc.config.messaging.MessagingConfig;
 import uk.cooperca.lodge.website.mvc.consumer.NotificationMessageConsumers;
+import uk.cooperca.lodge.website.mvc.password.PasswordGenerator;
+import uk.cooperca.lodge.website.mvc.password.impl.RandomPasswordGenerator;
 import uk.cooperca.lodge.website.mvc.service.impl.EmailNotificationService;
 import uk.cooperca.lodge.website.mvc.link.LinkBuilder;
 import uk.cooperca.lodge.website.mvc.token.TokenManager;
@@ -58,5 +60,10 @@ public class TestConfig {
     @Bean
     public TokenManager tokenManager() {
         return mock(TokenManager.class);
+    }
+
+    @Bean
+    public PasswordGenerator passwordGenerator() {
+        return new RandomPasswordGenerator();
     }
 }

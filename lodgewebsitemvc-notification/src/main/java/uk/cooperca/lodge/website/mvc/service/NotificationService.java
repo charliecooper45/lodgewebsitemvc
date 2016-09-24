@@ -41,4 +41,11 @@ public interface NotificationService {
      * @param userId the user's Id
      */
     public void handleVerificationReminderEvent(int userId);
+
+    /**
+     * Handles the event where a user requires a new password.
+     *
+     * @param userId the user's id
+     */
+    public void handlePasswordResetEvent(int userId);
 }
