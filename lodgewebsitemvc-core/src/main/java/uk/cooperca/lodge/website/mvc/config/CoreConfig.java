@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import uk.cooperca.lodge.website.mvc.config.logging.LoggingConfig;
 import uk.cooperca.lodge.website.mvc.config.util.CoreConfigImportSelector;
 
 /**
@@ -16,7 +17,7 @@ import uk.cooperca.lodge.website.mvc.config.util.CoreConfigImportSelector;
  */
 @Configuration
 @EnableScheduling
-@Import(CoreConfigImportSelector.class)
+@Import({CoreConfigImportSelector.class, LoggingConfig.class})
 public class CoreConfig {
 
     @Bean

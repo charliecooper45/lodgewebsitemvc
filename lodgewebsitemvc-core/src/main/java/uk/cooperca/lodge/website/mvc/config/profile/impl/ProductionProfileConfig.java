@@ -38,7 +38,7 @@ public class ProductionProfileConfig implements ProfileConfig {
     }
 
     @Override
-    @Bean(initMethod = "migrate")
+    @Bean(initMethod = "migrate", destroyMethod = "clean")
     public Flyway flyway() {
         Flyway flyway = new Flyway();
         flyway.setLocations(env.getProperty("flyway.locations"));
