@@ -20,7 +20,7 @@ public class LinkBuilder {
     private Environment environment;
 
     public String getVerificationLink(int userId) {
-        return "http://localhost:8080/user/verify?token=" + tokenManager.generateVerificationToken(userId);
+        return environment.getProperty("domain") + "/user/verify?token=" + tokenManager.generateVerificationToken(userId);
     }
 
     public String getAccountLink() {
