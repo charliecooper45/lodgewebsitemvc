@@ -11,7 +11,7 @@
   <name>lodgewebsitemvc</name>
   <description>An interactive website for the Cooper family lodge allowing users to sign up, leave reviews and make/edit bookings</description>
   <inceptionYear>2016</inceptionYear>
-  <url>http://www.cooperca.uk/lodgewebsitemvc</url>
+  <url>http://www.cooperca.uk/mvcweb</url>
   <developers>
     <developer>
       <name>Charlie Cooper</name>
