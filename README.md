@@ -18,7 +18,7 @@ As mentioned above the aim of this project was to expose myself to the Spring fr
     * Rabbit
     * Mail
 2. Logging
-    * Logback
+    * Logback (Logback Spring Extension)
     * SL4J
 3. Persistence
     * Hibernate
