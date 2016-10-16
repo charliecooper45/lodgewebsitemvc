@@ -1,0 +1,27 @@
+{
+  "name": "modernizr-lite",
+  "homepage": "https://github.com/moreguppy/modernizr-lite",
+  "authors": [
+    "modernizr.com"
+  ],
+  "keywords": [
+    "modernizr"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "a230e3ac88",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a230e3ac889892f56730124ac3756a38c0554bb2"
+  },
+  "_source": "https://github.com/moreguppy/modernizr-lite.git",
+  "_target": "*",
+  "_originalSource": "modernizr-lite"
+}

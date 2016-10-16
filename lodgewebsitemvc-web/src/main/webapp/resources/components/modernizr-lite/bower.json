@@ -1,0 +1,19 @@
+{
+  "name": "modernizr-lite",
+  "version": "0.0.0",
+  "homepage": "https://github.com/moreguppy/modernizr-lite",
+  "authors": [
+    "modernizr.com"
+  ],
+  "keywords": [
+    "modernizr"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

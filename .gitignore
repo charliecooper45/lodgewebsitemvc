@@ -28,7 +28,7 @@ buildNumber.properties
 .mvn/timing.properties
 
 ### Bower
-lodgewebsitemvc-web/src/main/webapp/resources/components
+#lodgewebsitemvc-web/src/main/webapp/resources/components
 
 
 
