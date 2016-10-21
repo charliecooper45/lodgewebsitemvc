@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Configures messaging using RabbitMQ for the notification module.
+ * Main configuration class for the notification module.
  *
  * @author Charlie Cooper
  */
@@ -37,7 +37,10 @@ public class NotificationConfig {
         mailSender.setUsername(env.getProperty("mail.username"));
         mailSender.setPassword(env.getProperty("mail.password"));
         Properties properties = new Properties();
-        properties.put("mail.smtp.starttls.enable", env.getProperty("mail.smtp.starttls.enable"));
+        properties.setProperty("mail.smtp.socketFactory.class", env.getProperty("mail.smtp.socketFactory.class"));
+        properties.setProperty("mail.smtp.socketFactory.fallback", env.getProperty("mail.smtp.socketFactory.fallback"));
+        properties.setProperty("mail.smtp.socketFactory.port", env.getProperty("mail.port"));
+        properties.put("mail.smtp.startssl.enable", env.getProperty("mail.smtp.startssl.enable"));
         mailSender.setJavaMailProperties(properties);
         return mailSender;
     }

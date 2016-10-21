@@ -3,6 +3,7 @@ package uk.cooperca.lodge.website.mvc.service.impl;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,9 @@ public class EmailNotificationService implements NotificationService {
 
     @Autowired
     private PasswordGenerator passwordGenerator;
+
+    @Autowired
+    private Environment env;
 
     private final String templateFolder = "/template/";
     private final String velocitySuffix = ".vm";
@@ -129,6 +133,7 @@ public class EmailNotificationService implements NotificationService {
         sender.send(mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setTo(user.getEmail());
+            message.setFrom(env.getProperty("mail.username"));
             message.setSubject(messageSource.getMessage(code, null, new Locale(user.getLanguage().name())));
             String text = mergeTemplateIntoString(velocityEngine, getTemplate(template, user.getLanguage()), "UTF-8", model);
             message.setText(text, true);
