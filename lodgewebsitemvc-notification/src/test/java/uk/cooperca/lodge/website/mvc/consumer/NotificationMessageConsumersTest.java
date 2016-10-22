@@ -27,7 +27,7 @@ import static uk.cooperca.lodge.website.mvc.messaging.message.NotificationMessag
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
-@TestPropertySource(properties = {"spring.profiles.active=dev", "jasypt.encryptor.password=dFt83FfMm33WR72DQJhPjs"})
+@TestPropertySource(properties = {"spring.profiles.active=dev"})
 public class NotificationMessageConsumersTest {
 
     @Autowired

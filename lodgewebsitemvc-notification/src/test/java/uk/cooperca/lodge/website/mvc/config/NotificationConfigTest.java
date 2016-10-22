@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { NotificationConfig.class })
-@TestPropertySource(properties = {"spring.profiles.active=dev", "jasypt.encryptor.password=dFt83FfMm33WR72DQJhPjs"})
+@TestPropertySource(properties = {"spring.profiles.active=dev"})
 @DirtiesContext
 public class NotificationConfigTest {
 

@@ -20,7 +20,7 @@ import uk.cooperca.lodge.website.mvc.token.TokenManager;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {CoreConfig.class, SecurityConfig.class})
-@TestPropertySource(properties = {"spring.profiles.active=test", "jasypt.encryptor.password=password"})
+@TestPropertySource(properties = {"spring.profiles.active=test"})
 public abstract class AbstractServiceTest {
 
     @Autowired

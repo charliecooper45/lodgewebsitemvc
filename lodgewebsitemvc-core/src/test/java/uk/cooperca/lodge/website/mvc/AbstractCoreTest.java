@@ -14,5 +14,5 @@ import uk.cooperca.lodge.website.mvc.config.SecurityConfig;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {CoreConfig.class, SecurityConfig.class})
-@TestPropertySource(properties = {"spring.profiles.active=dev", "jasypt.encryptor.password=dFt83FfMm33WR72DQJhPjs"})
+@TestPropertySource(properties = {"spring.profiles.active=dev"})
 public abstract class AbstractCoreTest {}
