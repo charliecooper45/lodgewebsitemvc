@@ -65,4 +65,14 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
     * dev, test, prod
 
 ## Deployment
-During the project I setup a home server running Ubuntu Linux. The application runs on Apache Tomcat and is served through Apache. The build process is currently not automated (this is a future improvement) but TeamCity is used for continuous integration.
+As part of the project I setup a home server running Ubuntu Linux. This is used both as a build server and to host a web server VM that serves the application.
+
+#### Build Server
+- TeamCity (using the Maven Nexus Staging Plugin to deploy to Nexus)
+- Nexus
+- Artifacts are then deployed to the Web Server manually (this is a future improvement) 
+
+#### Web Server VM
+- Apache Web Server 
+- Apache Tomcat running the web module WAR
+- Java service for the notification module JAR
