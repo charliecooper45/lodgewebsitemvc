@@ -7,10 +7,10 @@
         <div class="row">
           <div sec:authorize="isAnonymous()" class="col-xs-4" id="login-register">
             <form th:action="@{/login}">
-              <button th:action="@{/login}" class="btn btn-link"><i class="fa fa-sign-in" />&nbsp;Login&nbsp;&nbsp;</button>
+              <button th:action="@{/login}" class="btn btn-link"><i class="fa fa-sign-in" />&nbsp;<span th:text="#{footer.login}" />&nbsp;&nbsp;</button>
             </form>
             <form th:action="@{/register}">
-              <button class="btn btn-link"><i class="fa fa-user-plus" />&nbsp;Register</button>
+              <button class="btn btn-link"><i class="fa fa-user-plus" />&nbsp;<span th:text="#{footer.register}" /></button>
             </form>
           </div>
           <div sec:authorize="isAuthenticated()" class="col-xs-4" id="logout">
@@ -18,7 +18,7 @@
               <button class="btn btn-link"><i class="fa fa-user" />&nbsp;<span sec:authentication="principal.firstName" />&nbsp;&nbsp;</button>
             </form>
             <form th:action="@{/logout}" method="post">
-              <button class="btn btn-link"><i class="fa fa-sign-out" />&nbsp;Log Out</button>
+              <button class="btn btn-link"><i class="fa fa-sign-out" />&nbsp;<span th:text="#{footer.logout}" /></button>
             </form>
           </div>
           <div class="col-xs-4 text-center">
