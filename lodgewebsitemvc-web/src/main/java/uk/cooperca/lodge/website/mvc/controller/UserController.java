@@ -16,6 +16,8 @@ import uk.cooperca.lodge.website.mvc.entity.User;
 import uk.cooperca.lodge.website.mvc.security.session.SessionManager;
 import uk.cooperca.lodge.website.mvc.service.UserService;
 
+import java.util.Optional;
+
 /**
  * Controller for operations on users that do not require authentication.
  *
@@ -68,7 +70,8 @@ public class UserController extends AbstractController {
         if (result.hasErrors()) {
             return "forgottenPassword";
         }
-        // TODO
+        Optional<User> user = userService.getUserByEmail(command.getEmail());
+        userService.sendPasswordResetRequest(user.get().getId());
         return "passwordRequested";
     }
 }

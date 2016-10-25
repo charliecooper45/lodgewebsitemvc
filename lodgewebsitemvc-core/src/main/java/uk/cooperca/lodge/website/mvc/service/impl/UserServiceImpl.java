@@ -100,6 +100,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void sendPasswordResetRequest(int id) {
+        producer.sendMessage(PASSWORD_RESET, id);
+    }
+
+    @Override
     public void updateEmail(String email, int id) {
         handleUpdate(userRepository.updateEmail(email, id));
         handleUpdate(userRepository.updateVerified(false, id));

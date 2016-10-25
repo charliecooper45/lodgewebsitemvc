@@ -75,6 +75,13 @@ public interface UserService {
     public void sendVerificationReminder(int id);
 
     /**
+     * Sends a new password to the user.
+     *
+     * @param id of the user to send the password to
+     */
+    public void sendPasswordResetRequest(int id);
+
+    /**
      * Updates the given user's email address.
      *
      * @param email the new email address for the user

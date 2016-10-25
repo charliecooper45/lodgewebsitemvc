@@ -90,12 +90,22 @@ public class UserControllerTest extends AbstractControllerTest {
 
         // incorrect email
         map.replace("email", asList("sdfadfsd.com"));
+        expectPasswordError(map);
 
         // non-existent user
         map.replace("email", asList("test2@yahoo.com"));
+        expectPasswordError(map);
 
         // working
         map.replace("email", asList("test@yahoo.com"));
+        mockMvc.perform(post("/user/requestPassword")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .params(map))
+                .andExpect(status().isOk())
+                .andExpect(view().name("passwordRequested"))
+                .andExpect(model().hasNoErrors());
+        verify(userService).sendPasswordResetRequest(anyInt());
     }
 
     private void expectPasswordError(MultiValueMap<String, String> map) throws Exception {
@@ -106,7 +116,6 @@ public class UserControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("forgottenPassword"))
                 .andExpect(model().attributeHasFieldErrors("passwordCommand"));
-        // TODO: finish test
-//        verify(userService, never()).registerUser(Matchers.any(UserCommand.class), Matchers.any(Locale.class));
+        verify(userService, never()).sendPasswordResetRequest(anyInt());
     }
 }
