@@ -113,7 +113,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("update User u set u.lastName = ?1 where u.id = ?2")
     public int updateLastName(String lastName, int id);
 
-
     /**
      * Updates the given user's language preference.
      *
