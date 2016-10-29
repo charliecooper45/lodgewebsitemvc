@@ -1,4 +1,9 @@
 # lodgewebsitemvc
+
+[![Build Status](http://teamcity.cooperca.uk/app/rest/builds/buildType:id:lodgewebsitemvc_build/statusIcon)]
+(http://teamcity.cooperca.uk/viewType.html?buildTypeId=lodgewebsitemvc_build&guest=1)
+
+
 This project was inspired by my parents buying a holiday lodge in Cornwall, UK. They asked me to create a simple <a href="https://github.com/charliecooper45/lodgewebsite">website</a> that gave users an overview of the lodge itself and the surrounding area. I decided to use this opportunity to enhance the project and help me learn the Spring framework. The enhancements to the static website are as follows:
 
 1. User accounts (registration/login and password reset)
