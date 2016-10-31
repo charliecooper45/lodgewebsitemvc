@@ -468,7 +468,7 @@
   <distributionManagement>
     <snapshotRepository>
       <id>nexus</id>
-      <url>http://web-1:8081/nexus/content/repositories/snapshots/</url>
+      <url>http://nexus.cooperca.uk/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
