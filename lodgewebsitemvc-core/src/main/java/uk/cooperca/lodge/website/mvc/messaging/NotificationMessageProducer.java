@@ -30,6 +30,7 @@ public class NotificationMessageProducer {
         try {
             template.convertAndSend(new NotificationMessage(type, id));
         } catch (Exception e) {
+            // TODO: display error page to the user
             LOGGER.warn("Unable to send message of type {} with entity ID {}", type, id, e);
         }
     }

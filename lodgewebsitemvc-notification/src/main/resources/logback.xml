@@ -3,6 +3,9 @@
   <appender name="consoleAppender" class="ch.qos.logback.ext.spring.DelegatingLogbackAppender"/>
   <appender name="fileAppender" class="ch.qos.logback.ext.spring.DelegatingLogbackAppender"/>
 
+  <logger name="org.hibernate.type" level="WARN" />
+  <logger name="org.hibernate" level="WARN" />
+
   <root level="INFO">
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>

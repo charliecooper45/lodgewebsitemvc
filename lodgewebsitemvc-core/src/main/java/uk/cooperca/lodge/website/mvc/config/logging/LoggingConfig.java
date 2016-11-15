@@ -52,40 +52,28 @@ public class LoggingConfig {
         return appender;
     }
 
-    @Configuration
     @Profile("prod")
-    public static class ProductionLoggingConfig {
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public RollingFileAppender fileAppender(LoggerContext context) {
+        RollingFileAppender appender = new RollingFileAppender();
+        appender.setContext(context);
+        appender.setAppend(env.getProperty("logging.file.append", Boolean.class));
 
-        @Autowired
-        private Environment env;
+        PatternLayoutEncoder encoder = new PatternLayoutEncoder();
+        encoder.setContext(context);
+        encoder.setPattern(env.getProperty("logging.file.pattern"));
+        encoder.start();
 
-        @Bean(name = "fileEncoder", initMethod = "start", destroyMethod = "stop")
-        public PatternLayoutEncoder fileEncoder(LoggerContext ctx) {
-            PatternLayoutEncoder encoder = new PatternLayoutEncoder();
-            encoder.setContext(ctx);
-            encoder.setPattern(env.getProperty("logging.file.pattern"));
-            return encoder;
-        }
+        TimeBasedRollingPolicy timeBasedRollingPolicy = new TimeBasedRollingPolicy();
+        timeBasedRollingPolicy.setContext(context);
+        timeBasedRollingPolicy.setParent(appender);
+        timeBasedRollingPolicy.setFileNamePattern(env.getProperty("logging.file.directory") + "server%d{yyyy-MM-dd}.zip");
+        timeBasedRollingPolicy.setMaxHistory(env.getProperty("logging.file.maxHistory", Integer.class));
+        timeBasedRollingPolicy.start();
 
-        @Bean(initMethod = "start", destroyMethod = "stop")
-        public RollingFileAppender fileAppender(LoggerContext context, @Qualifier("fileEncoder") Encoder encoder) {
-            RollingFileAppender appender = new RollingFileAppender();
-            appender.setContext(context);
-            appender.setEncoder(encoder);
-            appender.setAppend(env.getProperty("logging.file.append", Boolean.class));
-            appender.setFile(env.getProperty("logging.file.directory") + "application.log");
-            return appender;
-        }
+        appender.setEncoder(encoder);
+        appender.setRollingPolicy(timeBasedRollingPolicy);
 
-        @Bean(initMethod = "start", destroyMethod = "stop")
-        public TimeBasedRollingPolicy timeBasedRollingPolicy(LoggerContext context, RollingFileAppender appender) {
-            TimeBasedRollingPolicy timeBasedRollingPolicy = new TimeBasedRollingPolicy();
-            timeBasedRollingPolicy.setContext(context);
-            timeBasedRollingPolicy.setParent(appender);
-            timeBasedRollingPolicy.setFileNamePattern(env.getProperty("logging.file.directory") + "application_%d{yyyy-MM-dd}.%i.log");
-            timeBasedRollingPolicy.setMaxHistory(env.getProperty("logging.file.maxHistory", Integer.class));
-            appender.setRollingPolicy(timeBasedRollingPolicy);
-            return timeBasedRollingPolicy;
-        }
+        return appender;
     }
 }
