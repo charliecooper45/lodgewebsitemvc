@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
                 command.getLastName(), role, language, false, DateTime.now());
         user = userRepository.save(user);
         if (user != null) {
-            producer.sendMessage(NEW_USER, user.getId());
+            producer.sendMessageHandleError(NEW_USER, user.getId());
         }
         return user;
     }
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void sendVerificationReminder(int id) {
-        producer.sendMessage(VERIFICATION_REMINDER, id);
+        producer.sendMessageHandleError(VERIFICATION_REMINDER, id);
         handleUpdate(userRepository.updateVerificationRequestAt(DateTime.now(), id));
     }
 
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
         handleUpdate(userRepository.updateEmail(email, id));
         handleUpdate(userRepository.updateVerified(false, id));
         handleUpdate(userRepository.updateVerificationRequestAt(DateTime.now(), id));
-        producer.sendMessage(EMAIL_UPDATE, id);
+        producer.sendMessageHandleError(EMAIL_UPDATE, id);
     }
 
     @Override

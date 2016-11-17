@@ -36,7 +36,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
         // saved successfully
         userService.registerUser(command, Locale.ENGLISH);
-        verify(producer).sendMessage(NotificationMessage.Type.NEW_USER, 1);
+        verify(producer).sendMessageHandleError(NotificationMessage.Type.NEW_USER, 1);
     }
 
     @Test
@@ -120,6 +120,6 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
         // success
         userService.updateEmail(email, id);
-        verify(producer).sendMessage(EMAIL_UPDATE, 1);
+        verify(producer).sendMessageHandleError(EMAIL_UPDATE, 1);
     }
 }
