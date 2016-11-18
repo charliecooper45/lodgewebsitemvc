@@ -1,7 +1,7 @@
 # lodgewebsitemvc
 
-[![Build Status](http://teamcity.cooperca.uk/app/rest/builds/buildType:id:lodgewebsitemvc_build/statusIcon)]
-(http://teamcity.cooperca.uk/viewType.html?buildTypeId=lodgewebsitemvc_build&guest=1)
+[![Build Status](https://teamcity.cooperca.uk/app/rest/builds/buildType:id:lodgewebsitemvc_build/statusIcon)]
+(https://teamcity.cooperca.uk/viewType.html?buildTypeId=lodgewebsitemvc_build&guest=1)
 
 
 This project was inspired by my parents buying a holiday lodge in Cornwall, UK. They asked me to create a simple <a href="https://github.com/charliecooper45/lodgewebsite">website</a> that gave users an overview of the lodge itself and the surrounding area. I decided to use this opportunity to enhance the project and help me learn the Spring framework. The enhancements to the static website are as follows:
@@ -70,14 +70,12 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
     * dev, test, prod
 
 ## Deployment
-As part of the project I setup a home server running Ubuntu Linux. This is used both as a build server and to host a web server VM that serves the application.
+The application runs on a DigitalOcean droplet.
 
-#### Build Server
+#### Server
 - TeamCity (using the Maven Nexus Staging Plugin to deploy to Nexus)
 - Nexus
-- Artifacts are then deployed to the Web Server manually (this is a future improvement) 
-
-#### Web Server VM
-- Apache Web Server 
+- Deployment via shell scripts
+- Nginx 
 - Apache Tomcat running the web module WAR
 - Java service for the notification module JAR
