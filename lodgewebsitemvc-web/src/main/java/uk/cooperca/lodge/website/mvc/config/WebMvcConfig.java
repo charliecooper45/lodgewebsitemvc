@@ -37,6 +37,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
+        templateResolver.setCharacterEncoding("UTF-8");
+        // TODO: cache in production
         templateResolver.setCacheable(false);
         return templateResolver;
     }
@@ -57,6 +59,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
         thymeleafViewResolver.setTemplateEngine(templateEngine());
         thymeleafViewResolver.setCharacterEncoding("UTF-8");
+        thymeleafViewResolver.setContentType("text/html; charset=UTF-8");
         return thymeleafViewResolver;
     }
 
