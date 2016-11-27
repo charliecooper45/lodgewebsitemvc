@@ -95,7 +95,7 @@
                 <div layout:replace="fragments/modals/reviews :: deleteReviewModal" />
               </div>
               <div class="tab-pane" id="bookings">
-                <h4 class="text-center">Currently it is not possible to book online, please check back at a later date!</h4>
+                <h4 class="text-center" th:text="#{account.bookingMessage}">Currently it is not possible to book online, please check back at a later date!</h4>
               </div>
               <div class="tab-pane" id="settings">
                 <form th:object="${user}">
