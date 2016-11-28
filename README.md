@@ -80,7 +80,7 @@ The application runs on a DigitalOcean droplet.
 - Apache Tomcat running the web module WAR
 - Java service for the notification module JAR
 
-#### Future Improvements
+## Future Improvements
 - Web caching
 - JavaScript build tool support
 
