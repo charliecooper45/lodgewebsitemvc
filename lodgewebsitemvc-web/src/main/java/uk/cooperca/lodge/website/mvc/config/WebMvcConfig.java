@@ -1,12 +1,10 @@
 package uk.cooperca.lodge.website.mvc.config;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.*;
@@ -80,7 +78,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/").addResourceLocations("/resources/**");
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/")
+                // TODO: cache in production
+                .setCachePeriod(0);
     }
 
     @Override
