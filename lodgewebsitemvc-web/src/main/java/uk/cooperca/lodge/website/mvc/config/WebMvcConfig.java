@@ -9,6 +9,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.resource.ContentVersionStrategy;
+import org.springframework.web.servlet.resource.VersionResourceResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -78,10 +80,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        VersionResourceResolver versionResourceResolver = new VersionResourceResolver()
+                .addVersionStrategy(new ContentVersionStrategy(), "/**");
+
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/")
-                // TODO: cache in production
-                .setCachePeriod(0);
+                .setCachePeriod(60 * 60 * 24 * 365)
+                .resourceChain(true)
+                .addResolver(versionResourceResolver);
     }
 
     @Override

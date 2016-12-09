@@ -7,25 +7,25 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE" th:text="#{website.shortTitle}">Lodge Website</title>
-    <link href="../../../resources/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/resources/components/bootstrap/dist/css/bootstrap.min.css}"/>
-    <link href="../../../resources/components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" th:href="@{/resources/components/bootstrap/dist/css/bootstrap-theme.min.css}"/>
-    <link href="../../../resources/components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.min.css" rel="stylesheet" th:href="@{/resources/components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.min.css}"/>
-    <link href="../../../resources/components/blueimp-gallery-css/index.css" rel="stylesheet" th:href="@{/resources/components/blueimp-gallery-css/index.css}"/>
-    <link href="../../../resources/components/bootstrap-star-rating/css/star-rating.min.css" rel="stylesheet" th:href="@{/resources/components/bootstrap-star-rating/css/star-rating.min.css}"/>
-    <link href="../../../resources/components/font-awesome/css/font-awesome.min.css" rel="stylesheet" th:href="@{/resources/components/font-awesome/css/font-awesome.min.css}"/>
-    <link href="../../../resources/components/main/index.css" rel="stylesheet" th:href="@{/resources/components/main/index.css}"/>
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap/dist/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap/dist/css/bootstrap-theme.min.css')}}" />
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.min.css')}}" />
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/blueimp-gallery-css/index.css')}}" />
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap-star-rating/css/star-rating.min.css')}}" />
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/font-awesome/css/font-awesome.min.css')}}" />
+    <link rel="stylesheet" th:href="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/main/index.css')}}" />
   </head>
   <body>
     <header layout:replace="fragments/header :: header(${page})" />
     <section layout:fragment="content" />
     <footer layout:replace="fragments/footer :: footer" />
 
-    <script src="../../../resources/components/jquery/dist/jquery.min.js" th:src="@{/resources/components/jquery/dist/jquery.min.js}"/>
-    <script src="../../../resources/components/account/index.js" th:src="@{/resources/components/account/index.js}"/>
-    <script src="../../../resources/components/bootstrap/dist/js/bootstrap.min.js" th:src="@{/resources/components/bootstrap/dist/js/bootstrap.min.js}"/>
-    <script src="../../../resources/components/blueimp-gallery-js/index.js" th:src="@{/resources/components/blueimp-gallery-js/index.js}" />
-    <script src="../../../resources/components/bootstrap-image-gallery/index.js" th:src="@{/resources/components/bootstrap-image-gallery/index.js}" />
-    <script src="../../../resources/components/bootstrap-star-rating/js/star-rating.min.js" th:src="@{/resources/components/bootstrap-star-rating/js/star-rating.min.js}"/>
-    <script src="../../../resources/components/modernizr-lite/modernizr.js" th:src="@{/resources/components/modernizr-lite/modernizr.js}"/>
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/jquery/dist/jquery.min.js')}}" />
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/account/index.js')}}" />
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap/dist/js/bootstrap.min.js')}}" />
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/blueimp-gallery-js/index.js')}}" />
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap-image-gallery/index.js')}}" />
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/bootstrap-star-rating/js/star-rating.min.js')}}" />
+    <script type="application/javascript" th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/components/modernizr-lite/modernizr.js')}}" />
   </body>
 </html>

@@ -26,9 +26,9 @@
           </div>
           <div sec:authorize="isAnonymous()" id="languages" class="col-xs-4 text-center">
             <p>
-              <a href="?lang=en"><image th:src="@{/resources/img/gb.png}" th:alt="EN" th:title="#{footer.english}"/></a>
+              <a href="?lang=en"><image th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/img/gb.png')}}" th:alt="EN" th:title="#{footer.english}"/></a>
               &nbsp;
-              <a href="?lang=ru"><image th:src="@{/resources/img/ru.png}" th:alt="RU" th:title="#{footer.russian}"/></a>
+              <a href="?lang=ru"><image th:src="@{${@mvcResourceUrlProvider.getForLookupPath('/resources/img/ru.png')}}" th:alt="RU" th:title="#{footer.russian}"/></a>
             </p>
           </div>
         </div>
