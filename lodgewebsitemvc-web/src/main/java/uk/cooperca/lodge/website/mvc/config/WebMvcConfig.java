@@ -1,10 +1,12 @@
 package uk.cooperca.lodge.website.mvc.config;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.*;
@@ -31,6 +33,9 @@ import uk.cooperca.lodge.website.mvc.config.util.WebMvcConfigImportSelector;
 @Import(WebMvcConfigImportSelector.class)
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
+    @Autowired
+    private Environment env;
+
     @Bean
     public ServletContextTemplateResolver templateResolver() {
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
@@ -38,8 +43,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
         templateResolver.setCharacterEncoding("UTF-8");
-        // TODO: cache in production
-        templateResolver.setCacheable(false);
+        templateResolver.setCacheable(env.getProperty("thymeleaf.cache.templates", Boolean.class));
         return templateResolver;
     }
 
