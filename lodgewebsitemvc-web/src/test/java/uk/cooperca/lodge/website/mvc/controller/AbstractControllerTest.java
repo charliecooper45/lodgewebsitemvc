@@ -32,7 +32,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebMvcConfig.class, SecurityConfig.class})
 @WebAppConfiguration
-@TestPropertySource(properties = {"spring.profiles.active=test"})
+@TestPropertySource(properties = {"spring.profiles.active=test", "thymeleaf.cache.templates=false"})
 public abstract class AbstractControllerTest extends AbstractController {
 
     private final Role userRole;
