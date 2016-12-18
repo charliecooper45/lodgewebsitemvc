@@ -1,0 +1,19 @@
+{
+  "name": "lodgewebsitemvc-web",
+  "homepage": "https://github.com/charliecooper45/lodgewebsitemvc",
+  "authors": [
+    "Charlie Cooper <charlie@cooperca.uk>"
+  ],
+  "description": "Web module of the Lodge Website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charliecooper45/lodgewebsitemvc"
+  },
+  "scripts": {
+    "init": "npm install",
+    "install": "bower install"
+  },
+  "dependencies": {
+    "bower": "~1.8.0"
+  }
+}

@@ -33,6 +33,7 @@ As mentioned above the aim of this project was to expose myself to the Spring fr
 4. Maven
     * Parent POM
     * Three modules (web, core and notification)
+    * Frontend Maven Plugin
 5. Velocity (for email templates)
 6. JSON
     * Json Web Tokens (for email links), jjwt library
@@ -64,6 +65,7 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
 4. HTML
     * Local Storage
 5. Bower
+6. NPM
 
 ### Environment
 1. Three environments (controlled via Spring profiles)
@@ -81,6 +83,5 @@ The application runs on a DigitalOcean droplet.
 - Java service for the notification module JAR
 
 ## Future Improvements
-- Web caching
-- JavaScript build tool support
+- Gulp
 

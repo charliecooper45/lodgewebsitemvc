@@ -30,5 +30,10 @@ buildNumber.properties
 ### Bower
 lodgewebsitemvc-web/src/main/webapp/resources/components
 
+### NPM
+.npm
+node
+node_modules
+
 
 
