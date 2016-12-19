@@ -28,12 +28,14 @@ buildNumber.properties
 .mvn/timing.properties
 
 ### Bower
+bower_components
 lodgewebsitemvc-web/src/main/webapp/resources/components
 
 ### NPM
 .npm
 node
 node_modules
+etc
 
 
 

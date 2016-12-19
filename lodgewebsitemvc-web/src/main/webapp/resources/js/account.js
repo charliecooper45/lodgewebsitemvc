@@ -1,16 +1,16 @@
 /* JavaScript for the account page */
-var token = $("meta[name='_csrf']").attr("content");
+var token = $('meta[name="_csrf"]').attr('content');
 
 $(function() {
     if (window.location.pathname.endsWith('/account')) {
         if (window.location.hash === '#updated') {
             if (Modernizr.localstorage) {
                 window.location.hash = '';
-                var updateAlert = $("#update-alert");
+                var updateAlert = $('#update-alert');
                 updateAlert.text(localStorage.getItem('successMessage'));
                 updateAlert.slideDown();
                 updateAlert.fadeTo(1500, 500).slideUp(500);
-                localStorage.removeItem("successMessage");
+                localStorage.removeItem('successMessage');
             }
         }
     }
@@ -22,7 +22,7 @@ $('#save-email').click(function() {
     user.confirmEmail = $('#confirm-edit-email').val();
     ajax('PUT', 'account/email', JSON.stringify(user), $('#email-modal'));
 });
-setModalFocus($('#email-modal'), $('#edit-email'))
+setModalFocus($('#email-modal'), $('#edit-email'));
 
 $('#save-password').click(function() {
     var user = {};
@@ -30,7 +30,7 @@ $('#save-password').click(function() {
     user.confirmPassword = $('#confirm-edit-password').val();
     ajax('PUT', 'account/password', JSON.stringify(user), $('#password-modal'));
 });
-setModalFocus($('#password-modal'), $('#edit-password'))
+setModalFocus($('#password-modal'), $('#edit-password'));
 
 $('#save-first-name').click(function() {
     var user = {};
@@ -51,7 +51,7 @@ $('#save-review').click(function() {
     var review = {};
     review.review = $('#review-text').val();
     review.score = $('#review-score').val();
-    ajax('POST', 'reviews', JSON.stringify(review), $('#add-review-modal'))
+    ajax('POST', 'reviews', JSON.stringify(review), $('#add-review-modal'));
 });
 setModalFocus($('#add-review-modal'), $('#review-text'));
 
@@ -60,17 +60,18 @@ $('#delete-review-modal').on('show.bs.modal', function(e) {
     $(e.currentTarget).find('#delete-review').attr('data-review', reviewId);
 });
 $('#delete-review').click(function() {
-    ajax('DELETE', 'reviews/' + $(this).data('review'), null, $('#delete-review-modal'))
+    ajax('DELETE', 'reviews/' + $(this).data('review'), null, $('#delete-review-modal'));
 });
 
 /* settings */
 $('#language-select').on('change', function() {
     var modal = $('#language-modal');
-    modal.find('#save-language').attr('data-language', $("option:selected", this).val());
+    modal.find('#save-language').attr('data-language', $('option:selected', this).val());
     modal.modal('toggle');
 });
 $('#save-language').click(function() {
-    ajax('PUT', 'account/language?language=' + $(this).data('language'), null, $('#language-modal'));
+    ajax('PUT', 'account/language?language=' +
+        $(this).data('language'), null, $('#language-modal'));
 });
 
 /* common functions */
@@ -81,7 +82,7 @@ function getBaseUrl() {
 function setModalFocus(modal, element) {
     modal.on('shown.bs.modal', function () {
         element.focus();
-    })
+    });
 }
 
 function ajax(method, url, data, modal) {
@@ -112,5 +113,5 @@ function ajax(method, url, data, modal) {
                 });
             }
         }
-    })
+    });
 }

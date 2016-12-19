@@ -467,6 +467,22 @@
                 <arguments>install</arguments>
               </configuration>
             </execution>
+            <execution>
+              <id>bower install</id>
+              <goals>
+                <goal>bower</goal>
+              </goals>
+              <configuration>
+                <arguments>install</arguments>
+              </configuration>
+            </execution>
+            <execution>
+              <id>gulp</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>gulp</goal>
+              </goals>
+            </execution>
           </executions>
         </plugin>
         <plugin>
