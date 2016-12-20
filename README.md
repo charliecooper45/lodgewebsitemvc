@@ -65,7 +65,8 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
 4. HTML
     * Local Storage
 5. Bower
-6. NPM
+6. Gulp
+7. NPM
 
 ### Environment
 1. Three environments (controlled via Spring profiles)
@@ -82,6 +83,4 @@ The application runs on a DigitalOcean droplet.
 - Apache Tomcat running the web module WAR
 - Java service for the notification module JAR
 
-## Future Improvements
-- Gulp
 
