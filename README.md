@@ -1,9 +1,5 @@
 # lodgewebsitemvc
 
-[![Build Status](https://teamcity.buildca.uk/app/rest/builds/buildType:id:lodgewebsitemvc_build/statusIcon)]
-(https://teamcity.buildca.uk/viewType.html?buildTypeId=lodgewebsitemvc_build&guest=1)
-
-
 This project was inspired by my parents buying a holiday lodge in Cornwall, UK. They asked me to create a simple <a href="https://github.com/charliecooper45/lodgewebsite">website</a> that gave users an overview of the lodge itself and the surrounding area. I decided to use this opportunity to enhance the project and help me learn the Spring framework. The enhancements to the static website are as follows:
 
 1. User accounts (registration/login and password reset)
@@ -73,7 +69,7 @@ The front end is served via the Thymeleaf templating engine. JQuery is used exte
     * dev, test, prod
 
 ## Deployment
-The application runs on a DigitalOcean droplet.
+Currently not deployed.
 
 #### Server
 - TeamCity (using the Maven Nexus Staging Plugin to deploy to Nexus)
